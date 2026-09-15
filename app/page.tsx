@@ -1,0 +1,834 @@
+"use client";
+
+import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  ArrowRight,
+  CalendarCheck,
+  Check,
+  ChevronRight,
+  Circle,
+  Clock3,
+  Mail,
+  Menu,
+  MessageCircle,
+  MousePointer2,
+  Moon,
+  Sparkles,
+  Star,
+  Sun,
+  X
+} from "lucide-react";
+import { useMemo, useState } from "react";
+import {
+  caseStudies,
+  dashboardTasks,
+  failurePrevention,
+  faqs,
+  industries,
+  journey,
+  navItems,
+  process,
+  qualityChecks,
+  services,
+  tech
+} from "@/lib/content";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0 }
+};
+
+const budgets = [
+  { label: "Starter", value: 3500, timeline: "3-5 weeks" },
+  { label: "Growth", value: 8500, timeline: "6-9 weeks" },
+  { label: "Scale", value: 18000, timeline: "10-14 weeks" }
+];
+
+const featureOptions = ["CMS", "Payments", "AI Bot", "Dashboard", "Mobile App", "Analytics"];
+
+export default function Home() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [serviceIndex, setServiceIndex] = useState(0);
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>(["CMS", "Dashboard", "Analytics"]);
+  const [budgetIndex, setBudgetIndex] = useState(1);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [portfolioFilter, setPortfolioFilter] = useState("All");
+  const [sliderValue, setSliderValue] = useState(54);
+  const { scrollYProgress } = useScroll();
+  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 90]);
+  const filteredCaseStudies = useMemo(
+    () => (portfolioFilter === "All" ? caseStudies : caseStudies.filter((study) => study.category === portfolioFilter)),
+    [portfolioFilter]
+  );
+  const shellClass =
+    theme === "dark"
+      ? "bg-ink text-cloud"
+      : "bg-[#f6f8f9] text-[#071014] [color-scheme:light]";
+
+  const estimate = useMemo(() => {
+    const base = budgets[budgetIndex].value;
+    const featureCost = selectedFeatures.length * 950;
+    const serviceMultiplier = serviceIndex === 1 ? 1.25 : serviceIndex === 3 ? 1.18 : 1;
+    const total = Math.round((base + featureCost) * serviceMultiplier);
+    return {
+      low: total,
+      high: Math.round(total * 1.35),
+      timeline: budgets[budgetIndex].timeline
+    };
+  }, [budgetIndex, selectedFeatures.length, serviceIndex]);
+
+  function toggleFeature(feature: string) {
+    setSelectedFeatures((current) =>
+      current.includes(feature) ? current.filter((item) => item !== feature) : [...current, feature]
+    );
+  }
+
+  return (
+    <main className={`min-h-screen overflow-hidden transition-colors duration-500 ${shellClass}`}>
+      <div className={`pointer-events-none fixed inset-0 z-0 noise ${theme === "dark" ? "opacity-25" : "opacity-10"}`} />
+      <Header mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} theme={theme} setTheme={setTheme} />
+
+      <section className="relative z-10 min-h-screen overflow-hidden pt-28">
+        <motion.div style={{ y: heroY }} className="absolute inset-0">
+          <Image
+            src="/images/opus-hero-command-center.png"
+            alt="Premium digital product command center with mobile and web dashboards"
+            fill
+            priority
+            className="object-cover opacity-65"
+          />
+          <div className={`absolute inset-0 ${theme === "dark" ? "bg-[linear-gradient(90deg,#071014_0%,rgba(7,16,20,0.92)_34%,rgba(7,16,20,0.35)_100%)]" : "bg-[linear-gradient(90deg,#f6f8f9_0%,rgba(246,248,249,0.92)_34%,rgba(246,248,249,0.25)_100%)]"}`} />
+          <div className={`absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t ${theme === "dark" ? "from-ink" : "from-[#f6f8f9]"} to-transparent`} />
+        </motion.div>
+
+        <div className="section-shell relative grid min-h-[calc(100vh-7rem)] items-center pb-16 lg:grid-cols-[0.9fr_1.1fr]">
+          <motion.div
+            initial="hidden"
+            animate="show"
+            transition={{ staggerChildren: 0.08 }}
+            className="max-w-3xl"
+          >
+            <motion.div variants={fadeUp} className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur">
+              <Sparkles className="h-4 w-4 text-teal" />
+              Sales, hiring, brand image, and international trust
+            </motion.div>
+            <motion.h1 variants={fadeUp} className={`text-balance text-5xl font-semibold tracking-normal md:text-7xl lg:text-8xl ${theme === "dark" ? "text-white" : "text-ink"}`}>
+              Build digital products that move businesses forward.
+            </motion.h1>
+            <motion.p variants={fadeUp} className={`mt-6 max-w-2xl text-lg leading-8 md:text-xl ${theme === "dark" ? "text-white/72" : "text-ink/70"}`}>
+              Opus Geeks becomes a digital product lab: app development, web development, and UI/UX design presented with proof, motion, and a sales-ready experience.
+            </motion.p>
+            <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="#estimator" className="group inline-flex items-center justify-center gap-2 rounded-full bg-teal px-6 py-4 font-semibold text-ink transition hover:bg-white">
+                Get free estimate
+                <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
+              </a>
+              <a href="#work" className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-4 font-semibold backdrop-blur transition ${theme === "dark" ? "border-white/15 bg-white/10 text-white hover:border-white/35" : "border-ink/15 bg-white text-ink hover:border-ink/30"}`}>
+                See case studies
+              </a>
+            </motion.div>
+            <motion.div variants={fadeUp} className="mt-10 grid max-w-xl grid-cols-3 gap-3">
+              {[
+                ["80+", "Projects"],
+                ["12", "Industries"],
+                ["4.9/5", "Client rating"]
+              ].map(([value, label]) => (
+                <div key={label} className={`rounded-2xl border p-4 backdrop-blur ${theme === "dark" ? "glass" : "border-ink/10 bg-white/75"}`}>
+                  <div className={`text-2xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{value}</div>
+                  <div className={`mt-1 text-sm ${theme === "dark" ? "text-white/55" : "text-ink/55"}`}>{label}</div>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.35, duration: 0.7 }}
+            className="hidden justify-end lg:flex"
+          >
+            <div className="glass relative mt-24 w-[430px] rounded-[28px] p-5 shadow-glow">
+              <div className="mb-5 flex items-center justify-between">
+                <span className="text-sm text-white/60">Launch cockpit</span>
+                <span className="rounded-full bg-teal/15 px-3 py-1 text-xs font-semibold text-teal">Live sprint</span>
+              </div>
+              <div className="space-y-3">
+                {["Discovery complete", "Prototype approved", "API sprint active", "Launch checklist"].map((item, index) => (
+                  <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/[0.06] p-3">
+                    <span className={`flex h-9 w-9 items-center justify-center rounded-full ${index < 2 ? "bg-teal text-ink" : "bg-white/10 text-white"}`}>
+                      {index < 2 ? <Check className="h-4 w-4" /> : <Clock3 className="h-4 w-4" />}
+                    </span>
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-white">{item}</div>
+                      <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/10">
+                        <div className="h-full rounded-full bg-coral" style={{ width: `${index < 2 ? 100 : 42 + index * 12}%` }} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <LogoTicker />
+
+      <Section id="services" eyebrow="Services" title="Three core services, presented like a premium product studio." intro="The current services are App Development, Web Development, and UX/UI Design. This direction makes each one feel business-critical instead of generic." theme={theme}>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <motion.button
+                key={service.title}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-80px" }}
+                variants={fadeUp}
+                transition={{ delay: index * 0.05 }}
+                onClick={() => setServiceIndex(index)}
+                className={`group rounded-3xl border p-6 text-left transition ${serviceIndex === index ? "border-teal bg-teal/10 shadow-glow" : theme === "dark" ? "border-white/10 bg-white/[0.04] hover:border-white/25" : "border-ink/10 bg-white hover:border-ink/25"}`}
+              >
+                <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl text-teal ${theme === "dark" ? "bg-white/10" : "bg-ink/[0.04]"}`}>
+                  <Icon className="h-6 w-6" />
+                </div>
+                <h3 className={`text-xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{service.title}</h3>
+                <p className={`mt-3 min-h-24 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{service.description}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {service.deliverables.map((item) => (
+                    <span key={item} className={`rounded-full px-3 py-1 text-xs ${theme === "dark" ? "bg-white/8 text-white/70" : "bg-ink/[0.04] text-ink/70"}`}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </motion.button>
+            );
+          })}
+        </div>
+      </Section>
+
+      <Section id="work" eyebrow="Portfolio" title="Filterable portfolio with animated previews and measurable outcomes." intro="The original portfolio has placeholder cards. This version makes every card feel like a real case study with category, result, preview, and stack." theme={theme}>
+        <div className="mb-6 flex flex-wrap gap-2">
+          {["All", "App Development", "Web Development", "UI/UX Design", "AI Automation"].map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setPortfolioFilter(filter)}
+              className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                portfolioFilter === filter
+                  ? "border-teal bg-teal text-ink"
+                  : theme === "dark"
+                    ? "border-white/10 bg-white/[0.04] text-white/65"
+                    : "border-ink/10 bg-white text-ink/65"
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+        <div className="grid gap-5 lg:grid-cols-3">
+          {filteredCaseStudies.map((study, index) => (
+            <motion.article
+              key={study.title}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-80px" }}
+              variants={fadeUp}
+              transition={{ delay: index * 0.08 }}
+              className={`group overflow-hidden rounded-3xl border transition hover:-translate-y-1 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
+            >
+              <div className="relative h-56 overflow-hidden" style={{ background: study.image }}>
+                <div className="absolute inset-5 rounded-3xl border border-white/20 bg-black/20 p-5 backdrop-blur-sm transition duration-500 group-hover:scale-[1.03]">
+                  <div className="mb-8 flex justify-between">
+                    <span className="rounded-full bg-white/15 px-3 py-1 text-xs">{study.sector}</span>
+                    <MousePointer2 className="h-5 w-5 text-white/75" />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="h-3 w-2/3 rounded-full bg-white/70" />
+                    <div className="h-3 w-1/2 rounded-full bg-white/35" />
+                    <div className="grid grid-cols-3 gap-3 pt-4">
+                      <div className="h-16 rounded-2xl bg-white/15" />
+                      <div className="h-16 rounded-2xl bg-white/25" />
+                      <div className="h-16 rounded-2xl bg-white/15" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="mb-3 text-sm font-semibold text-teal">{study.result}</div>
+                <h3 className={`text-2xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{study.title}</h3>
+                <p className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{study.summary}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {study.stack.map((item) => (
+                    <span key={item} className={`rounded-full border px-3 py-1 text-xs ${theme === "dark" ? "border-white/10 text-white/65" : "border-ink/10 text-ink/65"}`}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </Section>
+
+      <BeforeAfter sliderValue={sliderValue} setSliderValue={setSliderValue} theme={theme} />
+
+      <Journey theme={theme} />
+
+      <FailurePrevention theme={theme} />
+
+      <ProjectDashboard theme={theme} />
+
+      <CeoMessage theme={theme} />
+
+      <Section id="process" eyebrow="Process" title="A launch journey visitors can understand in 10 seconds." intro="The current site has a process section, but this version turns it into a clear product pathway with trust-building checkpoints." theme={theme}>
+        <div className="relative grid gap-4 lg:grid-cols-4">
+          {process.map((step, index) => {
+            const Icon = step.icon;
+            return (
+              <motion.div
+                key={step.title}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-80px" }}
+                variants={fadeUp}
+                transition={{ delay: index * 0.08 }}
+                className={`rounded-3xl border p-6 backdrop-blur ${theme === "dark" ? "glass" : "border-ink/10 bg-white"}`}
+              >
+                <div className="mb-6 flex items-center justify-between">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-coral/15 text-coral">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <span className="text-4xl font-semibold text-white/15">0{index + 1}</span>
+                </div>
+                <h3 className={`text-xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{step.title}</h3>
+                <p className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{step.text}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </Section>
+
+      <Estimator
+        selectedFeatures={selectedFeatures}
+        budgetIndex={budgetIndex}
+        serviceIndex={serviceIndex}
+        estimate={estimate}
+        theme={theme}
+        setBudgetIndex={setBudgetIndex}
+        setServiceIndex={setServiceIndex}
+        toggleFeature={toggleFeature}
+      />
+
+      <Section id="industries" eyebrow="Industries" title="Industry depth without boring walls of text." intro="A compact industry grid shows range while keeping the page scan-friendly." theme={theme}>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          {industries.map((industry) => {
+            const Icon = industry.icon;
+            return (
+              <div key={industry.name} className={`group flex items-center gap-3 rounded-2xl border p-4 transition hover:border-teal/60 hover:bg-teal/10 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
+                <Icon className="h-5 w-5 text-teal" />
+                <span className={`font-medium ${theme === "dark" ? "text-white/82" : "text-ink/82"}`}>{industry.name}</span>
+              </div>
+            );
+          })}
+        </div>
+      </Section>
+
+      <Testimonials theme={theme} />
+
+      <Section id="faqs" eyebrow="FAQs" title="Questions answered before the contact form." intro="This reduces friction and makes the company look transparent, prepared, and senior." theme={theme}>
+        <div className="grid gap-4 lg:grid-cols-2">
+          {faqs.map((item) => (
+            <div key={item.q} className={`rounded-3xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
+              <h3 className={`text-lg font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{item.q}</h3>
+              <p className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <FinalCta theme={theme} />
+    </main>
+  );
+}
+
+function Header({
+  mobileOpen,
+  setMobileOpen,
+  theme,
+  setTheme
+}: {
+  mobileOpen: boolean;
+  setMobileOpen: (value: boolean) => void;
+  theme: "dark" | "light";
+  setTheme: (value: "dark" | "light") => void;
+}) {
+  return (
+    <header className={`fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl ${theme === "dark" ? "border-white/10 bg-ink/75" : "border-ink/10 bg-white/85"}`}>
+      <div className="section-shell flex h-20 items-center justify-between">
+        <a href="#" className="relative flex h-12 w-32 items-center">
+          <Image src="/images/opus-logo.png" alt="Opus Geeks logo" fill className="object-contain object-left" />
+        </a>
+        <nav className="hidden items-center gap-7 lg:flex">
+          {navItems.map((item) => (
+            <a key={item.href} href={item.href} className={`text-sm font-medium transition ${theme === "dark" ? "text-white/65 hover:text-white" : "text-ink/65 hover:text-ink"}`}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <div className="hidden items-center gap-3 lg:flex">
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition ${theme === "dark" ? "border-white/10 text-white/70 hover:border-white/30" : "border-ink/10 text-ink/70 hover:border-ink/30"}`}
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </button>
+          <a href="mailto:contact@opusgeeks.com" className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition ${theme === "dark" ? "border-white/10 text-white/70 hover:border-white/30 hover:text-white" : "border-ink/10 text-ink/70 hover:border-ink/30 hover:text-ink"}`} aria-label="Email Opus Geeks">
+            <Mail className="h-5 w-5" />
+          </a>
+          <a href="#estimator" className="inline-flex items-center gap-2 rounded-full bg-teal px-5 py-3 text-sm font-semibold text-ink transition hover:bg-white">
+            Start project
+            <ChevronRight className="h-4 w-4" />
+          </a>
+        </div>
+        <button onClick={() => setMobileOpen(!mobileOpen)} className={`inline-flex h-11 w-11 items-center justify-center rounded-full border lg:hidden ${theme === "dark" ? "border-white/10" : "border-ink/10"}`} aria-label="Toggle menu">
+          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </div>
+      {mobileOpen ? (
+        <div className="section-shell pb-5 lg:hidden">
+          <div className={`rounded-3xl border p-4 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
+            {navItems.map((item) => (
+              <a key={item.href} onClick={() => setMobileOpen(false)} href={item.href} className={`block rounded-2xl px-4 py-3 ${theme === "dark" ? "text-white/75" : "text-ink/75"}`}>
+                {item.label}
+              </a>
+            ))}
+            <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="mt-2 flex w-full items-center gap-2 rounded-2xl bg-teal px-4 py-3 font-semibold text-ink">
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              Toggle theme
+            </button>
+          </div>
+        </div>
+      ) : null}
+    </header>
+  );
+}
+
+function Section({
+  id,
+  eyebrow,
+  title,
+  intro,
+  children,
+  theme
+}: {
+  id: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  children: React.ReactNode;
+  theme: "dark" | "light";
+}) {
+  return (
+    <section id={id} className="relative z-10 py-20 md:py-28">
+      <div className="section-shell">
+        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mb-10 max-w-3xl">
+          <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">{eyebrow}</span>
+          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>{title}</h2>
+          <p className={`mt-5 text-base leading-7 md:text-lg ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{intro}</p>
+        </motion.div>
+        {children}
+      </div>
+    </section>
+  );
+}
+
+function LogoTicker() {
+  return (
+    <section className="relative z-10 border-y border-white/10 bg-white/[0.03] py-5">
+      <div className="flex overflow-hidden">
+        <div className="flex min-w-max animate-ticker gap-4 px-2">
+          {[...tech, ...tech].map((item, index) => (
+            <span key={`${item}-${index}`} className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-2 text-sm font-semibold text-white/70">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BeforeAfter({
+  sliderValue,
+  setSliderValue,
+  theme
+}: {
+  sliderValue: number;
+  setSliderValue: (value: number) => void;
+  theme: "dark" | "light";
+}) {
+  return (
+    <section className="relative z-10 py-20 md:py-28">
+      <div className="section-shell grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <span className="mb-4 inline-flex rounded-full border border-coral/30 bg-coral/10 px-3 py-1 text-sm font-semibold text-coral">Before / After</span>
+          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Show the gap between a template site and a serious growth website.</h2>
+          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
+            A comparison slider instantly proves the redesign strategy: better hierarchy, stronger trust, cleaner copy, real case studies, and clear CTAs.
+          </p>
+        </div>
+        <div className={`rounded-[32px] border p-4 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
+          <div className="relative h-[420px] overflow-hidden rounded-[24px] bg-ink">
+            <div className="absolute inset-0 p-5">
+              <div className="mb-5 text-sm font-semibold text-white/45">Before</div>
+              <div className="space-y-3">
+                <div className="h-16 rounded-2xl bg-white/10" />
+                <div className="h-8 w-3/5 rounded-full bg-white/10" />
+                <div className="grid grid-cols-2 gap-3 pt-5">
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <div key={index} className="h-20 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
+                      <div className="h-3 w-1/2 rounded bg-white/15" />
+                      <div className="mt-3 h-2 w-full rounded bg-white/10" />
+                      <div className="mt-2 h-2 w-2/3 rounded bg-white/10" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="absolute inset-0 overflow-hidden" style={{ clipPath: `inset(0 ${100 - sliderValue}% 0 0)` }}>
+              <div className="absolute inset-0 bg-[linear-gradient(135deg,#16d1c2_0%,#071014_52%,#ff7a59_100%)] p-5">
+                <div className="mb-5 flex items-center justify-between text-sm font-semibold text-white">
+                  <span>After</span>
+                  <span className="rounded-full bg-white/15 px-3 py-1">Premium product lab</span>
+                </div>
+                <div className="rounded-3xl bg-black/25 p-5 backdrop-blur">
+                  <div className="h-6 w-4/5 rounded-full bg-white/80" />
+                  <div className="mt-4 h-3 w-2/3 rounded-full bg-white/40" />
+                  <div className="mt-6 grid grid-cols-3 gap-3">
+                    {["Estimator", "Case studies", "Hiring"].map((item) => (
+                      <div key={item} className="rounded-2xl bg-white/15 p-3">
+                        <Circle className="mb-4 h-4 w-4 fill-teal text-teal" />
+                        <div className="text-xs font-semibold text-white">{item}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl bg-white/15 p-4 text-white">
+                    <div className="text-2xl font-semibold">42%</div>
+                    <div className="text-xs text-white/70">faster lead clarity</div>
+                  </div>
+                  <div className="rounded-2xl bg-white/15 p-4 text-white">
+                    <div className="text-2xl font-semibold">4 goals</div>
+                    <div className="text-xs text-white/70">sales, hiring, brand, global</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute inset-y-0 w-1 bg-white shadow-glow" style={{ left: `${sliderValue}%` }} />
+          </div>
+          <input
+            aria-label="Before after slider"
+            type="range"
+            min="18"
+            max="82"
+            value={sliderValue}
+            onChange={(event) => setSliderValue(Number(event.target.value))}
+            className="mt-5 w-full accent-teal"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Journey({ theme }: { theme: "dark" | "light" }) {
+  return (
+    <section id="journey" className="relative z-10 py-20 md:py-28">
+      <div className="section-shell">
+        <div className="mb-12 max-w-3xl">
+          <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">Interactive journey</span>
+          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Idea to wireframe to design to code to launch.</h2>
+          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>This scroll story helps visitors understand how Opus Geeks turns raw ideas into shipped products.</p>
+        </div>
+        <div className="relative grid gap-4 lg:grid-cols-5">
+          {journey.map((step, index) => {
+            const Icon = step.icon;
+            return (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 34 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: index * 0.12 }}
+                className={`rounded-3xl border p-5 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
+              >
+                <div className="mb-5 flex items-center justify-between">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal text-ink">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <span className={`text-sm font-semibold ${theme === "dark" ? "text-white/35" : "text-ink/35"}`}>0{index + 1}</span>
+                </div>
+                <h3 className={`text-xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{step.title}</h3>
+                <p className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{step.text}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FailurePrevention({ theme }: { theme: "dark" | "light" }) {
+  return (
+    <Section id="failures" eyebrow="Risk control" title="Why projects fail, and how Opus Geeks prevents it." intro="This section makes the company look experienced because it names the problems clients already fear." theme={theme}>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {failurePrevention.map((item) => {
+          const Icon = item.icon;
+          return (
+            <div key={item.problem} className={`rounded-3xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
+              <Icon className="mb-5 h-7 w-7 text-coral" />
+              <h3 className={`text-lg font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{item.problem}</h3>
+              <p className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{item.fix}</p>
+            </div>
+          );
+        })}
+      </div>
+    </Section>
+  );
+}
+
+function ProjectDashboard({ theme }: { theme: "dark" | "light" }) {
+  return (
+    <section className="relative z-10 py-20 md:py-28">
+      <div className="section-shell grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className={`rounded-[32px] border p-5 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className={`text-2xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>Project progress dashboard</h2>
+              <p className={`mt-1 text-sm ${theme === "dark" ? "text-white/55" : "text-ink/55"}`}>A visual trust signal for international clients.</p>
+            </div>
+            <span className="rounded-full bg-teal px-3 py-1 text-sm font-semibold text-ink">Week 2 / 10</span>
+          </div>
+          <div className="space-y-3">
+            {dashboardTasks.map((task) => (
+              <div key={task.label} className={`rounded-2xl p-4 ${theme === "dark" ? "bg-white/[0.05]" : "bg-ink/[0.035]"}`}>
+                <div className="mb-3 flex justify-between gap-3">
+                  <span className={`font-medium ${theme === "dark" ? "text-white" : "text-ink"}`}>{task.label}</span>
+                  <span className="text-sm font-semibold text-teal">{task.status}</span>
+                </div>
+                <div className={`h-2 overflow-hidden rounded-full ${theme === "dark" ? "bg-white/10" : "bg-ink/10"}`}>
+                  <div className="h-full rounded-full bg-coral" style={{ width: `${task.progress}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="self-center">
+          <span className="mb-4 inline-flex rounded-full border border-coral/30 bg-coral/10 px-3 py-1 text-sm font-semibold text-coral">Transparent delivery</span>
+          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Make the website feel like the company already runs mature projects.</h2>
+          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
+            A mini dashboard suggests weekly demos, clear milestones, QA discipline, and a team clients can trust remotely.
+          </p>
+          <div className="mt-6 grid grid-cols-2 gap-3">
+            {qualityChecks.map((check) => {
+              const Icon = check.icon;
+              return (
+                <div key={check.label} className={`flex items-center gap-3 rounded-2xl border p-4 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
+                  <Icon className="h-5 w-5 text-teal" />
+                  <span className={`text-sm font-semibold ${theme === "dark" ? "text-white/75" : "text-ink/75"}`}>{check.label}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CeoMessage({ theme }: { theme: "dark" | "light" }) {
+  return (
+    <section className="relative z-10 py-20 md:py-28">
+      <div className={`section-shell overflow-hidden rounded-[36px] border ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
+        <div className="grid lg:grid-cols-[0.85fr_1.15fr]">
+          <div className="min-h-80 bg-[linear-gradient(135deg,#16d1c2_0%,#071014_55%,#ff7a59_100%)] p-8">
+            <div className="flex h-full flex-col justify-between rounded-[28px] border border-white/15 bg-black/20 p-6 backdrop-blur">
+              <button className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-ink" aria-label="CEO video placeholder">
+                <ArrowRight className="h-7 w-7" />
+              </button>
+              <div>
+                <div className="text-sm font-semibold text-teal">CEO message / video area</div>
+                <div className="mt-2 text-2xl font-semibold text-white">A personal note builds trust faster than stock sections.</div>
+              </div>
+            </div>
+          </div>
+          <div className="p-8 md:p-10">
+            <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">Leadership</span>
+            <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>“We do not just ship screens. We build digital systems that help businesses grow.”</h2>
+            <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
+              Add the CEO’s real photo or 30-second video here. The message should speak to four goals: more sales, stronger hiring, premium brand perception, and international client confidence.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {["Sales", "Hiring", "Brand image", "International clients"].map((item) => (
+                <span key={item} className="rounded-full bg-teal/15 px-4 py-2 text-sm font-semibold text-teal">{item}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Estimator({
+  selectedFeatures,
+  budgetIndex,
+  serviceIndex,
+  estimate,
+  theme,
+  setBudgetIndex,
+  setServiceIndex,
+  toggleFeature
+}: {
+  selectedFeatures: string[];
+  budgetIndex: number;
+  serviceIndex: number;
+  estimate: { low: number; high: number; timeline: string };
+  theme: "dark" | "light";
+  setBudgetIndex: (index: number) => void;
+  setServiceIndex: (index: number) => void;
+  toggleFeature: (feature: string) => void;
+}) {
+  return (
+    <section id="estimator" className="relative z-10 py-20 md:py-28">
+      <div className="section-shell grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <span className="mb-4 inline-flex rounded-full border border-coral/30 bg-coral/10 px-3 py-1 text-sm font-semibold text-coral">AI-style estimator</span>
+          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>A contact form is fine. A project estimator wins attention.</h2>
+          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
+            This interactive tool makes the site feel useful immediately. Visitors get a realistic starting range and Opus Geeks receives warmer leads.
+          </p>
+          <div className={`mt-8 rounded-3xl border p-5 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
+            <div className={`flex items-center gap-3 ${theme === "dark" ? "text-white/75" : "text-ink/75"}`}>
+              <MessageCircle className="h-5 w-5 text-teal" />
+              "I need an app with payments and dashboard" becomes a scoped conversation, not a blank inquiry.
+            </div>
+          </div>
+        </div>
+        <div className={`rounded-[32px] border p-5 md:p-7 shadow-coral ${theme === "dark" ? "glass" : "border-ink/10 bg-white"}`}>
+          <div className="grid gap-5">
+            <div>
+              <div className={`mb-3 text-sm font-semibold ${theme === "dark" ? "text-white/75" : "text-ink/75"}`}>1. Choose project type</div>
+              <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+                {services.slice(0, 6).map((service, index) => (
+                  <button key={service.title} onClick={() => setServiceIndex(index)} className={`rounded-2xl border px-3 py-3 text-sm font-medium transition ${serviceIndex === index ? "border-teal bg-teal text-ink" : theme === "dark" ? "border-white/10 bg-white/[0.04] text-white/65 hover:border-white/30" : "border-ink/10 bg-ink/[0.03] text-ink/65 hover:border-ink/30"}`}>
+                    {service.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className={`mb-3 text-sm font-semibold ${theme === "dark" ? "text-white/75" : "text-ink/75"}`}>2. Select features</div>
+              <div className="flex flex-wrap gap-2">
+                {featureOptions.map((feature) => (
+                  <button key={feature} onClick={() => toggleFeature(feature)} className={`rounded-full border px-4 py-2 text-sm transition ${selectedFeatures.includes(feature) ? "border-coral bg-coral text-ink" : theme === "dark" ? "border-white/10 bg-white/[0.04] text-white/65" : "border-ink/10 bg-ink/[0.03] text-ink/65"}`}>
+                    {feature}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className={`mb-3 text-sm font-semibold ${theme === "dark" ? "text-white/75" : "text-ink/75"}`}>3. Pick ambition level</div>
+              <div className="grid gap-2 md:grid-cols-3">
+                {budgets.map((budget, index) => (
+                  <button key={budget.label} onClick={() => setBudgetIndex(index)} className={`rounded-2xl border p-4 text-left transition ${budgetIndex === index ? "border-teal bg-teal text-ink" : theme === "dark" ? "border-white/10 bg-white/[0.04] text-white/65" : "border-ink/10 bg-ink/[0.03] text-ink/65"}`}>
+                    <div className="font-semibold">{budget.label}</div>
+                    <div className="mt-1 text-xs opacity-70">{budget.timeline}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-3xl bg-ink p-5">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <div className="text-sm text-white/55">Estimated range</div>
+                  <div className="mt-1 text-3xl font-semibold text-white">
+                    ${estimate.low.toLocaleString()} - ${estimate.high.toLocaleString()}
+                  </div>
+                  <div className="mt-2 text-sm text-white/55">Timeline: {estimate.timeline}</div>
+                </div>
+                <CalendarCheck className="hidden h-12 w-12 text-teal sm:block" />
+              </div>
+              <a href="mailto:contact@opusgeeks.com?subject=Project estimate request" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal px-5 py-4 font-semibold text-ink transition hover:bg-white">
+                Send my estimate
+                <ArrowRight className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Testimonials({ theme }: { theme: "dark" | "light" }) {
+  return (
+    <section className="relative z-10 py-20 md:py-28">
+      <div className="section-shell grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+        <div>
+          <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">Client voice</span>
+          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Replace random reviews with sharper social proof.</h2>
+          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>Short, specific testimonials feel more credible than long generic paragraphs. Add names, roles, and project context wherever possible.</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {[
+            ["The team made our product feel simpler, faster, and easier to sell.", "SaaS founder"],
+            ["Weekly demos and clear estimates helped us trust the build from day one.", "Operations lead"],
+            ["The redesigned flow reduced confusion and gave our sales team better leads.", "Marketing director"],
+            ["They cared about launch quality, not just attractive screens.", "Product manager"]
+          ].map(([quote, role]) => (
+            <div key={quote} className={`rounded-3xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
+              <div className="mb-5 flex gap-1 text-gold">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Star key={index} className="h-4 w-4 fill-current" />
+                ))}
+              </div>
+              <p className={`text-lg leading-7 ${theme === "dark" ? "text-white/82" : "text-ink/82"}`}>{quote}</p>
+              <p className="mt-5 text-sm font-semibold text-teal">{role}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FinalCta({ theme }: { theme: "dark" | "light" }) {
+  return (
+    <section className="relative z-10 pb-10 md:pb-16">
+      <div className={`section-shell overflow-hidden rounded-[36px] border p-8 md:p-12 ${theme === "dark" ? "border-white/10 bg-white/[0.05]" : "border-ink/10 bg-white"}`}>
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
+          <div>
+            <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Ready to look like the team clients trust with serious builds?</h2>
+            <p className={`mt-5 max-w-2xl text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
+              This redesign makes Opus Geeks feel premium, useful, and conversion-focused from the first viewport to the final CTA.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+            <a href="#estimator" className="inline-flex items-center justify-center gap-2 rounded-full bg-teal px-6 py-4 font-semibold text-ink transition hover:bg-white">
+              Estimate a project
+              <ArrowRight className="h-5 w-5" />
+            </a>
+            <a href="mailto:contact@opusgeeks.com" className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-4 font-semibold transition ${theme === "dark" ? "border-white/15 text-white hover:border-white/40" : "border-ink/15 text-ink hover:border-ink/40"}`}>
+              Contact team
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
