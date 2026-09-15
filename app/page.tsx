@@ -5,10 +5,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
   CalendarCheck,
-  Check,
   ChevronRight,
   Circle,
-  Clock3,
   Mail,
   Menu,
   MessageCircle,
@@ -19,9 +17,11 @@ import {
   Sun,
   X
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Premium3DShowcase } from "@/components/Premium3DShowcase";
 import {
   caseStudies,
+  companyCopy,
   dashboardTasks,
   failurePrevention,
   faqs,
@@ -31,7 +31,8 @@ import {
   process,
   qualityChecks,
   services,
-  tech
+  tech,
+  testimonials as testimonialItems
 } from "@/lib/content";
 
 const fadeUp = {
@@ -55,8 +56,10 @@ export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [portfolioFilter, setPortfolioFilter] = useState("All");
   const [sliderValue, setSliderValue] = useState(54);
+  const [viewportMode, setViewportMode] = useState<"desktop" | "mobile" | null>(null);
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 90]);
+  const heroWords = companyCopy.heroTitle.split(" ");
   const filteredCaseStudies = useMemo(
     () => (portfolioFilter === "All" ? caseStudies : caseStudies.filter((study) => study.category === portfolioFilter)),
     [portfolioFilter]
@@ -65,6 +68,14 @@ export default function Home() {
     theme === "dark"
       ? "bg-ink text-cloud"
       : "bg-[#f6f8f9] text-[#071014] [color-scheme:light]";
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 1024px)");
+    const update = () => setViewportMode(media.matches ? "desktop" : "mobile");
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   const estimate = useMemo(() => {
     const base = budgets[budgetIndex].value;
@@ -85,11 +96,12 @@ export default function Home() {
   }
 
   return (
-    <main className={`min-h-screen overflow-hidden transition-colors duration-500 ${shellClass}`}>
-      <div className={`pointer-events-none fixed inset-0 z-0 noise ${theme === "dark" ? "opacity-25" : "opacity-10"}`} />
+    <main className={`relative min-h-screen overflow-hidden transition-colors duration-500 ${shellClass}`}>
+      <div className={`pointer-events-none absolute inset-0 z-0 noise ${theme === "dark" ? "opacity-12" : "opacity-5"}`} />
       <Header mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} theme={theme} setTheme={setTheme} />
 
-      <section className="relative z-10 min-h-screen overflow-hidden pt-28">
+      <section className="relative z-10 min-h-screen overflow-hidden pt-32">
+        <div className="animated-grid pointer-events-none absolute inset-0 opacity-20" />
         <motion.div style={{ y: heroY }} className="absolute inset-0">
           <Image
             src="/images/opus-hero-command-center.png"
@@ -111,16 +123,26 @@ export default function Home() {
           >
             <motion.div variants={fadeUp} className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur">
               <Sparkles className="h-4 w-4 text-teal" />
-              Sales, hiring, brand image, and international trust
+              {companyCopy.heroEyebrow}
             </motion.div>
             <motion.h1 variants={fadeUp} className={`text-balance text-5xl font-semibold tracking-normal md:text-7xl lg:text-8xl ${theme === "dark" ? "text-white" : "text-ink"}`}>
-              Build digital products that move businesses forward.
+              {heroWords.map((word, index) => (
+                <motion.span
+                  key={`${word}-${index}`}
+                  initial={{ opacity: 0, y: 34, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ delay: 0.18 + index * 0.045, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  className="mr-3 inline-block"
+                >
+                  {word}
+                </motion.span>
+              ))}
             </motion.h1>
             <motion.p variants={fadeUp} className={`mt-6 max-w-2xl text-lg leading-8 md:text-xl ${theme === "dark" ? "text-white/72" : "text-ink/70"}`}>
-              Opus Geeks becomes a digital product lab: app development, web development, and UI/UX design presented with proof, motion, and a sales-ready experience.
+              {companyCopy.heroIntro}
             </motion.p>
             <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href="#estimator" className="group inline-flex items-center justify-center gap-2 rounded-full bg-teal px-6 py-4 font-semibold text-ink transition hover:bg-white">
+              <a href="#estimator" className="shine group inline-flex items-center justify-center gap-2 rounded-full bg-teal px-6 py-4 font-semibold text-ink transition hover:bg-white">
                 Get free estimate
                 <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
               </a>
@@ -128,6 +150,19 @@ export default function Home() {
                 See case studies
               </a>
             </motion.div>
+            {viewportMode === "mobile" ? (
+              <motion.div
+                variants={fadeUp}
+                className="relative mt-10 overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.035]"
+              >
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(22,209,194,0.2),transparent_44%)]" />
+                <Premium3DShowcase compact />
+                <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-ink/70 px-4 py-3 backdrop-blur-xl">
+                  <div className="text-xs font-semibold uppercase tracking-[0.2em] text-teal">3D Product Lab</div>
+                  <div className="mt-1 text-sm font-semibold text-white/82">Apps • Websites • UI/UX</div>
+                </div>
+              </motion.div>
+            ) : null}
             <motion.div variants={fadeUp} className="mt-10 grid max-w-xl grid-cols-3 gap-3">
               {[
                 ["80+", "Projects"],
@@ -142,40 +177,23 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.35, duration: 0.7 }}
-            className="hidden justify-end lg:flex"
-          >
-            <div className="glass relative mt-24 w-[430px] rounded-[28px] p-5 shadow-glow">
-              <div className="mb-5 flex items-center justify-between">
-                <span className="text-sm text-white/60">Launch cockpit</span>
-                <span className="rounded-full bg-teal/15 px-3 py-1 text-xs font-semibold text-teal">Live sprint</span>
-              </div>
-              <div className="space-y-3">
-                {["Discovery complete", "Prototype approved", "API sprint active", "Launch checklist"].map((item, index) => (
-                  <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/[0.06] p-3">
-                    <span className={`flex h-9 w-9 items-center justify-center rounded-full ${index < 2 ? "bg-teal text-ink" : "bg-white/10 text-white"}`}>
-                      {index < 2 ? <Check className="h-4 w-4" /> : <Clock3 className="h-4 w-4" />}
-                    </span>
-                    <div className="flex-1">
-                      <div className="text-sm font-medium text-white">{item}</div>
-                      <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/10">
-                        <div className="h-full rounded-full bg-coral" style={{ width: `${index < 2 ? 100 : 42 + index * 12}%` }} />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+          {viewportMode === "desktop" ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, x: 40 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ delay: 0.35, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              className="relative hidden min-h-[620px] items-center justify-center lg:flex"
+            >
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_54%_48%,rgba(22,209,194,0.22),transparent_34%),radial-gradient(circle_at_75%_64%,rgba(255,122,89,0.18),transparent_30%)]" />
+              <Premium3DShowcase />
+            </motion.div>
+          ) : null}
         </div>
       </section>
 
       <LogoTicker />
 
-      <Section id="services" eyebrow="Services" title="Three core services, presented like a premium product studio." intro="The current services are App Development, Web Development, and UX/UI Design. This direction makes each one feel business-critical instead of generic." theme={theme}>
+      <Section id="services" eyebrow="Services" title="Services built for modern businesses." intro="Opus Geeks focuses on mobile app development, website development, UI/UX design, game development, and custom digital solutions for growing brands." theme={theme}>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => {
             const Icon = service.icon;
@@ -184,14 +202,18 @@ export default function Home() {
                 key={service.title}
                 initial="hidden"
                 whileInView="show"
+                whileHover={{ y: -10, scale: 1.015 }}
+                whileTap={{ scale: 0.985 }}
                 viewport={{ once: true, margin: "-80px" }}
                 variants={fadeUp}
                 transition={{ delay: index * 0.05 }}
                 onClick={() => setServiceIndex(index)}
-                className={`group rounded-3xl border p-6 text-left transition ${serviceIndex === index ? "border-teal bg-teal/10 shadow-glow" : theme === "dark" ? "border-white/10 bg-white/[0.04] hover:border-white/25" : "border-ink/10 bg-white hover:border-ink/25"}`}
+                className={`premium-border group relative overflow-hidden rounded-3xl border p-6 text-left transition ${serviceIndex === index ? "border-teal bg-teal/10 shadow-glow" : theme === "dark" ? "border-white/10 bg-white/[0.04] hover:border-white/25" : "border-ink/10 bg-white hover:border-ink/25"}`}
               >
                 <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl text-teal ${theme === "dark" ? "bg-white/10" : "bg-ink/[0.04]"}`}>
-                  <Icon className="h-6 w-6" />
+                  <motion.span whileHover={{ rotate: -8, scale: 1.08 }}>
+                    <Icon className="h-6 w-6" />
+                  </motion.span>
                 </div>
                 <h3 className={`text-xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{service.title}</h3>
                 <p className={`mt-3 min-h-24 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{service.description}</p>
@@ -208,9 +230,9 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="work" eyebrow="Portfolio" title="Filterable portfolio with animated previews and measurable outcomes." intro="The original portfolio has placeholder cards. This version makes every card feel like a real case study with category, result, preview, and stack." theme={theme}>
+      <Section id="work" eyebrow="Portfolio" title="Digital work across apps, websites, design, and interactive experiences." intro="The existing Opus Geeks portfolio groups work by service category. This version turns those categories into clearer case-study style cards until real project screenshots and results are available." theme={theme}>
         <div className="mb-6 flex flex-wrap gap-2">
-          {["All", "App Development", "Web Development", "UI/UX Design", "AI Automation"].map((filter) => (
+          {["All", "App Development", "Web Development", "UI/UX Design", "Game Development"].map((filter) => (
             <button
               key={filter}
               onClick={() => setPortfolioFilter(filter)}
@@ -232,25 +254,36 @@ export default function Home() {
               key={study.title}
               initial="hidden"
               whileInView="show"
+              whileHover={{ y: -8 }}
               viewport={{ once: true, margin: "-80px" }}
               variants={fadeUp}
               transition={{ delay: index * 0.08 }}
-              className={`group overflow-hidden rounded-3xl border transition hover:-translate-y-1 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
+              className={`premium-border group relative overflow-hidden rounded-3xl border transition hover:-translate-y-1 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
             >
               <div className="relative h-56 overflow-hidden" style={{ background: study.image }}>
-                <div className="absolute inset-5 rounded-3xl border border-white/20 bg-black/20 p-5 backdrop-blur-sm transition duration-500 group-hover:scale-[1.03]">
-                  <div className="mb-8 flex justify-between">
-                    <span className="rounded-full bg-white/15 px-3 py-1 text-xs">{study.sector}</span>
-                    <MousePointer2 className="h-5 w-5 text-white/75" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.26),transparent_28%),linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.24))]" />
+                <div className="absolute inset-5 rounded-3xl border border-white/24 bg-black/24 p-5 backdrop-blur-md transition duration-500 group-hover:scale-[1.03]">
+                  <div className="mb-5 flex items-center justify-between">
+                    <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white">{study.sector}</span>
+                    <motion.span whileHover={{ rotate: 8, scale: 1.08 }} className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-ink shadow-lg">
+                      <MousePointer2 className="h-4 w-4" />
+                    </motion.span>
                   </div>
-                  <div className="space-y-3">
-                    <div className="h-3 w-2/3 rounded-full bg-white/70" />
-                    <div className="h-3 w-1/2 rounded-full bg-white/35" />
-                    <div className="grid grid-cols-3 gap-3 pt-4">
-                      <div className="h-16 rounded-2xl bg-white/15" />
-                      <div className="h-16 rounded-2xl bg-white/25" />
-                      <div className="h-16 rounded-2xl bg-white/15" />
-                    </div>
+                  <div className="min-h-24">
+                    <div className="text-xs font-bold uppercase tracking-[0.18em] text-white/65">Opus Geeks Case Study</div>
+                    <h3 className="mt-2 max-w-xs text-2xl font-semibold leading-tight text-white">{study.title}</h3>
+                    <p className="mt-2 line-clamp-2 text-sm leading-5 text-white/72">{study.result}</p>
+                  </div>
+                  <div className="mt-5 grid grid-cols-3 gap-2">
+                    {study.stack.slice(0, 3).map((item) => (
+                      <motion.div
+                        key={item}
+                        whileHover={{ y: -4 }}
+                        className="rounded-2xl bg-white/18 p-3 text-xs font-semibold text-white shadow-sm"
+                      >
+                        {item}
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -281,7 +314,7 @@ export default function Home() {
 
       <CeoMessage theme={theme} />
 
-      <Section id="process" eyebrow="Process" title="A launch journey visitors can understand in 10 seconds." intro="The current site has a process section, but this version turns it into a clear product pathway with trust-building checkpoints." theme={theme}>
+      <Section id="process" eyebrow="Process" title="From branding to prototype, development, and launch." intro="The Opus Geeks process is presented as a clear path that helps clients understand how an idea becomes a polished digital product." theme={theme}>
         <div className="relative grid gap-4 lg:grid-cols-4">
           {process.map((step, index) => {
             const Icon = step.icon;
@@ -320,7 +353,7 @@ export default function Home() {
         toggleFeature={toggleFeature}
       />
 
-      <Section id="industries" eyebrow="Industries" title="Industry depth without boring walls of text." intro="A compact industry grid shows range while keeping the page scan-friendly." theme={theme}>
+      <Section id="industries" eyebrow="Industries" title="Experience across business-critical industries." intro="Opus Geeks highlights fintech, healthcare, retail, real estate, and other sectors where clean digital experiences can create measurable value." theme={theme}>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {industries.map((industry) => {
             const Icon = industry.icon;
@@ -336,7 +369,7 @@ export default function Home() {
 
       <Testimonials theme={theme} />
 
-      <Section id="faqs" eyebrow="FAQs" title="Questions answered before the contact form." intro="This reduces friction and makes the company look transparent, prepared, and senior." theme={theme}>
+      <Section id="faqs" eyebrow="FAQs" title="Questions answered before the contact form." intro="Useful answers help visitors understand what Opus Geeks offers and how to start a project conversation." theme={theme}>
         <div className="grid gap-4 lg:grid-cols-2">
           {faqs.map((item) => (
             <div key={item.q} className={`rounded-3xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
@@ -364,10 +397,16 @@ function Header({
   setTheme: (value: "dark" | "light") => void;
 }) {
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl ${theme === "dark" ? "border-white/10 bg-ink/75" : "border-ink/10 bg-white/85"}`}>
-      <div className="section-shell flex h-20 items-center justify-between">
-        <a href="#" className="relative flex h-12 w-32 items-center">
-          <Image src="/images/opus-logo.png" alt="Opus Geeks logo" fill className="object-contain object-left" />
+    <header className={`fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl ${theme === "dark" ? "border-white/10 bg-ink/88" : "border-ink/10 bg-white/90"}`}>
+      <div className="section-shell flex h-24 items-center justify-between gap-5">
+        <a href="#" className="group flex min-w-[260px] items-center gap-4">
+          <span className="relative flex h-16 w-32 items-center transition group-hover:scale-105">
+            <Image src="/images/opus-logo.png" alt="Opus Geeks logo" fill className="object-contain object-left" />
+          </span>
+          <span className="hidden sm:block">
+            <span className={`block text-lg font-bold leading-none tracking-normal ${theme === "dark" ? "text-white" : "text-ink"}`}>Software House</span>
+            <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.22em] text-teal">Digital Product Studio</span>
+          </span>
         </a>
         <nav className="hidden items-center gap-7 lg:flex">
           {navItems.map((item) => (
@@ -384,7 +423,7 @@ function Header({
           >
             {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </button>
-          <a href="mailto:contact@opusgeeks.com" className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition ${theme === "dark" ? "border-white/10 text-white/70 hover:border-white/30 hover:text-white" : "border-ink/10 text-ink/70 hover:border-ink/30 hover:text-ink"}`} aria-label="Email Opus Geeks">
+          <a href={`mailto:${companyCopy.contactEmail}`} className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition ${theme === "dark" ? "border-white/10 text-white/70 hover:border-white/30 hover:text-white" : "border-ink/10 text-ink/70 hover:border-ink/30 hover:text-ink"}`} aria-label="Email Opus Geeks">
             <Mail className="h-5 w-5" />
           </a>
           <a href="#estimator" className="inline-flex items-center gap-2 rounded-full bg-teal px-5 py-3 text-sm font-semibold text-ink transition hover:bg-white">
@@ -431,7 +470,7 @@ function Section({
   theme: "dark" | "light";
 }) {
   return (
-    <section id={id} className="relative z-10 py-20 md:py-28">
+    <section id={id} className="relative z-10 scroll-mt-32 py-20 md:py-28">
       <div className="section-shell">
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mb-10 max-w-3xl">
           <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">{eyebrow}</span>
@@ -554,6 +593,13 @@ function Journey({ theme }: { theme: "dark" | "light" }) {
           <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>This scroll story helps visitors understand how Opus Geeks turns raw ideas into shipped products.</p>
         </div>
         <div className="relative grid gap-4 lg:grid-cols-5">
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: "-120px" }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-0 top-6 hidden h-px w-full origin-left bg-gradient-to-r from-teal via-coral to-teal lg:block"
+          />
           {journey.map((step, index) => {
             const Icon = step.icon;
             return (
@@ -561,14 +607,15 @@ function Journey({ theme }: { theme: "dark" | "light" }) {
                 key={step.title}
                 initial={{ opacity: 0, y: 34 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -8 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ delay: index * 0.12 }}
-                className={`rounded-3xl border p-5 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
+                className={`premium-border relative rounded-3xl border p-5 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
               >
                 <div className="mb-5 flex items-center justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal text-ink">
+                  <motion.div whileHover={{ scale: 1.08 }} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal text-ink shadow-[0_0_28px_rgba(22,209,194,0.22)]">
                     <Icon className="h-6 w-6" />
-                  </div>
+                  </motion.div>
                   <span className={`text-sm font-semibold ${theme === "dark" ? "text-white/35" : "text-ink/35"}`}>0{index + 1}</span>
                 </div>
                 <h3 className={`text-xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{step.title}</h3>
@@ -661,20 +708,26 @@ function CeoMessage({ theme }: { theme: "dark" | "light" }) {
                 <ArrowRight className="h-7 w-7" />
               </button>
               <div>
-                <div className="text-sm font-semibold text-teal">CEO message / video area</div>
-                <div className="mt-2 text-2xl font-semibold text-white">A personal note builds trust faster than stock sections.</div>
+                <div className="text-sm font-semibold text-teal">About Opus Geeks</div>
+                <div className="mt-2 text-2xl font-semibold text-white">{companyCopy.aboutTitle}</div>
               </div>
             </div>
           </div>
           <div className="p-8 md:p-10">
-            <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">Leadership</span>
-            <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>“We do not just ship screens. We build digital systems that help businesses grow.”</h2>
+            <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">About</span>
+            <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>{companyCopy.aboutTitle}</h2>
             <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
-              Add the CEO’s real photo or 30-second video here. The message should speak to four goals: more sales, stronger hiring, premium brand perception, and international client confidence.
+              {companyCopy.aboutText}
             </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {["Sales", "Hiring", "Brand image", "International clients"].map((item) => (
-                <span key={item} className="rounded-full bg-teal/15 px-4 py-2 text-sm font-semibold text-teal">{item}</span>
+            <div className="mt-6 grid gap-3 md:grid-cols-2">
+              {[
+                ["Vision", companyCopy.vision],
+                ["Mission", companyCopy.mission]
+              ].map(([label, value]) => (
+                <div key={label} className={`rounded-2xl border p-4 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-ink/[0.03]"}`}>
+                  <div className="text-sm font-semibold text-teal">{label}</div>
+                  <p className={`mt-2 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{value}</p>
+                </div>
               ))}
             </div>
           </div>
@@ -763,7 +816,7 @@ function Estimator({
                 </div>
                 <CalendarCheck className="hidden h-12 w-12 text-teal sm:block" />
               </div>
-              <a href="mailto:contact@opusgeeks.com?subject=Project estimate request" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal px-5 py-4 font-semibold text-ink transition hover:bg-white">
+              <a href={`mailto:${companyCopy.contactEmail}?subject=Project estimate request`} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal px-5 py-4 font-semibold text-ink transition hover:bg-white">
                 Send my estimate
                 <ArrowRight className="h-5 w-5" />
               </a>
@@ -781,24 +834,19 @@ function Testimonials({ theme }: { theme: "dark" | "light" }) {
       <div className="section-shell grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
           <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">Client voice</span>
-          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Replace random reviews with sharper social proof.</h2>
-          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>Short, specific testimonials feel more credible than long generic paragraphs. Add names, roles, and project context wherever possible.</p>
+          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>What clients expect from Opus Geeks.</h2>
+          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>The original site includes client-review sections. This version keeps the proof section focused on trust, communication, design quality, and reliable delivery.</p>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
-          {[
-            ["The team made our product feel simpler, faster, and easier to sell.", "SaaS founder"],
-            ["Weekly demos and clear estimates helped us trust the build from day one.", "Operations lead"],
-            ["The redesigned flow reduced confusion and gave our sales team better leads.", "Marketing director"],
-            ["They cared about launch quality, not just attractive screens.", "Product manager"]
-          ].map(([quote, role]) => (
-            <div key={quote} className={`rounded-3xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
+          {testimonialItems.map((item) => (
+            <div key={item.quote} className={`rounded-3xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
               <div className="mb-5 flex gap-1 text-gold">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <Star key={index} className="h-4 w-4 fill-current" />
                 ))}
               </div>
-              <p className={`text-lg leading-7 ${theme === "dark" ? "text-white/82" : "text-ink/82"}`}>{quote}</p>
-              <p className="mt-5 text-sm font-semibold text-teal">{role}</p>
+              <p className={`text-lg leading-7 ${theme === "dark" ? "text-white/82" : "text-ink/82"}`}>{item.quote}</p>
+              <p className="mt-5 text-sm font-semibold text-teal">{item.name} - {item.role}</p>
             </div>
           ))}
         </div>
@@ -813,9 +861,9 @@ function FinalCta({ theme }: { theme: "dark" | "light" }) {
       <div className={`section-shell overflow-hidden rounded-[36px] border p-8 md:p-12 ${theme === "dark" ? "border-white/10 bg-white/[0.05]" : "border-ink/10 bg-white"}`}>
         <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
           <div>
-            <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Ready to look like the team clients trust with serious builds?</h2>
+            <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Ready to build your next digital product?</h2>
             <p className={`mt-5 max-w-2xl text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
-              This redesign makes Opus Geeks feel premium, useful, and conversion-focused from the first viewport to the final CTA.
+              {companyCopy.aboutText}
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
@@ -823,7 +871,7 @@ function FinalCta({ theme }: { theme: "dark" | "light" }) {
               Estimate a project
               <ArrowRight className="h-5 w-5" />
             </a>
-            <a href="mailto:contact@opusgeeks.com" className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-4 font-semibold transition ${theme === "dark" ? "border-white/15 text-white hover:border-white/40" : "border-ink/15 text-ink hover:border-ink/40"}`}>
+            <a href={`mailto:${companyCopy.contactEmail}`} className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-4 font-semibold transition ${theme === "dark" ? "border-white/15 text-white hover:border-white/40" : "border-ink/15 text-ink hover:border-ink/40"}`}>
               Contact team
             </a>
           </div>

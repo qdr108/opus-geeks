@@ -38,129 +38,129 @@ export const services = [
     title: "App Development",
     icon: Smartphone,
     description:
-      "Native-feeling iOS and Android products designed around user flows, secure APIs, fast performance, and store-ready launch support.",
-    deliverables: ["React Native", "User journeys", "API integration", "Store release"]
+      "Mobile app development for businesses that need polished, scalable, and user-friendly iOS and Android experiences from idea to launch.",
+    deliverables: ["iOS apps", "Android apps", "Hybrid apps", "API integration", "Store launch", "App support"]
   },
   {
     title: "Web Development",
     icon: Globe2,
     description:
-      "High-converting websites, business portals, ecommerce systems, dashboards, and CMS-powered pages built to win trust.",
-    deliverables: ["Next.js builds", "CMS-ready pages", "SEO + analytics", "Performance audits"]
+      "Custom website development for brands that need fast, secure, responsive, and conversion-focused digital experiences.",
+    deliverables: ["Business websites", "Web apps", "Ecommerce", "Landing pages", "CMS setup", "SEO-ready structure"]
   },
   {
     title: "UI/UX Design",
     icon: Brush,
     description:
-      "Research-led interfaces, design systems, prototypes, and conversion-focused product experiences.",
-    deliverables: ["Wireframes", "Design systems", "Clickable prototypes", "Usability polish"]
+      "User interface and user experience design focused on clean journeys, attractive screens, and easy-to-use product flows.",
+    deliverables: ["User research", "Wireframes", "Prototypes", "Visual design", "Design systems", "Usability polish"]
   },
   {
-    title: "AI Automation",
-    icon: Bot,
+    title: "Game Development",
+    icon: Gamepad2,
     description:
-      "Smart workflows, internal copilots, lead qualification, reporting, and operations automation.",
-    deliverables: ["AI agents", "CRM workflows", "Support bots", "Ops dashboards"]
+      "Interactive game and gamified web experiences for brands that want stronger engagement and memorable digital campaigns.",
+    deliverables: ["2D games", "Web games", "Gamified flows", "Interactive concepts", "Game UI", "Launch support"]
   },
   {
     title: "Custom Software",
     icon: Code2,
     description:
-      "Business tools, APIs, integrations, cloud deployments, and secure data-driven products.",
-    deliverables: ["APIs", "Cloud setup", "Role access", "Data models"]
+      "Tailored software systems, dashboards, integrations, and internal tools built around business operations and growth.",
+    deliverables: ["Dashboards", "Admin panels", "APIs", "Automation", "Role access", "Cloud setup"]
   },
   {
-    title: "Game Experiences",
-    icon: Gamepad2,
+    title: "Digital Strategy",
+    icon: Bot,
     description:
-      "Interactive campaign games, product explainers, and lightweight 2D/3D branded experiences.",
-    deliverables: ["Web games", "Gamified flows", "3D scenes", "Engagement loops"]
+      "Product planning, branding direction, and technical guidance that help companies choose the right path before development starts.",
+    deliverables: ["Product planning", "Feature scope", "Brand direction", "Tech consulting", "Roadmaps", "Launch planning"]
   }
 ];
 
 export const caseStudies = [
   {
-    title: "FinPay Command",
+    title: "Fintech Product Platform",
     sector: "Fintech",
     category: "Web Development",
-    result: "42% faster onboarding",
+    result: "Built for secure digital finance workflows",
     image: "linear-gradient(135deg, #16262d 0%, #0e7c78 52%, #ff7a59 100%)",
     summary:
-      "A secure fintech dashboard with guided KYC, transaction insights, and compliance-ready reporting.",
-    stack: ["Next.js", "Node", "PostgreSQL", "Stripe"]
+      "A web platform concept aligned with Opus Geeks' fintech industry focus, covering onboarding, dashboards, payment flows, and reporting.",
+    stack: ["Web app", "Dashboard", "Payments", "Security"]
   },
   {
-    title: "CareLoop Mobile",
+    title: "Healthcare Mobile Experience",
     sector: "Healthcare",
     category: "App Development",
-    result: "31% fewer missed appointments",
+    result: "Designed for patient-friendly access",
     image: "linear-gradient(135deg, #102027 0%, #16d1c2 48%, #f7c948 100%)",
     summary:
-      "Patient scheduling, reminders, care notes, and staff workflows wrapped into a friendly mobile app.",
-    stack: ["React Native", "Firebase", "FHIR", "Twilio"]
+      "A healthcare app direction focused on appointment flows, patient communication, reminders, and simple mobile usability.",
+    stack: ["Mobile app", "UX flows", "Notifications", "Secure data"]
   },
   {
-    title: "RetailFlow AI",
+    title: "Retail Ecommerce System",
     sector: "Retail",
-    category: "AI Automation",
-    result: "18 hours saved weekly",
+    category: "Web Development",
+    result: "Structured for online sales growth",
     image: "linear-gradient(135deg, #111827 0%, #ff7a59 45%, #16d1c2 100%)",
     summary:
-      "Inventory alerts, sales forecasting, and automated supplier tasks for a multi-branch retail team.",
-    stack: ["AI Agents", "Shopify", "Python", "AWS"]
+      "A retail website and ecommerce direction based on product discovery, checkout clarity, customer trust, and conversion-focused design.",
+    stack: ["Ecommerce", "CMS", "Analytics", "Responsive web"]
   },
   {
-    title: "EstateVista UX",
+    title: "Real Estate Listing UX",
     sector: "Real Estate",
     category: "UI/UX Design",
-    result: "2.4x more inquiries",
+    result: "Built around property discovery",
     image: "linear-gradient(135deg, #101418 0%, #f7c948 42%, #16d1c2 100%)",
     summary:
-      "A buyer-first property discovery experience with cleaner search, better listing cards, and conversion-focused detail pages.",
+      "A real estate interface direction with better listing cards, search experience, property detail pages, and inquiry-focused CTAs.",
     stack: ["Figma", "Design System", "Next.js", "Analytics"]
   },
   {
-    title: "EduBridge App",
-    sector: "Education",
-    category: "App Development",
-    result: "58% better lesson completion",
+    title: "Brand Website Redesign",
+    sector: "Business",
+    category: "UI/UX Design",
+    result: "Focused on brand image and trust",
     image: "linear-gradient(135deg, #151a22 0%, #16d1c2 36%, #ffffff 100%)",
     summary:
-      "A mobile learning platform with offline lessons, progress tracking, quizzes, and parent-friendly reporting.",
-    stack: ["React Native", "Firebase", "Node", "Push"]
+      "A premium website design direction for companies that want stronger credibility, better storytelling, and clearer lead generation.",
+    stack: ["UI/UX", "Branding", "Web design", "Lead capture"]
   },
   {
-    title: "LogiCore Portal",
-    sector: "Logistics",
-    category: "Web Development",
-    result: "27% faster dispatch flow",
+    title: "Interactive Game Experience",
+    sector: "Engagement",
+    category: "Game Development",
+    result: "Made for stronger user engagement",
     image: "linear-gradient(135deg, #071014 0%, #ff7a59 44%, #f5f7fa 100%)",
     summary:
-      "A role-based operations portal for fleet visibility, route updates, document workflows, and customer tracking.",
-    stack: ["Next.js", "Maps", "PostgreSQL", "AWS"]
+      "A lightweight game or interactive web experience concept for campaigns, product education, and memorable brand interaction.",
+    stack: ["Game UI", "Web game", "Animation", "Engagement"]
   }
 ];
 
 export const process = [
   {
-    title: "Discover",
+    title: "Branding",
     icon: BrainCircuit,
-    text: "We map business goals, users, competitors, and the shortest route to visible value."
+    text: "We define the digital direction, brand personality, user goals, and the experience your audience should remember."
   },
   {
     title: "Prototype",
     icon: AppWindow,
-    text: "Clickable flows, interface direction, feature priority, and estimate clarity before build."
+    text: "We turn ideas into wireframes and clickable flows so the structure is clear before development begins."
   },
   {
-    title: "Build",
+    title: "Development",
     icon: Cpu,
-    text: "Fast sprints, clean code, integrations, QA, analytics, and transparent weekly demos."
+    text: "We build responsive websites, apps, and software experiences with clean code, integrations, testing, and launch readiness."
   },
   {
     title: "Launch",
     icon: Rocket,
-    text: "Deployment, app-store readiness, training, conversion checks, and post-launch support."
+    text: "We prepare the product for release, review performance, support deployment, and help the brand move forward after launch."
   }
 ];
 
@@ -269,19 +269,63 @@ export const tech = [
 
 export const faqs = [
   {
-    q: "How is this redesign different from the current website?",
-    a: "It replaces generic copy, dummy team cards, zero metrics, and repeated hero slides with proof-led case studies, interactive tools, sharper positioning, and a premium product-studio visual direction."
+    q: "What services does Opus Geeks provide?",
+    a: "Opus Geeks provides app development, web development, UI/UX design, game development, custom software, and digital strategy for businesses that need strong digital products."
   },
   {
-    q: "Can the content be managed from Sanity CMS?",
-    a: "Yes. The code includes a Sanity client pattern and fallback content. Once Sanity project credentials are added, services, blogs, FAQs, and case studies can be moved into CMS collections."
+    q: "Does Opus Geeks work on mobile apps?",
+    a: "Yes. The company builds mobile app experiences for iOS and Android, including user flows, interface design, API integration, testing, launch support, and ongoing improvement."
   },
   {
-    q: "What should be the main conversion action?",
-    a: "The strongest action is a free project estimate. It feels more valuable than a plain contact form and gives visitors a reason to share their requirements."
+    q: "Can Opus Geeks redesign an existing website?",
+    a: "Yes. The team can improve structure, visuals, responsiveness, performance, and conversion flow so an old website feels more modern and business-ready."
   },
   {
-    q: "Which sections matter most for judges?",
-    a: "Hero clarity, real-looking portfolio, AI estimator, smooth motion, mobile responsiveness, fast performance, and typo-free content will make the design feel complete."
+    q: "How can clients start a project?",
+    a: "Clients can share their project type, goals, features, timeline, and contact details. The website estimator helps turn a vague idea into a clearer project conversation."
+  }
+];
+
+export const companyCopy = {
+  heroEyebrow: "Mobile app, web development, and UI/UX design company",
+  heroTitle: "Build digital products that move businesses forward.",
+  heroIntro:
+    "Opus Geeks helps businesses create high-quality mobile apps, websites, user interfaces, and digital experiences that are designed to look professional, work smoothly, and support growth.",
+  aboutTitle: "Where creativity meets technology",
+  aboutText:
+    "Opus Geeks blends design, development, and digital strategy to help businesses create products that feel modern, useful, and ready for real users. The company focuses on websites, mobile apps, UI/UX design, and engaging digital experiences.",
+  vision:
+    "To become a trusted digital partner for companies that want beautiful, functional, and scalable technology solutions.",
+  mission:
+    "To transform ideas into polished digital products through thoughtful design, reliable development, and a process that keeps clients clear and confident.",
+  contactEmail: "info@opusgeeks.com",
+  contactPhone: "+92 300 0000000",
+  location: "Pakistan"
+};
+
+export const testimonials = [
+  {
+    quote:
+      "Opus Geeks understood the idea quickly and turned it into a smooth digital experience with a clean design direction.",
+    name: "Client Review",
+    role: "Mobile app project"
+  },
+  {
+    quote:
+      "The team was responsive, professional, and focused on making the website look modern while keeping it easy to use.",
+    name: "Client Review",
+    role: "Website development"
+  },
+  {
+    quote:
+      "Their UI/UX approach helped simplify the product flow and made the interface feel more professional.",
+    name: "Client Review",
+    role: "UI/UX design"
+  },
+  {
+    quote:
+      "A reliable team for digital product work, from planning and design to development and launch support.",
+    name: "Client Review",
+    role: "Digital product"
   }
 ];
