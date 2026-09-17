@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
   CalendarCheck,
+  ChevronDown,
   ChevronRight,
   Circle,
   Mail,
@@ -100,7 +101,7 @@ export default function Home() {
       <div className={`pointer-events-none absolute inset-0 z-0 noise ${theme === "dark" ? "opacity-12" : "opacity-5"}`} />
       <Header mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} theme={theme} setTheme={setTheme} />
 
-      <section className="relative z-10 min-h-screen overflow-hidden pt-32">
+      <section id="home" className="relative z-10 min-h-screen scroll-mt-28 overflow-hidden pt-32">
         <div className="animated-grid pointer-events-none absolute inset-0 opacity-20" />
         <motion.div style={{ y: heroY }} className="absolute inset-0">
           <Image
@@ -385,6 +386,12 @@ export default function Home() {
   );
 }
 
+const serviceNavItems = [
+  { label: "App Development", href: "#services" },
+  { label: "Web Development", href: "#services" },
+  { label: "UX/UI Design", href: "#services" }
+];
+
 function Header({
   mobileOpen,
   setMobileOpen,
@@ -398,37 +405,38 @@ function Header({
 }) {
   return (
     <header className={`fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl ${theme === "dark" ? "border-white/10 bg-ink/88" : "border-ink/10 bg-white/90"}`}>
-      <div className="section-shell flex h-24 items-center justify-between gap-5">
-        <a href="#" className="group flex min-w-[260px] items-center gap-4">
-          <span className="relative flex h-16 w-32 items-center transition group-hover:scale-105">
+      <div className="section-shell flex h-24 items-center justify-between gap-4 xl:h-28">
+        <a href="#home" className="group flex shrink-0 items-center" aria-label="Opus Geeks home">
+          <span className="relative flex h-16 w-40 items-center transition duration-300 group-hover:scale-[1.03] xl:w-44">
             <Image src="/images/opus-logo.png" alt="Opus Geeks logo" fill className="object-contain object-left" />
           </span>
-          <span className="hidden sm:block">
-            <span className={`block text-lg font-bold leading-none tracking-normal ${theme === "dark" ? "text-white" : "text-ink"}`}>Software House</span>
-            <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.22em] text-teal">Digital Product Studio</span>
-          </span>
         </a>
-        <nav className="hidden items-center gap-7 lg:flex">
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href} className={`text-sm font-medium transition ${theme === "dark" ? "text-white/65 hover:text-white" : "text-ink/65 hover:text-ink"}`}>
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-8" aria-label="Main navigation">
+          <a href="#home" className="text-sm font-semibold text-teal transition hover:text-white">Home</a>
+          <div className="group relative">
+            <a href="#services" className={`flex items-center gap-1.5 py-9 text-sm font-medium transition xl:py-10 ${theme === "dark" ? "text-white/72 hover:text-white" : "text-ink/72 hover:text-ink"}`}>
+              Services
+              <ChevronDown className="h-4 w-4 transition duration-200 group-hover:rotate-180" />
+            </a>
+            <div className={`invisible absolute left-1/2 top-[calc(100%-8px)] w-64 -translate-x-1/2 translate-y-2 rounded-2xl border p-2 opacity-0 shadow-2xl transition duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 ${theme === "dark" ? "border-white/10 bg-[#0b171b]" : "border-ink/10 bg-white"}`}>
+              {serviceNavItems.map((item) => (
+                <a key={item.label} href={item.href} className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm transition ${theme === "dark" ? "text-white/72 hover:bg-white/10 hover:text-white" : "text-ink/72 hover:bg-ink/5 hover:text-ink"}`}>
+                  {item.label}
+                  <ChevronRight className="h-4 w-4 text-teal" />
+                </a>
+              ))}
+            </div>
+          </div>
+          {navItems.slice(1).map((item) => (
+            <a key={item.label} href={item.href} className={`whitespace-nowrap text-sm font-medium transition ${theme === "dark" ? "text-white/72 hover:text-white" : "text-ink/72 hover:text-ink"}`}>
               {item.label}
             </a>
           ))}
         </nav>
-        <div className="hidden items-center gap-3 lg:flex">
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition ${theme === "dark" ? "border-white/10 text-white/70 hover:border-white/30" : "border-ink/10 text-ink/70 hover:border-ink/30"}`}
-            aria-label="Toggle theme"
-          >
-            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-          </button>
-          <a href={`mailto:${companyCopy.contactEmail}`} className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition ${theme === "dark" ? "border-white/10 text-white/70 hover:border-white/30 hover:text-white" : "border-ink/10 text-ink/70 hover:border-ink/30 hover:text-ink"}`} aria-label="Email Opus Geeks">
-            <Mail className="h-5 w-5" />
-          </a>
-          <a href="#estimator" className="inline-flex items-center gap-2 rounded-full bg-teal px-5 py-3 text-sm font-semibold text-ink transition hover:bg-white">
-            Start project
-            <ChevronRight className="h-4 w-4" />
+        <div className="hidden shrink-0 lg:flex">
+          <a href="#contact" className={`group inline-flex items-center gap-4 rounded-full border-8 px-7 py-3 text-base font-semibold transition ${theme === "dark" ? "border-white/10 bg-white text-ink hover:border-teal/25" : "border-ink/10 bg-ink text-white hover:border-teal/30"}`}>
+            Get Started
+            <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
           </a>
         </div>
         <button onClick={() => setMobileOpen(!mobileOpen)} className={`inline-flex h-11 w-11 items-center justify-center rounded-full border lg:hidden ${theme === "dark" ? "border-white/10" : "border-ink/10"}`} aria-label="Toggle menu">
@@ -438,11 +446,24 @@ function Header({
       {mobileOpen ? (
         <div className="section-shell pb-5 lg:hidden">
           <div className={`rounded-3xl border p-4 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
-            {navItems.map((item) => (
+            <a onClick={() => setMobileOpen(false)} href="#home" className="block rounded-2xl bg-teal/10 px-4 py-3 font-semibold text-teal">Home</a>
+            <div className={`my-2 rounded-2xl px-2 py-2 ${theme === "dark" ? "bg-white/[0.04]" : "bg-ink/[0.03]"}`}>
+              <a onClick={() => setMobileOpen(false)} href="#services" className={`block px-2 py-2 font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>Services</a>
+              {serviceNavItems.map((item) => (
+                <a key={item.label} onClick={() => setMobileOpen(false)} href={item.href} className={`block rounded-xl px-3 py-2 text-sm ${theme === "dark" ? "text-white/62 hover:bg-white/5" : "text-ink/62 hover:bg-ink/5"}`}>
+                  {item.label}
+                </a>
+              ))}
+            </div>
+            {navItems.slice(1).map((item) => (
               <a key={item.href} onClick={() => setMobileOpen(false)} href={item.href} className={`block rounded-2xl px-4 py-3 ${theme === "dark" ? "text-white/75" : "text-ink/75"}`}>
                 {item.label}
               </a>
             ))}
+            <a onClick={() => setMobileOpen(false)} href="#contact" className="mt-2 flex w-full items-center justify-between rounded-2xl bg-white px-4 py-3 font-semibold text-ink">
+              Get Started
+              <ArrowRight className="h-4 w-4" />
+            </a>
             <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="mt-2 flex w-full items-center gap-2 rounded-2xl bg-teal px-4 py-3 font-semibold text-ink">
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               Toggle theme
@@ -699,7 +720,7 @@ function ProjectDashboard({ theme }: { theme: "dark" | "light" }) {
 
 function CeoMessage({ theme }: { theme: "dark" | "light" }) {
   return (
-    <section className="relative z-10 py-20 md:py-28">
+    <section id="about" className="relative z-10 scroll-mt-32 py-20 md:py-28">
       <div className={`section-shell overflow-hidden rounded-[36px] border ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
         <div className="grid lg:grid-cols-[0.85fr_1.15fr]">
           <div className="min-h-80 bg-[linear-gradient(135deg,#16d1c2_0%,#071014_55%,#ff7a59_100%)] p-8">
@@ -857,7 +878,7 @@ function Testimonials({ theme }: { theme: "dark" | "light" }) {
 
 function FinalCta({ theme }: { theme: "dark" | "light" }) {
   return (
-    <section className="relative z-10 pb-10 md:pb-16">
+    <section id="contact" className="relative z-10 scroll-mt-32 pb-10 md:pb-16">
       <div className={`section-shell overflow-hidden rounded-[36px] border p-8 md:p-12 ${theme === "dark" ? "border-white/10 bg-white/[0.05]" : "border-ink/10 bg-white"}`}>
         <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
           <div>
