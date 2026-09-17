@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   ArrowRight,
   CalendarCheck,
@@ -59,11 +59,12 @@ export default function Home() {
   const [serviceIndex, setServiceIndex] = useState(0);
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>(["CMS", "Dashboard", "Analytics"]);
   const [budgetIndex, setBudgetIndex] = useState(1);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const [portfolioFilter, setPortfolioFilter] = useState("All");
   const [sliderValue, setSliderValue] = useState(54);
   const [viewportMode, setViewportMode] = useState<"desktop" | "mobile" | null>(null);
   const { scrollYProgress } = useScroll();
+  const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.2 });
   const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 90]);
   const heroWords = companyCopy.heroTitle.split(" ");
   const filteredCaseStudies = useMemo(
@@ -73,7 +74,7 @@ export default function Home() {
   const shellClass =
     theme === "dark"
       ? "bg-ink text-cloud"
-      : "bg-[#f6f8f9] text-[#071014] [color-scheme:light]";
+      : "bg-[#f0f2f5] text-ink [color-scheme:light]";
 
   useEffect(() => {
     const media = window.matchMedia("(min-width: 1024px)");
@@ -103,6 +104,7 @@ export default function Home() {
 
   return (
     <main className={`relative min-h-screen overflow-hidden transition-colors duration-500 ${shellClass}`}>
+      <motion.div className="fixed inset-x-0 top-0 z-[80] h-[3px] origin-left bg-gradient-to-r from-teal via-[#62a5ff] to-coral" style={{ scaleX: smoothScrollProgress }} />
       <div className={`pointer-events-none absolute inset-0 z-0 noise ${theme === "dark" ? "opacity-12" : "opacity-5"}`} />
       <Header mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} theme={theme} setTheme={setTheme} />
 
@@ -114,10 +116,10 @@ export default function Home() {
             alt="Premium digital product command center with mobile and web dashboards"
             fill
             priority
-            className="object-cover opacity-65"
+            className={`object-cover ${theme === "dark" ? "opacity-65" : "opacity-20"}`}
           />
-          <div className={`absolute inset-0 ${theme === "dark" ? "bg-[linear-gradient(90deg,#071014_0%,rgba(7,16,20,0.92)_34%,rgba(7,16,20,0.35)_100%)]" : "bg-[linear-gradient(90deg,#f6f8f9_0%,rgba(246,248,249,0.92)_34%,rgba(246,248,249,0.25)_100%)]"}`} />
-          <div className={`absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t ${theme === "dark" ? "from-ink" : "from-[#f6f8f9]"} to-transparent`} />
+          <div className={`absolute inset-0 ${theme === "dark" ? "bg-[linear-gradient(90deg,#1c1e21_0%,rgba(28,30,33,0.92)_34%,rgba(28,30,33,0.35)_100%)]" : "bg-[linear-gradient(90deg,#f0f2f5_0%,rgba(240,242,245,0.96)_38%,rgba(240,242,245,0.38)_100%)]"}`} />
+          <div className={`absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t ${theme === "dark" ? "from-ink" : "from-[#f0f2f5]"} to-transparent`} />
         </motion.div>
 
         <div className="section-shell relative grid min-h-[calc(100vh-7rem)] items-center pb-16 lg:grid-cols-[0.9fr_1.1fr]">
@@ -127,7 +129,7 @@ export default function Home() {
             transition={{ staggerChildren: 0.08 }}
             className="max-w-3xl"
           >
-            <motion.div variants={fadeUp} className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur">
+            <motion.div variants={fadeUp} className={`mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm backdrop-blur ${theme === "dark" ? "border-white/15 bg-white/10 text-white/80" : "border-ink/10 bg-white/80 text-ink/65 shadow-sm"}`}>
               <Sparkles className="h-4 w-4 text-teal" />
               {companyCopy.heroEyebrow}
             </motion.div>
@@ -148,24 +150,24 @@ export default function Home() {
               {companyCopy.heroIntro}
             </motion.p>
             <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href="#estimator" className="shine group inline-flex items-center justify-center gap-2 rounded-full bg-teal px-6 py-4 font-semibold text-ink transition hover:bg-white">
+              <motion.a whileHover={{ y: -3, scale: 1.02 }} whileTap={{ scale: 0.98 }} href="#estimator" className="shine group inline-flex items-center justify-center gap-2 rounded-full bg-teal px-6 py-4 font-semibold text-white shadow-[0_14px_34px_rgba(24,119,242,0.24)] transition hover:bg-[#166fe5]">
                 Get free estimate
                 <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
-              </a>
-              <a href="#work" className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-4 font-semibold backdrop-blur transition ${theme === "dark" ? "border-white/15 bg-white/10 text-white hover:border-white/35" : "border-ink/15 bg-white text-ink hover:border-ink/30"}`}>
+              </motion.a>
+              <motion.a whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }} href="#work" className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-4 font-semibold backdrop-blur transition ${theme === "dark" ? "border-white/15 bg-white/10 text-white hover:border-white/35" : "border-ink/15 bg-white text-ink shadow-sm hover:border-teal/40"}`}>
                 See case studies
-              </a>
+              </motion.a>
             </motion.div>
             {viewportMode === "mobile" ? (
               <motion.div
                 variants={fadeUp}
                 className="relative mt-10 overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.035]"
               >
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(22,209,194,0.2),transparent_44%)]" />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(24, 119, 242,0.2),transparent_44%)]" />
                 <Premium3DShowcase compact />
                 <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-ink/70 px-4 py-3 backdrop-blur-xl">
                   <div className="text-xs font-semibold uppercase tracking-[0.2em] text-teal">3D Product Lab</div>
-                  <div className="mt-1 text-sm font-semibold text-white/82">Apps • Websites • UI/UX</div>
+                  <div className="mt-1 text-sm font-semibold text-white/80">Apps • Websites • UI/UX</div>
                 </div>
               </motion.div>
             ) : null}
@@ -175,10 +177,10 @@ export default function Home() {
                 ["12", "Industries"],
                 ["4.9/5", "Client rating"]
               ].map(([value, label]) => (
-                <div key={label} className={`rounded-2xl border p-4 backdrop-blur ${theme === "dark" ? "glass" : "border-ink/10 bg-white/75"}`}>
+                <motion.div key={label} whileHover={{ y: -6, scale: 1.02 }} className={`rounded-2xl border p-4 backdrop-blur ${theme === "dark" ? "glass" : "border-ink/10 bg-white/85 shadow-sm"}`}>
                   <div className={`text-2xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{value}</div>
                   <div className={`mt-1 text-sm ${theme === "dark" ? "text-white/55" : "text-ink/55"}`}>{label}</div>
-                </div>
+                </motion.div>
               ))}
             </motion.div>
           </motion.div>
@@ -190,14 +192,14 @@ export default function Home() {
             transition={{ delay: 0.35, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
               className="relative hidden min-h-[620px] items-center justify-center lg:flex"
             >
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_54%_48%,rgba(22,209,194,0.22),transparent_34%),radial-gradient(circle_at_75%_64%,rgba(255,122,89,0.18),transparent_30%)]" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_54%_48%,rgba(24, 119, 242,0.22),transparent_34%),radial-gradient(circle_at_75%_64%,rgba(66, 183, 42,0.18),transparent_30%)]" />
               <Premium3DShowcase />
             </motion.div>
           ) : null}
         </div>
       </section>
 
-      <LogoTicker />
+      <LogoTicker theme={theme} />
 
       <Section id="services" eyebrow="Services" title="Services built for modern businesses." intro="Opus Geeks focuses on mobile app development, website development, UI/UX design, game development, and custom digital solutions for growing brands." theme={theme}>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -244,7 +246,7 @@ export default function Home() {
               onClick={() => setPortfolioFilter(filter)}
               className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
                 portfolioFilter === filter
-                  ? "border-teal bg-teal text-ink"
+                  ? "border-teal bg-teal text-white"
                   : theme === "dark"
                     ? "border-white/10 bg-white/[0.04] text-white/65"
                     : "border-ink/10 bg-white text-ink/65"
@@ -415,10 +417,11 @@ function Header({
         <a href="#home" className="group flex shrink-0 items-center" aria-label="Opus Geeks home">
           <span className="relative flex h-16 w-40 items-center transition duration-300 group-hover:scale-[1.03] xl:w-44">
             <Image src="/images/opus-logo.png" alt="Opus Geeks logo" fill className="object-contain object-left" />
+            {theme === "light" ? <span className="absolute inset-x-0 bottom-0 text-center text-[11px] font-medium tracking-[0.24em] text-ink">OPUSGEEKS</span> : null}
           </span>
         </a>
         <nav className="hidden items-center gap-5 lg:flex xl:gap-8" aria-label="Main navigation">
-          <a href="#home" className="text-sm font-semibold text-teal transition hover:text-white">Home</a>
+          <a href="#home" className="text-sm font-semibold text-teal transition hover:text-[#166fe5]">Home</a>
           <div className="group relative">
             <a href="#services" className={`flex items-center gap-1.5 py-9 text-sm font-medium transition xl:py-10 ${theme === "dark" ? "text-white/72 hover:text-white" : "text-ink/72 hover:text-ink"}`}>
               Services
@@ -466,14 +469,10 @@ function Header({
                 {item.label}
               </a>
             ))}
-            <a onClick={() => setMobileOpen(false)} href="#contact" className="mt-2 flex w-full items-center justify-between rounded-2xl bg-white px-4 py-3 font-semibold text-ink">
+            <a onClick={() => setMobileOpen(false)} href="#contact" className="mt-2 flex w-full items-center justify-between rounded-2xl bg-teal px-4 py-3 font-semibold text-white">
               Get Started
               <ArrowRight className="h-4 w-4" />
             </a>
-            <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="mt-2 flex w-full items-center gap-2 rounded-2xl bg-teal px-4 py-3 font-semibold text-ink">
-              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-              Toggle theme
-            </button>
           </div>
         </div>
       ) : null}
@@ -499,10 +498,11 @@ function Section({
   return (
     <section id={id} className="relative z-10 scroll-mt-32 py-20 md:py-28">
       <div className="section-shell">
-        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mb-10 max-w-3xl">
+        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }} className="mb-10 max-w-3xl">
           <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">{eyebrow}</span>
           <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>{title}</h2>
           <p className={`mt-5 text-base leading-7 md:text-lg ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{intro}</p>
+          <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.18, duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="mt-6 h-px w-32 origin-left bg-gradient-to-r from-teal to-transparent" />
         </motion.div>
         {children}
       </div>
@@ -510,13 +510,15 @@ function Section({
   );
 }
 
-function LogoTicker() {
+function LogoTicker({ theme }: { theme: "dark" | "light" }) {
   return (
-    <section className="relative z-10 border-y border-white/10 bg-white/[0.03] py-5">
+    <section className={`relative z-10 border-y py-5 ${theme === "dark" ? "border-white/10 bg-white/[0.03]" : "border-ink/10 bg-white/70"}`}>
+      <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r ${theme === "dark" ? "from-ink" : "from-white"} to-transparent`} />
+      <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l ${theme === "dark" ? "from-ink" : "from-white"} to-transparent`} />
       <div className="flex overflow-hidden">
         <div className="flex min-w-max animate-ticker gap-4 px-2">
           {[...tech, ...tech].map((item, index) => (
-            <span key={`${item}-${index}`} className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-2 text-sm font-semibold text-white/70">
+            <span key={`${item}-${index}`} className={`rounded-full border px-5 py-2 text-sm font-semibold shadow-sm ${theme === "dark" ? "border-white/10 bg-white/[0.04] text-white/70" : "border-ink/10 bg-white text-ink/65"}`}>
               {item}
             </span>
           ))}
@@ -564,7 +566,7 @@ function BeforeAfter({
               </div>
             </div>
             <div className="absolute inset-0 overflow-hidden" style={{ clipPath: `inset(0 ${100 - sliderValue}% 0 0)` }}>
-              <div className="absolute inset-0 bg-[linear-gradient(135deg,#16d1c2_0%,#071014_52%,#ff7a59_100%)] p-5">
+              <div className="absolute inset-0 bg-[linear-gradient(135deg,#1877f2_0%,#1C1E21_52%,#42b72a_100%)] p-5">
                 <div className="mb-5 flex items-center justify-between text-sm font-semibold text-white">
                   <span>After</span>
                   <span className="rounded-full bg-white/15 px-3 py-1">Premium product lab</span>
@@ -640,7 +642,7 @@ function Journey({ theme }: { theme: "dark" | "light" }) {
                 className={`premium-border relative rounded-3xl border p-5 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
               >
                 <div className="mb-5 flex items-center justify-between">
-                  <motion.div whileHover={{ scale: 1.08 }} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal text-ink shadow-[0_0_28px_rgba(22,209,194,0.22)]">
+                  <motion.div whileHover={{ scale: 1.08 }} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal text-white shadow-[0_0_28px_rgba(24, 119, 242,0.22)]">
                     <Icon className="h-6 w-6" />
                   </motion.div>
                   <span className={`text-sm font-semibold ${theme === "dark" ? "text-white/35" : "text-ink/35"}`}>0{index + 1}</span>
@@ -729,7 +731,7 @@ function CeoMessage({ theme }: { theme: "dark" | "light" }) {
     <section id="about" className="relative z-10 scroll-mt-32 py-20 md:py-28">
       <div className={`section-shell overflow-hidden rounded-[36px] border ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
         <div className="grid lg:grid-cols-[0.85fr_1.15fr]">
-          <div className="min-h-80 bg-[linear-gradient(135deg,#16d1c2_0%,#071014_55%,#ff7a59_100%)] p-8">
+          <div className="min-h-80 bg-[linear-gradient(135deg,#1877f2_0%,#1C1E21_55%,#42b72a_100%)] p-8">
             <div className="flex h-full flex-col justify-between rounded-[28px] border border-white/15 bg-black/20 p-6 backdrop-blur">
               <button className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-ink" aria-label="CEO video placeholder">
                 <ArrowRight className="h-7 w-7" />
@@ -805,7 +807,7 @@ function Estimator({
               <div className={`mb-3 text-sm font-semibold ${theme === "dark" ? "text-white/75" : "text-ink/75"}`}>1. Choose project type</div>
               <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
                 {services.slice(0, 6).map((service, index) => (
-                  <button key={service.title} onClick={() => setServiceIndex(index)} className={`rounded-2xl border px-3 py-3 text-sm font-medium transition ${serviceIndex === index ? "border-teal bg-teal text-ink" : theme === "dark" ? "border-white/10 bg-white/[0.04] text-white/65 hover:border-white/30" : "border-ink/10 bg-ink/[0.03] text-ink/65 hover:border-ink/30"}`}>
+                  <button key={service.title} onClick={() => setServiceIndex(index)} className={`rounded-2xl border px-3 py-3 text-sm font-medium transition ${serviceIndex === index ? "border-teal bg-teal text-white" : theme === "dark" ? "border-white/10 bg-white/[0.04] text-white/65 hover:border-white/30" : "border-ink/10 bg-ink/[0.03] text-ink/65 hover:border-ink/30"}`}>
                     {service.title}
                   </button>
                 ))}
@@ -825,7 +827,7 @@ function Estimator({
               <div className={`mb-3 text-sm font-semibold ${theme === "dark" ? "text-white/75" : "text-ink/75"}`}>3. Pick ambition level</div>
               <div className="grid gap-2 md:grid-cols-3">
                 {budgets.map((budget, index) => (
-                  <button key={budget.label} onClick={() => setBudgetIndex(index)} className={`rounded-2xl border p-4 text-left transition ${budgetIndex === index ? "border-teal bg-teal text-ink" : theme === "dark" ? "border-white/10 bg-white/[0.04] text-white/65" : "border-ink/10 bg-ink/[0.03] text-ink/65"}`}>
+                  <button key={budget.label} onClick={() => setBudgetIndex(index)} className={`rounded-2xl border p-4 text-left transition ${budgetIndex === index ? "border-teal bg-teal text-white" : theme === "dark" ? "border-white/10 bg-white/[0.04] text-white/65" : "border-ink/10 bg-ink/[0.03] text-ink/65"}`}>
                     <div className="font-semibold">{budget.label}</div>
                     <div className="mt-1 text-xs opacity-70">{budget.timeline}</div>
                   </button>
@@ -917,21 +919,22 @@ function Footer() {
   ];
 
   return (
-    <footer className="relative z-10 overflow-hidden border-t border-white/10 bg-[#030708] text-white">
+    <footer className="relative z-10 overflow-hidden border-t border-ink/10 bg-white text-ink">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-teal to-transparent" />
-      <div className="pointer-events-none absolute right-[-8rem] top-[-10rem] h-80 w-80 rounded-full border-[56px] border-[#168fd0]/10" />
-      <div className="pointer-events-none absolute bottom-20 left-0 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="pointer-events-none absolute right-[-8rem] top-[-10rem] h-80 w-80 rounded-full border-[56px] border-[#1877F2]/10" />
+      <div className="pointer-events-none absolute bottom-20 left-0 h-px w-full bg-gradient-to-r from-transparent via-ink/10 to-transparent" />
 
       <div className="section-shell relative pt-14 md:pt-20">
-        <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-[1.2fr_2fr] lg:gap-20 lg:pb-20">
-          <div className="lg:border-r lg:border-white/10 lg:pr-16">
+        <div className="grid gap-12 border-b border-ink/10 pb-14 lg:grid-cols-[1.2fr_2fr] lg:gap-20 lg:pb-20">
+          <div className="lg:border-r lg:border-ink/10 lg:pr-16">
             <a href="#home" className="relative block h-24 w-56" aria-label="Opus Geeks home">
               <Image src="/images/opus-logo.png" alt="Opus Geeks" fill className="object-contain object-left" />
+              <span className="absolute inset-x-0 bottom-0 text-center text-xs font-medium tracking-[0.24em] text-ink">OPUSGEEKS</span>
             </a>
-            <p className="mt-5 max-w-sm text-base leading-7 text-white/55">
+            <p className="mt-5 max-w-sm text-base leading-7 text-ink/60">
               Digital products shaped by clear thinking, thoughtful design, and dependable engineering.
             </p>
-            <a href="mailto:contact@opusgeeks.com" className="group mt-8 inline-flex items-center gap-3 border-b border-teal/60 pb-2 text-lg font-medium transition hover:border-white">
+            <a href="mailto:contact@opusgeeks.com" className="group mt-8 inline-flex items-center gap-3 border-b border-teal/60 pb-2 text-lg font-medium transition hover:border-ink">
               Start a conversation
               <ArrowRight className="h-5 w-5 text-teal transition group-hover:translate-x-1" />
             </a>
@@ -941,7 +944,7 @@ function Footer() {
                 { label: "X", icon: <span className="text-lg">X</span> },
                 { label: "Facebook", icon: <Facebook className="h-5 w-5" /> }
               ].map((social) => (
-                <a key={social.label} href="#" aria-label={`Opus Geeks on ${social.label}`} className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition hover:-translate-y-1 hover:border-teal hover:bg-teal hover:text-ink">
+                <a key={social.label} href="#" aria-label={`Opus Geeks on ${social.label}`} className="group flex h-11 w-11 items-center justify-center rounded-full border border-ink/15 text-ink/70 transition hover:-translate-y-1 hover:border-teal hover:bg-teal hover:text-white">
                   {social.icon}
                 </a>
               ))}
@@ -953,7 +956,7 @@ function Footer() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal">Explore</p>
               <nav className="mt-6 flex flex-col gap-4" aria-label="Footer navigation">
                 {quickLinks.map((item) => (
-                  <a key={item.label} href={item.href} className="group flex w-fit items-center gap-2 text-sm text-white/60 transition hover:text-white">
+                  <a key={item.label} href={item.href} className="group flex w-fit items-center gap-2 text-sm text-ink/60 transition hover:text-teal">
                     <span className="h-px w-0 bg-teal transition-all group-hover:w-4" />
                     {item.label}
                   </a>
@@ -965,7 +968,7 @@ function Footer() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-coral">Services</p>
               <nav className="mt-6 flex flex-col gap-4" aria-label="Services navigation">
                 {serviceNavItems.map((item) => (
-                  <a key={item.label} href={item.href} className="group flex w-fit items-center gap-2 text-sm text-white/60 transition hover:text-white">
+                  <a key={item.label} href={item.href} className="group flex w-fit items-center gap-2 text-sm text-ink/60 transition hover:text-teal">
                     <span className="h-px w-0 bg-coral transition-all group-hover:w-4" />
                     {item.label}
                   </a>
@@ -977,23 +980,23 @@ function Footer() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#55aee0]">Connect</p>
               <div className="mt-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-1">
                 <div>
-                  <p className="mb-3 text-sm font-semibold text-white">Karachi studio</p>
-                  <a href="mailto:contact@opusgeeks.com" className="mb-3 flex items-start gap-3 text-sm text-white/60 transition hover:text-white">
+                  <p className="mb-3 text-sm font-semibold text-ink">Karachi studio</p>
+                  <a href="mailto:contact@opusgeeks.com" className="mb-3 flex items-start gap-3 text-sm text-ink/60 transition hover:text-teal">
                     <Mail className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
                     <span className="break-all">contact@opusgeeks.com</span>
                   </a>
-                  <a href="tel:+13466904693" className="mb-3 flex items-start gap-3 text-sm text-white/60 transition hover:text-white">
+                  <a href="tel:+13466904693" className="mb-3 flex items-start gap-3 text-sm text-ink/60 transition hover:text-teal">
                     <Phone className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
                     <span>+1 (346) 690-4693</span>
                   </a>
-                  <p className="flex items-start gap-3 text-sm leading-6 text-white/60">
+                  <p className="flex items-start gap-3 text-sm leading-6 text-ink/60">
                     <MapPin className="mt-1 h-4 w-4 shrink-0 text-teal" />
                     <span>Block 22, Street Gulshan Karachi, Sindh Pakistan</span>
                   </p>
                 </div>
-                <div className="border-white/10 sm:border-l sm:pl-6 xl:border-l-0 xl:border-t xl:pl-0 xl:pt-5">
-                  <p className="mb-3 text-sm font-semibold text-white">USA headquarters</p>
-                  <p className="flex items-start gap-3 text-sm leading-6 text-white/60">
+                <div className="border-ink/10 sm:border-l sm:pl-6 xl:border-l-0 xl:border-t xl:pl-0 xl:pt-5">
+                  <p className="mb-3 text-sm font-semibold text-ink">USA headquarters</p>
+                  <p className="flex items-start gap-3 text-sm leading-6 text-ink/60">
                     <MapPin className="mt-1 h-4 w-4 shrink-0 text-[#55aee0]" />
                     <span>8903 Pines Blvd 217 153, Pembroke Pines, FL 33024, USA</span>
                   </p>
@@ -1003,16 +1006,16 @@ function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-5 py-7 text-sm text-white/45 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-5 py-7 text-sm text-ink/50 md:flex-row md:items-center md:justify-between">
           <p>© 2025 Opus Geeks. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-x-7 gap-y-3 pr-14">
-            <a href="#" className="transition hover:text-white">Terms &amp; Conditions</a>
-            <a href="#" className="transition hover:text-white">Privacy Policy</a>
+            <a href="#" className="transition hover:text-teal">Terms &amp; Conditions</a>
+            <a href="#" className="transition hover:text-teal">Privacy Policy</a>
           </div>
         </div>
       </div>
 
-      <a href="#home" aria-label="Back to top" className="absolute bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition hover:-translate-y-1 hover:border-teal hover:bg-teal hover:text-ink md:bottom-6 md:right-7">
+      <a href="#home" aria-label="Back to top" className="absolute bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full bg-teal text-white shadow-lg transition hover:-translate-y-1 hover:bg-[#166fe5] md:bottom-6 md:right-7">
         <ArrowUp className="h-5 w-5" />
       </a>
     </footer>

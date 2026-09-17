@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
-  background: #071014;
+  color-scheme: light;
+  background: #f0f2f5;
 }
 
 * {
@@ -18,12 +18,12 @@ html {
 
 body {
   margin: 0;
-  background: #071014;
-  color: #f5f7fa;
+  background: #f0f2f5;
+  color: #1c1e21;
 }
 
 ::selection {
-  background: rgba(22, 209, 194, 0.35);
+  background: rgba(24, 119, 242, 0.25);
 }
 
 .noise {
@@ -49,14 +49,14 @@ body {
 
 .animated-grid {
   background-image:
-    linear-gradient(rgba(22, 209, 194, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(22, 209, 194, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(24, 119, 242, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 119, 242, 0.08) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: linear-gradient(to bottom, black, transparent 82%);
 }
 
 .scanline {
-  background: linear-gradient(90deg, transparent, rgba(22, 209, 194, 0.55), transparent);
+  background: linear-gradient(90deg, transparent, rgba(24, 119, 242, 0.55), transparent);
   animation: scanline 4.8s ease-in-out infinite;
   will-change: transform, opacity;
 }
@@ -89,7 +89,7 @@ body {
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(22, 209, 194, 0.7), transparent 34%, rgba(255, 122, 89, 0.55));
+  background: linear-gradient(135deg, rgba(24, 119, 242, 0.7), transparent 34%, rgba(66, 183, 42, 0.55));
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
   pointer-events: none;
@@ -219,7 +219,7 @@ body {
 }
 
 .device-topbar span:nth-child(1) {
-  background: #ff7a59;
+  background: #42b72a;
 }
 
 .device-topbar span:nth-child(2) {
@@ -227,7 +227,7 @@ body {
 }
 
 .device-topbar span:nth-child(3) {
-  background: #16d1c2;
+  background: #1877f2;
 }
 
 .dashboard-grid {
@@ -287,11 +287,11 @@ body {
 }
 
 .teal-line {
-  background: #16d1c2;
+  background: #1877f2;
 }
 
 .coral-line {
-  background: #ff7a59;
+  background: #42b72a;
 }
 
 .gold-line {
@@ -315,13 +315,13 @@ body {
 .bar {
   width: 22%;
   border-radius: 999px 999px 8px 8px;
-  background: linear-gradient(180deg, #16d1c2, rgba(22, 209, 194, 0.2));
+  background: linear-gradient(180deg, #1877f2, rgba(24, 119, 242, 0.2));
 }
 
 .b1 { height: 44%; }
 .b2 { height: 76%; }
 .b3 { height: 58%; }
-.b4 { height: 88%; background: linear-gradient(180deg, #ff7a59, rgba(255, 122, 89, 0.2)); }
+.b4 { height: 88%; background: linear-gradient(180deg, #42b72a, rgba(66, 183, 42, 0.2)); }
 
 .list {
   display: grid;
@@ -364,7 +364,7 @@ body {
   border-radius: 28px;
   background:
     radial-gradient(circle, rgba(7, 16, 20, 0.8) 0 42%, transparent 43%),
-    conic-gradient(#16d1c2 0 58%, #ff7a59 58% 80%, rgba(255,255,255,0.18) 80%);
+    conic-gradient(#1877f2 0 58%, #42b72a 58% 80%, rgba(255,255,255,0.18) 80%);
 }
 
 .phone-row {
@@ -381,7 +381,7 @@ body {
   width: 54px;
   height: 54px;
   border-radius: 18px;
-  background: linear-gradient(135deg, #16d1c2, #ff7a59);
+  background: linear-gradient(135deg, #1877f2, #42b72a);
   margin-bottom: 22px;
 }
 
@@ -405,12 +405,12 @@ body {
   width: 34px;
   height: 34px;
   border-radius: 12px;
-  background: #16d1c2;
-  box-shadow: 0 0 18px rgba(22, 209, 194, 0.35);
+  background: #1877f2;
+  box-shadow: 0 0 18px rgba(24, 119, 242, 0.35);
 }
 
 .node-flow span:nth-child(2) {
-  background: #ff7a59;
+  background: #42b72a;
 }
 
 .node-flow span:nth-child(3) {
@@ -420,7 +420,7 @@ body {
 .connector {
   height: 2px;
   width: 220px;
-  background: linear-gradient(90deg, transparent, #16d1c2, transparent);
+  background: linear-gradient(90deg, transparent, #1877f2, transparent);
   opacity: 0.75;
 }
 
@@ -447,7 +447,7 @@ body {
   width: 360px;
   height: 360px;
   border-radius: 999px;
-  border: 1px solid rgba(22, 209, 194, 0.24);
+  border: 1px solid rgba(24, 119, 242, 0.24);
   transform: translateZ(10px) rotateX(64deg);
 }
 
@@ -455,7 +455,7 @@ body {
   inset: 132px auto auto 120px;
   width: 260px;
   height: 260px;
-  border-color: rgba(255, 122, 89, 0.22);
+  border-color: rgba(66, 183, 42, 0.22);
 }
 
 .scene-label {
@@ -476,7 +476,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #16d1c2;
+  color: #1877f2;
 }
 
 .scene-label strong {
@@ -485,6 +485,31 @@ body {
   color: white;
   font-size: 13px;
 }
+
+@keyframes laptop-breathe {
+  0%, 100% { transform: translateY(0) translateZ(120px) rotateX(5deg) rotateY(-17deg); }
+  50% { transform: translateY(-7px) translateZ(126px) rotateX(4deg) rotateY(-16deg); }
+}
+
+@keyframes phone-float {
+  0%, 100% { transform: translateY(0) translateZ(190px) rotateX(4deg) rotateY(20deg) rotateZ(-2deg); }
+  50% { transform: translateY(-12px) translateZ(198px) rotateX(3deg) rotateY(18deg) rotateZ(-1deg); }
+}
+
+@keyframes panel-one-float {
+  0%, 100% { transform: translateY(0) translateZ(210px) rotateY(-24deg); }
+  50% { transform: translateY(-10px) translateZ(220px) rotateY(-21deg); }
+}
+
+@keyframes panel-two-float {
+  0%, 100% { transform: translateY(0) translateZ(170px) rotateY(22deg); }
+  50% { transform: translateY(9px) translateZ(180px) rotateY(19deg); }
+}
+
+.premium-3d:not(.premium-3d-compact) .laptop { animation: laptop-breathe 8s ease-in-out infinite; }
+.premium-3d:not(.premium-3d-compact) .phone { animation: phone-float 6.5s ease-in-out infinite; }
+.premium-3d:not(.premium-3d-compact) .panel-one { animation: panel-one-float 7s ease-in-out infinite; }
+.premium-3d:not(.premium-3d-compact) .panel-two { animation: panel-two-float 7.8s ease-in-out infinite; }
 
 .premium-3d-compact .laptop {
   right: -18px;
@@ -508,10 +533,32 @@ body {
 }
 
 .premium-3d-compact .panel-two,
+.premium-3d-compact .panel-one,
 .premium-3d-compact .depth-ring-two,
 .premium-3d-compact .connector,
 .premium-3d-compact .scene-label {
   display: none;
+}
+
+.premium-3d-compact .dashboard-grid {
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 8px 14px 14px;
+}
+
+.premium-3d-compact .metric-wide {
+  grid-column: auto;
+  min-height: 70px;
+}
+
+.premium-3d-compact .metric-copy,
+.premium-3d-compact .metric-line,
+.premium-3d-compact .list {
+  display: none;
+}
+
+.premium-3d-compact .chart {
+  min-height: 84px;
 }
 
 @keyframes productFloat {

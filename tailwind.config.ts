@@ -9,15 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#071014",
-        cloud: "#F5F7FA",
-        teal: "#16D1C2",
-        coral: "#FF7A59",
-        gold: "#F7C948"
+        ink: "#1C1E21",
+        cloud: "#F0F2F5",
+        teal: "#1877F2",
+        coral: "#42B72A",
+        gold: "#F7B928"
       },
       boxShadow: {
-        glow: "0 0 80px rgba(22, 209, 194, 0.22)",
-        coral: "0 18px 70px rgba(255, 122, 89, 0.25)"
+        glow: "0 12px 40px rgba(24, 119, 242, 0.20)",
+        coral: "0 18px 60px rgba(66, 183, 42, 0.18)"
       },
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "Segoe UI", "Arial", "sans-serif"]
