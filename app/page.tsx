@@ -8,14 +8,19 @@ import {
   ChevronDown,
   ChevronRight,
   Circle,
+  Facebook,
+  Linkedin,
+  MapPin,
   Mail,
   Menu,
   MessageCircle,
   MousePointer2,
   Moon,
+  Phone,
   Sparkles,
   Star,
   Sun,
+  ArrowUp,
   X
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -382,12 +387,13 @@ export default function Home() {
       </Section>
 
       <FinalCta theme={theme} />
+      <Footer />
     </main>
   );
 }
 
 const serviceNavItems = [
-  { label: "App Development", href: "#services" },
+  { label: "App Development", href: "/app-development" },
   { label: "Web Development", href: "#services" },
   { label: "UX/UI Design", href: "#services" }
 ];
@@ -899,5 +905,116 @@ function FinalCta({ theme }: { theme: "dark" | "light" }) {
         </div>
       </div>
     </section>
+  );
+}
+
+function Footer() {
+  const quickLinks = [
+    { label: "Portfolio", href: "#work" },
+    { label: "About", href: "#about" },
+    { label: "FAQs", href: "#faqs" },
+    { label: "Blogs", href: "#blogs" }
+  ];
+
+  return (
+    <footer className="relative z-10 overflow-hidden border-t border-white/10 bg-[#030708] text-white">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-teal to-transparent" />
+      <div className="pointer-events-none absolute right-[-8rem] top-[-10rem] h-80 w-80 rounded-full border-[56px] border-[#168fd0]/10" />
+      <div className="pointer-events-none absolute bottom-20 left-0 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+      <div className="section-shell relative pt-14 md:pt-20">
+        <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-[1.2fr_2fr] lg:gap-20 lg:pb-20">
+          <div className="lg:border-r lg:border-white/10 lg:pr-16">
+            <a href="#home" className="relative block h-24 w-56" aria-label="Opus Geeks home">
+              <Image src="/images/opus-logo.png" alt="Opus Geeks" fill className="object-contain object-left" />
+            </a>
+            <p className="mt-5 max-w-sm text-base leading-7 text-white/55">
+              Digital products shaped by clear thinking, thoughtful design, and dependable engineering.
+            </p>
+            <a href="mailto:contact@opusgeeks.com" className="group mt-8 inline-flex items-center gap-3 border-b border-teal/60 pb-2 text-lg font-medium transition hover:border-white">
+              Start a conversation
+              <ArrowRight className="h-5 w-5 text-teal transition group-hover:translate-x-1" />
+            </a>
+            <div className="mt-10 flex gap-3">
+              {[
+                { label: "LinkedIn", icon: <Linkedin className="h-5 w-5" /> },
+                { label: "X", icon: <span className="text-lg">X</span> },
+                { label: "Facebook", icon: <Facebook className="h-5 w-5" /> }
+              ].map((social) => (
+                <a key={social.label} href="#" aria-label={`Opus Geeks on ${social.label}`} className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition hover:-translate-y-1 hover:border-teal hover:bg-teal hover:text-ink">
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-10 sm:grid-cols-2 xl:grid-cols-[0.75fr_0.9fr_1.5fr]">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal">Explore</p>
+              <nav className="mt-6 flex flex-col gap-4" aria-label="Footer navigation">
+                {quickLinks.map((item) => (
+                  <a key={item.label} href={item.href} className="group flex w-fit items-center gap-2 text-sm text-white/60 transition hover:text-white">
+                    <span className="h-px w-0 bg-teal transition-all group-hover:w-4" />
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-coral">Services</p>
+              <nav className="mt-6 flex flex-col gap-4" aria-label="Services navigation">
+                {serviceNavItems.map((item) => (
+                  <a key={item.label} href={item.href} className="group flex w-fit items-center gap-2 text-sm text-white/60 transition hover:text-white">
+                    <span className="h-px w-0 bg-coral transition-all group-hover:w-4" />
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            <div className="sm:col-span-2 xl:col-span-1">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#55aee0]">Connect</p>
+              <div className="mt-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-1">
+                <div>
+                  <p className="mb-3 text-sm font-semibold text-white">Karachi studio</p>
+                  <a href="mailto:contact@opusgeeks.com" className="mb-3 flex items-start gap-3 text-sm text-white/60 transition hover:text-white">
+                    <Mail className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
+                    <span className="break-all">contact@opusgeeks.com</span>
+                  </a>
+                  <a href="tel:+13466904693" className="mb-3 flex items-start gap-3 text-sm text-white/60 transition hover:text-white">
+                    <Phone className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
+                    <span>+1 (346) 690-4693</span>
+                  </a>
+                  <p className="flex items-start gap-3 text-sm leading-6 text-white/60">
+                    <MapPin className="mt-1 h-4 w-4 shrink-0 text-teal" />
+                    <span>Block 22, Street Gulshan Karachi, Sindh Pakistan</span>
+                  </p>
+                </div>
+                <div className="border-white/10 sm:border-l sm:pl-6 xl:border-l-0 xl:border-t xl:pl-0 xl:pt-5">
+                  <p className="mb-3 text-sm font-semibold text-white">USA headquarters</p>
+                  <p className="flex items-start gap-3 text-sm leading-6 text-white/60">
+                    <MapPin className="mt-1 h-4 w-4 shrink-0 text-[#55aee0]" />
+                    <span>8903 Pines Blvd 217 153, Pembroke Pines, FL 33024, USA</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-5 py-7 text-sm text-white/45 md:flex-row md:items-center md:justify-between">
+          <p>© 2025 Opus Geeks. All rights reserved.</p>
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-3 pr-14">
+            <a href="#" className="transition hover:text-white">Terms &amp; Conditions</a>
+            <a href="#" className="transition hover:text-white">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+
+      <a href="#home" aria-label="Back to top" className="absolute bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition hover:-translate-y-1 hover:border-teal hover:bg-teal hover:text-ink md:bottom-6 md:right-7">
+        <ArrowUp className="h-5 w-5" />
+      </a>
+    </footer>
   );
 }
