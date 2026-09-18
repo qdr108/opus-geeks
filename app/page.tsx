@@ -154,7 +154,7 @@ export default function Home() {
                 Get free estimate
                 <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
               </motion.a>
-              <motion.a whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }} href="#work" className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-4 font-semibold backdrop-blur transition ${theme === "dark" ? "border-white/15 bg-white/10 text-white hover:border-white/35" : "border-ink/15 bg-white text-ink shadow-sm hover:border-teal/40"}`}>
+              <motion.a whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }} href="/portfolio" className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-4 font-semibold backdrop-blur transition ${theme === "dark" ? "border-white/15 bg-white/10 text-white hover:border-white/35" : "border-ink/15 bg-white text-ink shadow-sm hover:border-teal/40"}`}>
                 See case studies
               </motion.a>
             </motion.div>
@@ -912,7 +912,7 @@ function FinalCta({ theme }: { theme: "dark" | "light" }) {
 
 function Footer() {
   const quickLinks = [
-    { label: "Portfolio", href: "#work" },
+    { label: "Portfolio", href: "/portfolio" },
     { label: "About", href: "#about" },
     { label: "FAQs", href: "#faqs" },
     { label: "Blogs", href: "#blogs" }

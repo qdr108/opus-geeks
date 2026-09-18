@@ -26,9 +26,9 @@ import {
 
 export const navItems = [
   { label: "Home", href: "#home" },
-  { label: "Portfolio", href: "#work" },
-  { label: "Blogs", href: "#blogs" },
-  { label: "About", href: "#about" },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "Blogs", href: "/blogs" },
+  { label: "About", href: "/about" },
   { label: "Contact Us", href: "#contact" },
   { label: "FAQs", href: "#faqs" }
 ];
