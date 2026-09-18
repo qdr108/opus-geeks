@@ -6,67 +6,45 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import {
   ArrowRight,
   ArrowUp,
-  Boxes,
+  Component,
   Check,
   ChevronDown,
   Facebook,
-  Gamepad2,
-  Glasses,
-  Layers3,
+  LayoutTemplate,
   Linkedin,
   Mail,
   MapPin,
   Menu,
   Phone,
-  Rocket,
+  Palette,
+  PenTool,
   ShieldCheck,
   Smartphone,
   Sparkles,
-  Watch,
   X
 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 
 const services = [
   {
-    title: "iOS App Development",
+    title: "Website Design",
+    icon: LayoutTemplate,
+    description: "We create visually striking, user-friendly websites that balance aesthetics and functionality, leave a lasting impression, and help your business drive meaningful results."
+  },
+  {
+    title: "Mobile Apps Design",
     icon: Smartphone,
-    description: "Unlock the full potential of your business with tailored iOS app development. From concept to deployment, we craft intuitive, high-performance applications built for Apple's ecosystem."
+    description: "Opus Geeks crafts mobile app experiences that combine thoughtful visual design with seamless functionality, optimized for user engagement and satisfaction."
   },
   {
-    title: "Android App Development",
-    icon: Smartphone,
-    description: "Reach Android users with flexible, feature-rich applications for smartphones, tablets, and wearable devices, engineered to engage users and support measurable growth."
+    title: "UX/UI Design",
+    icon: Component,
+    description: "Our UX/UI work prioritizes user satisfaction and engagement through intuitive interfaces and seamless experiences that keep audiences captivated and connected."
   },
   {
-    title: "AR/VR App Development",
-    icon: Glasses,
-    description: "Create memorable augmented and virtual reality experiences that move audiences into new worlds, from immersive brand experiences to gaming and education."
-  },
-  {
-    title: "Wearable App Development",
-    icon: Watch,
-    description: "Extend your brand to smartwatches and fitness trackers with useful, user-friendly applications that keep customers connected wherever they go."
-  },
-  {
-    title: "Native App Development",
-    icon: Layers3,
-    description: "Build native iOS and Android products that use each platform's capabilities to deliver excellent performance, reliability, and satisfying user experiences."
-  },
-  {
-    title: "Game App Development",
-    icon: Gamepad2,
-    description: "Combine creativity, technical expertise, and product insight to produce captivating mobile games, from casual experiences to ambitious multiplayer concepts."
-  },
-  {
-    title: "Flutter App Development",
-    icon: Boxes,
-    description: "Launch beautiful cross-platform applications with a consistent experience across iOS and Android while reducing development time and maintenance overhead."
-  },
-  {
-    title: "Ionic App Development",
-    icon: Rocket,
-    description: "Create capable cross-platform applications for iOS, Android, and the web from a shared foundation, helping products reach the market faster."
+    title: "Branding",
+    icon: Palette,
+    description: "From identity and logo direction to brand messaging, we create memorable systems that resonate with your audience and stand apart in competitive markets."
   }
 ];
 
@@ -78,10 +56,10 @@ const stats = [
 ];
 
 const caseStudies = [
-  { title: "Restaurant Techs", type: "On-demand services", image: "/images/app-case-1.png" },
-  { title: "Le Cavalier Cellars", type: "Mobile commerce", image: "/images/app-case-2.png" },
-  { title: "Mind Nourishment", type: "Wellness experience", image: "/images/app-case-3.png" },
-  { title: "Wedstimate", type: "Service marketplace", image: "/images/app-case-4.png" }
+  { title: "Product Experience 01", type: "Interface design", image: "/images/ux-case-1.png" },
+  { title: "Product Experience 02", type: "Mobile UX", image: "/images/ux-case-2.png" },
+  { title: "Product Experience 03", type: "Design system", image: "/images/ux-case-3.png" },
+  { title: "Product Experience 04", type: "Brand experience", image: "/images/ux-case-4.png" }
 ];
 
 const reveal = {
@@ -89,7 +67,7 @@ const reveal = {
   show: { opacity: 1, y: 0 }
 };
 
-export default function AppDevelopmentPage() {
+export default function UxUiDesignPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -127,13 +105,13 @@ export default function AppDevelopmentPage() {
         <div className="section-shell relative grid min-h-[650px] items-center gap-12 py-16 lg:grid-cols-[0.92fr_1.08fr] lg:py-20">
           <motion.div initial="hidden" animate="show" transition={{ staggerChildren: 0.08 }}>
             <motion.p variants={reveal} className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">
-              <Sparkles className="h-4 w-4" /> Mobile product engineering
+              <Sparkles className="h-4 w-4" /> Experience design &amp; brand systems
             </motion.p>
             <motion.h1 variants={reveal} className="text-balance text-5xl font-semibold leading-[1.02] md:text-7xl">
-              Innovative mobile apps built to <span className="text-[#1877F2]">move business.</span>
+              Visionary UI/UX built to <span className="text-[#1877F2]">feel effortless.</span>
             </motion.h1>
             <motion.p variants={reveal} className="mt-7 max-w-xl text-lg leading-8 text-[#1C1E21]/65">
-              Are you ready to take your business to the next level? Opus Geeks creates high-performance, user-friendly mobile applications tailored to your goals, audience, and growth plan.
+              Opus Geeks creates intuitive interfaces and engaging experiences that shape your brand&apos;s story, captivate your audience, and make every interaction feel natural.
             </motion.p>
             <motion.div variants={reveal} className="mt-9 flex flex-col gap-3 sm:flex-row">
               <button onClick={() => setModalOpen(true)} className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#1877F2] px-6 py-4 font-semibold text-white shadow-[0_16px_40px_rgba(24,119,242,0.25)] transition hover:bg-[#1C1E21]">
@@ -142,21 +120,19 @@ export default function AppDevelopmentPage() {
               <a href="#services" className="inline-flex items-center justify-center rounded-full border border-[#1C1E21]/15 bg-white/50 px-6 py-4 font-semibold text-[#1C1E21]/80 transition hover:border-[#1877F2] hover:text-[#1877F2]">Explore capabilities</a>
             </motion.div>
             <motion.div variants={reveal} className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm text-[#1C1E21]/55">
-              {["Product strategy", "Native & cross-platform", "Launch support"].map((item) => (
+              {["UX research", "Interactive prototypes", "Scalable design systems"].map((item) => (
                 <span key={item} className="flex items-center gap-2"><Check className="h-4 w-4 text-[#1877F2]" />{item}</span>
               ))}
             </motion.div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, scale: 0.9, x: 40 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="relative mx-auto h-[480px] w-full max-w-[590px] md:h-[590px]">
-            <div className="absolute inset-x-8 bottom-8 h-24 rounded-full bg-[#d2a95d]/20 blur-3xl" />
-            <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute inset-0">
-              <Image src="/images/app-phones.png" alt="Le Cavalier Cellars mobile application on two phones" fill priority sizes="(max-width: 1024px) 90vw, 46vw" className="object-contain drop-shadow-[0_35px_55px_rgba(0,0,0,0.5)]" />
+          <motion.div initial={{ opacity: 0, scale: 0.92, x: 40 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="relative mx-auto h-[480px] w-full max-w-[610px] [perspective:1200px] md:h-[590px]">
+            <div className="absolute inset-x-8 bottom-8 h-24 rounded-full bg-[#1877F2]/20 blur-3xl" />
+            <motion.div animate={{ y: [0, -8, 0], rotateY: [-2, 2, -2] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} className="absolute inset-x-3 top-8 overflow-hidden rounded-2xl border border-[#1C1E21]/15 bg-white shadow-[0_35px_70px_rgba(28,30,33,0.2)] md:inset-x-0 md:top-14">
+              <div className="flex h-12 items-center justify-between border-b border-[#1C1E21]/10 bg-[#F7F8FA] px-4"><div className="flex items-center gap-2"><PenTool className="h-4 w-4 text-[#1877F2]"/><b className="text-xs">Opus Design Lab</b></div><span className="rounded-md bg-[#E7F3FF] px-2 py-1 text-[10px] font-semibold text-[#1877F2]">Prototype · Live</span></div>
+              <div className="grid h-[375px] grid-cols-[64px_1fr] bg-[#F0F2F5] md:h-[430px] md:grid-cols-[84px_1fr]"><aside className="space-y-3 border-r border-[#1C1E21]/10 bg-white p-3">{[LayoutTemplate, Component, Palette, PenTool].map((Icon,index)=><motion.div key={index} whileHover={{scale:1.08}} className={`flex h-10 items-center justify-center rounded-lg ${index===1?'bg-[#1877F2] text-white':'bg-[#F0F2F5] text-[#1C1E21]/45'}`}><Icon className="h-4 w-4"/></motion.div>)}</aside><div className="relative overflow-hidden p-4 md:p-6"><div className="flex items-center justify-between"><div><p className="text-[10px] uppercase tracking-[0.18em] text-[#1877F2]">Checkout redesign</p><h3 className="mt-1 text-lg font-semibold md:text-2xl">Design system workspace</h3></div><div className="flex -space-x-2">{["A","M","S"].map((item,index)=><span key={item} className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-[#1877F2] text-[9px] font-bold text-white" style={{opacity:1-index*.16}}>{item}</span>)}</div></div><div className="mt-5 grid grid-cols-[1.2fr_.8fr] gap-3"><div className="rounded-xl bg-white p-4 shadow-sm"><div className="h-20 rounded-lg bg-[#1877F2] p-3 text-white"><div className="h-2 w-1/2 rounded bg-white/80"/><div className="mt-3 h-2 w-3/4 rounded bg-white/35"/><div className="mt-2 h-2 w-2/3 rounded bg-white/35"/></div><div className="mt-3 grid grid-cols-2 gap-2"><div className="h-20 rounded-lg bg-[#E7F3FF]"/><div className="h-20 rounded-lg bg-[#E9F8E5]"/></div></div><div className="space-y-3"><div className="rounded-xl bg-white p-3 shadow-sm"><p className="text-[9px] text-[#1C1E21]/45">Components</p><b className="mt-1 block text-xl text-[#1877F2]">48</b></div><div className="rounded-xl bg-white p-3 shadow-sm"><p className="text-[9px] text-[#1C1E21]/45">Accessibility</p><b className="mt-1 block text-xl text-[#42B72A]">AA</b></div><div className="flex gap-2 rounded-xl bg-white p-3 shadow-sm">{["#1877F2","#42B72A","#F7B928"].map(color=><i key={color} className="h-6 flex-1 rounded" style={{backgroundColor:color}}/>)}</div></div></div></div></div>
             </motion.div>
-            <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-8 right-0 rounded-2xl border border-white/15 bg-[#0b171b]/95 px-5 py-4 shadow-xl backdrop-blur">
-              <p className="text-xs uppercase tracking-[0.18em] text-[#d2a95d]">Featured launch</p>
-              <p className="mt-1 text-sm font-semibold">Commerce experience · iOS &amp; Android</p>
-            </motion.div>
+            <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-4 right-0 rounded-xl border border-[#1877F2]/15 bg-white px-5 py-4 shadow-xl"><p className="text-xs uppercase tracking-[0.18em] text-[#1877F2]">Validated flow</p><p className="mt-1 text-sm font-semibold">Research · Prototype · Test</p></motion.div>
           </motion.div>
         </div>
       </section>
@@ -164,8 +140,8 @@ export default function AppDevelopmentPage() {
       <section className="relative overflow-hidden border-b border-[#1C1E21]/10 bg-white py-16 md:py-20">
         <div className="pointer-events-none absolute right-0 top-0 h-full w-1/3 bg-[linear-gradient(135deg,transparent,rgba(24,119,242,0.1))]" />
         <div className="section-shell grid gap-8 lg:grid-cols-2 lg:items-center">
-          <motion.h2 initial="hidden" whileInView="show" viewport={{ once: true }} variants={reveal} className="text-balance text-4xl font-semibold leading-tight md:text-6xl">Progressive <span className="text-[#1877F2]">mobile application</span> development.</motion.h2>
-          <motion.p initial="hidden" whileInView="show" viewport={{ once: true }} variants={reveal} className="border-l border-[#1877F2]/40 pl-6 text-lg leading-8 text-[#1C1E21]/60">We specialize in progressive mobile application development that pushes boundaries and delivers unmatched user experiences. From polished design to advanced functionality, our team turns ambitious product ideas into dependable digital products.</motion.p>
+          <motion.h2 initial="hidden" whileInView="show" viewport={{ once: true }} variants={reveal} className="text-balance text-4xl font-semibold leading-tight md:text-6xl">Futuristic <span className="text-[#1877F2]">user experience</span> &amp; development.</motion.h2>
+          <motion.p initial="hidden" whileInView="show" viewport={{ once: true }} variants={reveal} className="border-l border-[#1877F2]/40 pl-6 text-lg leading-8 text-[#1C1E21]/60">Embrace the future with cutting-edge experience design. We make collaboration between people and interfaces more intensive, engaging, productive, and seamless.</motion.p>
         </div>
       </section>
 
@@ -173,9 +149,9 @@ export default function AppDevelopmentPage() {
         <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(rgba(24,119,242,0.14)_1px,transparent_1px)] [background-size:24px_24px]" />
         <div className="section-shell">
           <div className="relative mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Mobile capabilities</p>
-            <h2 className="mt-4 text-balance text-4xl font-semibold md:text-6xl">Mobile development services for you.</h2>
-            <p className="mt-6 text-lg leading-8 text-[#1C1E21]/55">Whether it is iOS, Android, or cross-platform, our team creates secure, user-friendly apps that improve engagement and deliver results.</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Design capabilities</p>
+            <h2 className="mt-4 text-balance text-4xl font-semibold md:text-6xl">Design services for every touchpoint.</h2>
+            <p className="mt-6 text-lg leading-8 text-[#1C1E21]/55">We intensify the connection between people and interfaces through strategic thinking, clear visual systems, and experiences built around real user needs.</p>
           </div>
           <div className="relative mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {services.map((service, index) => {
@@ -214,7 +190,7 @@ export default function AppDevelopmentPage() {
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Performance at scale</p>
             <h2 className="mt-4 text-balance text-4xl font-semibold md:text-5xl">Metrics that reflect delivery experience.</h2>
-            <p className="mt-6 text-lg leading-8 text-[#1C1E21]/60">We focus on the indicators that shape successful mobile products: reliable execution, capable teams, lasting partnerships, and consistently high standards.</p>
+            <p className="mt-6 text-lg leading-8 text-[#1C1E21]/60">We focus on the indicators that shape successful experiences: useful research, accessible systems, confident decisions, and lasting customer engagement.</p>
             <button onClick={() => setModalOpen(true)} className="group mt-8 inline-flex items-center gap-3 rounded-full bg-[#1877F2] px-6 py-4 font-semibold text-white shadow-[0_12px_30px_rgba(24,119,242,0.2)] transition hover:bg-[#166FE5]">Get a quote <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></button>
           </div>
           <div className="grid grid-cols-2 overflow-hidden rounded-2xl border-l border-t border-[#1C1E21]/10 bg-white shadow-[0_16px_44px_rgba(28,30,33,0.08)]">
@@ -228,12 +204,12 @@ export default function AppDevelopmentPage() {
       <section className="relative overflow-hidden border-y border-[#1C1E21]/10 bg-white py-20 md:py-28">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(85,174,224,0.18),transparent_30%)]" />
         <div className="section-shell grid gap-8 lg:grid-cols-2 lg:items-end">
-          <h2 className="relative text-balance text-4xl font-semibold leading-tight md:text-6xl">Our mobile application <span className="text-[#1877F2]">case studies.</span></h2>
-          <p className="relative text-lg leading-8 text-[#1C1E21]/60">Explore selected mobile products across hospitality, retail, wellness, and service marketplaces, designed around real customer journeys.</p>
+          <h2 className="relative text-balance text-4xl font-semibold leading-tight md:text-6xl">Our UI/UX development <span className="text-[#1877F2]">case studies.</span></h2>
+          <p className="relative text-lg leading-8 text-[#1C1E21]/60">Explore how Opus Geeks transforms digital experiences through stronger engagement, clearer navigation, and design decisions grounded in real customer journeys.</p>
         </div>
         <div className="section-shell mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {caseStudies.map((study, index) => (
-            <motion.article key={study.title} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true }} variants={reveal} transition={{ delay: index * 0.06 }} className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-[#101a1e] shadow-2xl">
+            <motion.article key={study.title} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true }} variants={reveal} transition={{ delay: index * 0.06 }} className="group relative aspect-[6/5] overflow-hidden rounded-2xl border border-white/10 bg-[#101a1e] shadow-2xl">
               <Image src={study.image} alt={`${study.title} mobile app case study`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover transition duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/5 to-transparent" />
               <div className="absolute inset-x-5 top-5 flex items-center justify-between text-xs uppercase tracking-[0.15em] text-white/65"><span>Case 0{index + 1}</span><Smartphone className="h-5 w-5" /></div>
@@ -247,7 +223,7 @@ export default function AppDevelopmentPage() {
       <section className="relative overflow-hidden bg-[#e5f2f8] py-20 md:py-28">
         <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(rgba(24,119,242,0.16)_1px,transparent_1px)] [background-size:24px_24px]" />
         <div className="section-shell grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-          <div className="relative"><p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Build with confidence</p><h2 className="mt-4 text-balance text-4xl font-semibold md:text-6xl">Ready to streamline your mobile product efforts?</h2><p className="mt-6 max-w-2xl text-lg leading-8 text-[#1C1E21]/55">Discover how Opus Geeks can simplify your product process and help your team move from idea to a polished, launch-ready application.</p></div>
+          <div className="relative"><p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Design with confidence</p><h2 className="mt-4 text-balance text-4xl font-semibold md:text-6xl">Ready to make every interaction count?</h2><p className="mt-6 max-w-2xl text-lg leading-8 text-[#1C1E21]/55">Discover how Opus Geeks can simplify your design process, strengthen your brand, and turn complex journeys into polished, intuitive experiences.</p></div>
           <div className="relative flex lg:justify-end"><button onClick={() => setModalOpen(true)} className="group inline-flex items-center gap-3 rounded-full bg-[#1C1E21] px-7 py-4 font-semibold text-white transition hover:bg-[#1877F2]">Book a free consultation <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></button></div>
         </div>
       </section>
@@ -286,13 +262,13 @@ function ServiceHeader({ menuOpen, setMenuOpen, openModal }: { menuOpen: boolean
         <Link href="/" className="relative h-16 w-40 shrink-0" aria-label="Opus Geeks home"><Image src="/images/opus-logo.png" alt="" fill className="object-contain object-left" /><span className="absolute inset-x-0 bottom-0 text-center text-[11px] font-medium tracking-[0.24em] text-[#1C1E21]">OPUSGEEKS</span></Link>
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
           <Link href="/" className="text-sm text-[#1C1E21]/60 transition hover:text-[#1877F2]">Home</Link>
-          <div className="group relative"><button className="flex items-center gap-1.5 py-9 text-sm font-semibold text-[#1877F2]">Services <ChevronDown className="h-4 w-4 transition group-hover:rotate-180" /></button><div className="invisible absolute left-1/2 top-[82px] w-60 -translate-x-1/2 translate-y-2 rounded-2xl border border-[#1C1E21]/10 bg-white p-2 opacity-0 shadow-2xl transition group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"><Link href="/app-development" className="block rounded-xl bg-[#1877F2]/10 px-4 py-3 text-sm text-[#1877F2]">App Development</Link><Link href="/web-development" className="block rounded-xl px-4 py-3 text-sm text-[#1C1E21]/60 hover:bg-[#1C1E21]/5 hover:text-[#1C1E21]">Web Development</Link><Link href="/ux-ui-design" className="block rounded-xl px-4 py-3 text-sm text-[#1C1E21]/60 hover:bg-[#1C1E21]/5 hover:text-[#1C1E21]">UX/UI Design</Link></div></div>
+          <div className="group relative"><button className="flex items-center gap-1.5 py-9 text-sm font-semibold text-[#1877F2]">Services <ChevronDown className="h-4 w-4 transition group-hover:rotate-180" /></button><div className="invisible absolute left-1/2 top-[82px] w-60 -translate-x-1/2 translate-y-2 rounded-2xl border border-[#1C1E21]/10 bg-white p-2 opacity-0 shadow-2xl transition group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"><Link href="/app-development" className="block rounded-xl px-4 py-3 text-sm text-[#1C1E21]/60 hover:bg-[#1C1E21]/5 hover:text-[#1C1E21]">App Development</Link><Link href="/web-development" className="block rounded-xl px-4 py-3 text-sm text-[#1C1E21]/60 hover:bg-[#1C1E21]/5 hover:text-[#1C1E21]">Web Development</Link><Link href="/ux-ui-design" className="block rounded-xl bg-[#1877F2]/10 px-4 py-3 text-sm font-semibold text-[#1877F2]">UX/UI Design</Link></div></div>
           <Link href="/#work" className="text-sm text-[#1C1E21]/60 transition hover:text-[#1877F2]">Portfolio</Link><Link href="/#blogs" className="text-sm text-[#1C1E21]/60 transition hover:text-[#1877F2]">Blogs</Link><Link href="/#about" className="text-sm text-[#1C1E21]/60 transition hover:text-[#1877F2]">About</Link><Link href="/#contact" className="text-sm text-[#1C1E21]/60 transition hover:text-[#1877F2]">Contact Us</Link><Link href="/#faqs" className="text-sm text-[#1C1E21]/60 transition hover:text-[#1877F2]">FAQs</Link>
         </nav>
         <button onClick={openModal} className="hidden items-center gap-3 rounded-full bg-[#1C1E21] px-6 py-3 font-semibold text-white transition hover:bg-[#1877F2] lg:flex">Get Started <ArrowRight className="h-5 w-5" /></button>
         <button onClick={() => setMenuOpen(!menuOpen)} className="flex h-11 w-11 items-center justify-center rounded-full border border-[#1C1E21]/15 lg:hidden" aria-label="Toggle navigation">{menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button>
       </div>
-      {menuOpen ? <div className="section-shell pb-5 lg:hidden"><nav className="rounded-2xl border border-[#1C1E21]/10 bg-white p-3 shadow-xl"><Link onClick={() => setMenuOpen(false)} href="/" className="block rounded-xl px-4 py-3 text-[#1C1E21]/70">Home</Link><Link onClick={() => setMenuOpen(false)} href="/app-development" className="block rounded-xl bg-[#1877F2]/10 px-4 py-3 font-semibold text-[#1877F2]">App Development</Link><Link onClick={() => setMenuOpen(false)} href="/web-development" className="block rounded-xl px-4 py-3 text-[#1C1E21]/70">Web Development</Link><Link onClick={() => setMenuOpen(false)} href="/ux-ui-design" className="block rounded-xl px-4 py-3 text-[#1C1E21]/70">UX/UI Design</Link><Link onClick={() => setMenuOpen(false)} href="/#work" className="block rounded-xl px-4 py-3 text-[#1C1E21]/70">Portfolio</Link><button onClick={() => { setMenuOpen(false); openModal(); }} className="mt-2 flex w-full items-center justify-between rounded-xl bg-[#1877F2] px-4 py-3 font-semibold text-white">Get Started <ArrowRight className="h-4 w-4" /></button></nav></div> : null}
+      {menuOpen ? <div className="section-shell pb-5 lg:hidden"><nav className="rounded-2xl border border-[#1C1E21]/10 bg-white p-3 shadow-xl"><Link onClick={() => setMenuOpen(false)} href="/" className="block rounded-xl px-4 py-3 text-[#1C1E21]/70">Home</Link><Link onClick={() => setMenuOpen(false)} href="/app-development" className="block rounded-xl px-4 py-3 text-[#1C1E21]/70">App Development</Link><Link onClick={() => setMenuOpen(false)} href="/web-development" className="block rounded-xl px-4 py-3 text-[#1C1E21]/70">Web Development</Link><Link onClick={() => setMenuOpen(false)} href="/ux-ui-design" className="block rounded-xl bg-[#1877F2]/10 px-4 py-3 font-semibold text-[#1877F2]">UX/UI Design</Link><Link onClick={() => setMenuOpen(false)} href="/#work" className="block rounded-xl px-4 py-3 text-[#1C1E21]/70">Portfolio</Link><button onClick={() => { setMenuOpen(false); openModal(); }} className="mt-2 flex w-full items-center justify-between rounded-xl bg-[#1877F2] px-4 py-3 font-semibold text-white">Get Started <ArrowRight className="h-4 w-4" /></button></nav></div> : null}
     </header>
   );
 }

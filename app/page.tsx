@@ -396,8 +396,8 @@ export default function Home() {
 
 const serviceNavItems = [
   { label: "App Development", href: "/app-development" },
-  { label: "Web Development", href: "#services" },
-  { label: "UX/UI Design", href: "#services" }
+  { label: "Web Development", href: "/web-development" },
+  { label: "UX/UI Design", href: "/ux-ui-design" }
 ];
 
 function Header({
