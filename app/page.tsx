@@ -7,7 +7,6 @@ import {
   CalendarCheck,
   ChevronDown,
   ChevronRight,
-  Circle,
   Facebook,
   Linkedin,
   MapPin,
@@ -190,22 +189,19 @@ export default function Home() {
 
       <LogoTicker theme={theme} />
 
-      <Section id="services" eyebrow="Services" title="Services built for modern businesses." intro="Opus Geeks focuses on mobile app development, website development, UI/UX design, game development, and custom digital solutions for growing brands." theme={theme}>
+      <Section id="services" eyebrow="Capabilities" title="One product team, from strategy to scale." intro="Senior product thinking, thoughtful design, and dependable engineering brought together to launch digital experiences that perform." theme={theme}>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
               <motion.button
                 key={service.title}
-                initial="hidden"
-                whileInView="show"
+                initial={false}
                 whileHover={{ y: -10, scale: 1.015 }}
                 whileTap={{ scale: 0.985 }}
-                viewport={{ once: true, margin: "-80px" }}
-                variants={fadeUp}
-                transition={{ delay: index * 0.05 }}
+                transition={{ duration: 0.2 }}
                 onClick={() => setServiceIndex(index)}
-                className={`premium-border group relative overflow-hidden rounded-3xl border p-6 text-left transition ${serviceIndex === index ? "border-teal bg-teal/10 shadow-glow" : theme === "dark" ? "border-white/10 bg-white/[0.04] hover:border-white/25" : "border-ink/10 bg-white hover:border-ink/25"}`}
+                className={`premium-border group relative overflow-hidden rounded-2xl border p-6 text-left transition ${serviceIndex === index ? "border-teal bg-teal/10 shadow-glow" : theme === "dark" ? "border-white/10 bg-white/[0.04] hover:border-white/25" : "border-ink/10 bg-white hover:border-ink/25"}`}
               >
                 <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl text-teal ${theme === "dark" ? "bg-white/10" : "bg-ink/[0.04]"}`}>
                   <motion.span whileHover={{ rotate: -8, scale: 1.08 }}>
@@ -227,7 +223,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="work" eyebrow="Portfolio" title="Digital work across apps, websites, design, and interactive experiences." intro="The existing Opus Geeks portfolio groups work by service category. This version turns those categories into clearer case-study style cards until real project screenshots and results are available." theme={theme}>
+      <Section id="work" eyebrow="Selected work" title="Digital products designed around business outcomes." intro="Explore product directions across fintech, healthcare, commerce, and emerging platforms, each shaped around a distinct customer and growth challenge." theme={theme}>
         <div className="mb-6 flex flex-wrap gap-2">
           {["All", "App Development", "Web Development", "UI/UX Design", "Game Development"].map((filter) => (
             <button
@@ -246,16 +242,13 @@ export default function Home() {
           ))}
         </div>
         <div className="grid gap-5 lg:grid-cols-3">
-          {filteredCaseStudies.map((study, index) => (
+          {filteredCaseStudies.map((study) => (
             <motion.article
               key={study.title}
-              initial="hidden"
-              whileInView="show"
+              initial={false}
               whileHover={{ y: -8 }}
-              viewport={{ once: true, margin: "-80px" }}
-              variants={fadeUp}
-              transition={{ delay: index * 0.08 }}
-              className={`premium-border group relative overflow-hidden rounded-3xl border transition hover:-translate-y-1 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
+              transition={{ duration: 0.2 }}
+              className={`premium-border group relative overflow-hidden rounded-2xl border transition hover:-translate-y-1 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
             >
               <div className="relative h-56 overflow-hidden" style={{ background: study.image }}>
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.26),transparent_28%),linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.24))]" />
@@ -311,19 +304,16 @@ export default function Home() {
 
       <CeoMessage theme={theme} />
 
-      <Section id="process" eyebrow="Process" title="From branding to prototype, development, and launch." intro="The Opus Geeks process is presented as a clear path that helps clients understand how an idea becomes a polished digital product." theme={theme}>
+      <Section id="process" eyebrow="Delivery model" title="A clear path from first decision to launch." intro="Every engagement moves through focused discovery, rapid validation, disciplined engineering, and measurable post-launch improvement." theme={theme}>
         <div className="relative grid gap-4 lg:grid-cols-4">
           {process.map((step, index) => {
             const Icon = step.icon;
             return (
               <motion.div
                 key={step.title}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: "-80px" }}
-                variants={fadeUp}
-                transition={{ delay: index * 0.08 }}
-                className={`rounded-3xl border p-6 backdrop-blur ${theme === "dark" ? "glass" : "border-ink/10 bg-white"}`}
+                initial={false}
+                transition={{ duration: 0.2 }}
+                className={`rounded-2xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
               >
                 <div className="mb-6 flex items-center justify-between">
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-coral/15 text-coral">
@@ -350,7 +340,7 @@ export default function Home() {
         toggleFeature={toggleFeature}
       />
 
-      <Section id="industries" eyebrow="Industries" title="Experience across business-critical industries." intro="Opus Geeks highlights fintech, healthcare, retail, real estate, and other sectors where clean digital experiences can create measurable value." theme={theme}>
+      <Section id="industries" eyebrow="Industry depth" title="Context matters as much as clean code." intro="Our teams bring product judgment to regulated, transaction-heavy, and customer-facing industries where clarity and reliability directly affect growth." theme={theme}>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {industries.map((industry) => {
             const Icon = industry.icon;
@@ -366,7 +356,7 @@ export default function Home() {
 
       <Testimonials theme={theme} />
 
-      <Section id="faqs" eyebrow="FAQs" title="Questions answered before the contact form." intro="Useful answers help visitors understand what Opus Geeks offers and how to start a project conversation." theme={theme}>
+      <Section id="faqs" eyebrow="FAQs" title="The practical details, answered clearly." intro="What to expect from scope and collaboration through delivery, launch, and ongoing product support." theme={theme}>
         <div className="grid gap-4 lg:grid-cols-2">
           {faqs.map((item) => (
             <div key={item.q} className={`rounded-3xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
@@ -485,14 +475,15 @@ function Section({
   theme: "dark" | "light";
 }) {
   return (
-    <section id={id} className="relative z-10 scroll-mt-32 py-20 md:py-28">
+    <section id={id} className="relative z-10 scroll-mt-32 border-b border-ink/[0.06] py-16 md:py-20">
       <div className="section-shell">
-        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }} className="mb-10 max-w-3xl">
-          <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">{eyebrow}</span>
-          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>{title}</h2>
-          <p className={`mt-5 text-base leading-7 md:text-lg ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{intro}</p>
-          <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.18, duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="mt-6 h-px w-32 origin-left bg-gradient-to-r from-teal to-transparent" />
-        </motion.div>
+        <div className="mb-10 grid gap-4 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
+          <div>
+            <span className="mb-4 inline-flex text-xs font-semibold uppercase tracking-[0.2em] text-teal">{eyebrow}</span>
+            <h2 className={`text-balance text-3xl font-semibold leading-tight md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>{title}</h2>
+          </div>
+          <p className={`max-w-2xl text-base leading-7 lg:justify-self-end lg:text-lg ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{intro}</p>
+        </div>
         {children}
       </div>
     </section>
@@ -527,75 +518,86 @@ function BeforeAfter({
   theme: "dark" | "light";
 }) {
   return (
-    <section className="relative z-10 py-20 md:py-28">
-      <div className="section-shell grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-        <div>
-          <span className="mb-4 inline-flex rounded-full border border-coral/30 bg-coral/10 px-3 py-1 text-sm font-semibold text-coral">Before / After</span>
-          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Show the gap between a template site and a serious growth website.</h2>
-          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
-            A comparison slider instantly proves the redesign strategy: better hierarchy, stronger trust, cleaner copy, real case studies, and clear CTAs.
+    <section className={`relative z-10 border-y py-20 md:py-24 ${theme === "dark" ? "border-white/10 bg-[#202124]" : "border-ink/10 bg-white"}`}>
+      <div className="section-shell grid items-center gap-12 lg:grid-cols-[0.76fr_1.24fr]">
+        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
+          <span className="mb-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-teal">
+            <span className="h-2 w-2 rounded-full bg-[#42b72a]" />
+            Design transformation
+          </span>
+          <h2 className={`text-balance text-4xl font-semibold leading-tight md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>
+            From overlooked to <span className="text-teal">built to convert.</span>
+          </h2>
+          <p className={`mt-5 max-w-xl text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
+            Drag the divider to see how clearer positioning, stronger proof and intentional calls to action turn a generic website into a sales asset.
           </p>
-        </div>
-        <div className={`rounded-[32px] border p-4 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
-          <div className="relative h-[420px] overflow-hidden rounded-[24px] bg-ink">
-            <div className="absolute inset-0 p-5">
-              <div className="mb-5 text-sm font-semibold text-white/45">Before</div>
-              <div className="space-y-3">
-                <div className="h-16 rounded-2xl bg-white/10" />
-                <div className="h-8 w-3/5 rounded-full bg-white/10" />
-                <div className="grid grid-cols-2 gap-3 pt-5">
-                  {Array.from({ length: 6 }).map((_, index) => (
-                    <div key={index} className="h-20 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
-                      <div className="h-3 w-1/2 rounded bg-white/15" />
-                      <div className="mt-3 h-2 w-full rounded bg-white/10" />
-                      <div className="mt-2 h-2 w-2/3 rounded bg-white/10" />
-                    </div>
-                  ))}
-                </div>
+          <div className="mt-8 grid grid-cols-3 gap-3">
+            {[["2.4x", "More enquiries"], ["42%", "Clearer journey"], ["1.8s", "Load target"]].map(([value, label]) => (
+              <div key={label} className={`border-l-2 border-teal pl-3 ${theme === "dark" ? "text-white" : "text-ink"}`}>
+                <p className="text-2xl font-semibold">{value}</p>
+                <p className={`mt-1 text-xs leading-5 ${theme === "dark" ? "text-white/50" : "text-ink/50"}`}>{label}</p>
               </div>
-            </div>
-            <div className="absolute inset-0 overflow-hidden" style={{ clipPath: `inset(0 ${100 - sliderValue}% 0 0)` }}>
-              <div className="absolute inset-0 bg-[linear-gradient(135deg,#1877f2_0%,#1C1E21_52%,#42b72a_100%)] p-5">
-                <div className="mb-5 flex items-center justify-between text-sm font-semibold text-white">
-                  <span>After</span>
-                  <span className="rounded-full bg-white/15 px-3 py-1">Premium product lab</span>
-                </div>
-                <div className="rounded-3xl bg-black/25 p-5 backdrop-blur">
-                  <div className="h-6 w-4/5 rounded-full bg-white/80" />
-                  <div className="mt-4 h-3 w-2/3 rounded-full bg-white/40" />
-                  <div className="mt-6 grid grid-cols-3 gap-3">
-                    {["Estimator", "Case studies", "Hiring"].map((item) => (
-                      <div key={item} className="rounded-2xl bg-white/15 p-3">
-                        <Circle className="mb-4 h-4 w-4 fill-teal text-teal" />
-                        <div className="text-xs font-semibold text-white">{item}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="mt-4 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl bg-white/15 p-4 text-white">
-                    <div className="text-2xl font-semibold">42%</div>
-                    <div className="text-xs text-white/70">faster lead clarity</div>
-                  </div>
-                  <div className="rounded-2xl bg-white/15 p-4 text-white">
-                    <div className="text-2xl font-semibold">4 goals</div>
-                    <div className="text-xs text-white/70">sales, hiring, brand, global</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="absolute inset-y-0 w-1 bg-white shadow-glow" style={{ left: `${sliderValue}%` }} />
+            ))}
           </div>
-          <input
-            aria-label="Before after slider"
-            type="range"
-            min="18"
-            max="82"
-            value={sliderValue}
-            onChange={(event) => setSliderValue(Number(event.target.value))}
-            className="mt-5 w-full accent-teal"
-          />
-        </div>
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.6 }}>
+          <div className={`overflow-hidden rounded-[24px] border shadow-[0_24px_70px_rgba(15,23,42,0.14)] ${theme === "dark" ? "border-white/10 bg-[#18191a]" : "border-ink/10 bg-[#f7f8fa]"}`}>
+            <div className={`flex h-12 items-center gap-2 border-b px-4 ${theme === "dark" ? "border-white/10" : "border-ink/10"}`}>
+              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+              <div className={`ml-3 flex h-7 flex-1 items-center rounded-md px-3 text-[11px] ${theme === "dark" ? "bg-white/[0.06] text-white/35" : "bg-white text-ink/40"}`}>opusgeeks.com / growth-experience</div>
+            </div>
+            <div className="relative aspect-[16/10] min-h-[360px] overflow-hidden bg-[#e9edf3]">
+              <div className="absolute inset-0 bg-[#e5e7eb] p-6 text-[#6b7280] sm:p-8">
+                <div className="flex items-center justify-between border-b border-black/10 pb-5">
+                  <span className="text-lg font-bold text-[#9ca3af]">YOUR LOGO</span>
+                  <div className="flex gap-4 text-xs"><span>Home</span><span>Services</span><span>Contact</span></div>
+                </div>
+                <div className="mx-auto max-w-md py-12 text-center">
+                  <p className="text-3xl font-semibold text-[#6b7280] sm:text-4xl">Welcome to our website</p>
+                  <p className="mx-auto mt-4 max-w-sm text-sm leading-6">We provide digital solutions for all types of businesses. Contact us to learn more.</p>
+                  <span className="mt-7 inline-flex rounded bg-[#9ca3af] px-5 py-2 text-xs font-semibold text-white">LEARN MORE</span>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  {["Quality", "Innovation", "Support"].map((item) => <div key={item} className="rounded border border-black/10 bg-white/35 p-4 text-center text-xs font-semibold">{item}</div>)}
+                </div>
+                <span className="absolute bottom-4 right-5 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white">Before</span>
+              </div>
+
+              <div className="absolute inset-0 overflow-hidden bg-[#071419] text-white" style={{ clipPath: `inset(0 ${100 - sliderValue}% 0 0)` }}>
+                <div className="absolute inset-0 p-6 sm:p-8">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-5">
+                    <span className="flex items-center gap-2 text-sm font-semibold"><span className="grid h-7 w-7 place-items-center rounded bg-teal text-xs text-white">OG</span> OPUS GEEKS</span>
+                    <div className="flex items-center gap-4 text-xs text-white/55"><span>Expertise</span><span>Work</span><span className="rounded-full bg-teal px-4 py-2 font-semibold text-white">Start a project</span></div>
+                  </div>
+                  <div className="grid grid-cols-[1.05fr_0.95fr] items-center gap-8 py-9">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#53d6ca]">Digital product studio</p>
+                      <p className="mt-4 text-4xl font-semibold leading-tight">Products engineered for real growth.</p>
+                      <p className="mt-4 max-w-sm text-sm leading-6 text-white/55">Strategy, design and engineering aligned around measurable business outcomes.</p>
+                      <div className="mt-6 flex gap-3"><span className="rounded-full bg-teal px-5 py-2 text-xs font-semibold">Get an estimate</span><span className="rounded-full border border-white/15 px-5 py-2 text-xs">View work</span></div>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.06] p-5">
+                      <div className="flex items-end gap-2">
+                        {[42, 64, 52, 82, 70, 96].map((height, index) => <span key={index} className="flex-1 rounded-t bg-teal" style={{ height }} />)}
+                      </div>
+                      <div className="mt-5 flex justify-between border-t border-white/10 pt-4"><span className="text-xs text-white/40">Conversion growth</span><span className="text-lg font-semibold text-[#53d6ca]">+38.4%</span></div>
+                    </div>
+                  </div>
+                </div>
+                <span className="absolute bottom-4 left-5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink">After</span>
+              </div>
+
+              <div className="pointer-events-none absolute inset-y-0 z-20 w-0.5 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.12)]" style={{ left: `${sliderValue}%` }}>
+                <span className="absolute left-1/2 top-1/2 grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-4 border-white bg-teal text-sm font-bold text-white shadow-xl">↔</span>
+              </div>
+              <input aria-label="Compare the original and redesigned website" type="range" min="22" max="78" value={sliderValue} onChange={(event) => setSliderValue(Number(event.target.value))} className="comparison-range absolute inset-0 z-30 h-full w-full cursor-ew-resize opacity-0" />
+            </div>
+          </div>
+          <p className={`mt-4 text-center text-xs font-medium ${theme === "dark" ? "text-white/40" : "text-ink/40"}`}>Drag anywhere across the preview to compare</p>
+        </motion.div>
       </div>
     </section>
   );
@@ -608,7 +610,7 @@ function Journey({ theme }: { theme: "dark" | "light" }) {
         <div className="mb-12 max-w-3xl">
           <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">Interactive journey</span>
           <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Idea to wireframe to design to code to launch.</h2>
-          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>This scroll story helps visitors understand how Opus Geeks turns raw ideas into shipped products.</p>
+          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>Five accountable stages keep decisions visible, reduce rework, and carry one product vision from discovery through launch.</p>
         </div>
         <div className="relative grid gap-4 lg:grid-cols-5">
           <motion.div
@@ -649,7 +651,7 @@ function Journey({ theme }: { theme: "dark" | "light" }) {
 
 function FailurePrevention({ theme }: { theme: "dark" | "light" }) {
   return (
-    <Section id="failures" eyebrow="Risk control" title="Why projects fail, and how Opus Geeks prevents it." intro="This section makes the company look experienced because it names the problems clients already fear." theme={theme}>
+    <Section id="failures" eyebrow="Risk control" title="The risks are predictable. Our process addresses them early." intro="Clear ownership, validated scope, frequent demonstrations, and quality gates keep delivery aligned before small issues become expensive ones." theme={theme}>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {failurePrevention.map((item) => {
           const Icon = item.icon;
@@ -853,7 +855,7 @@ function Testimonials({ theme }: { theme: "dark" | "light" }) {
         <div>
           <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">Client voice</span>
           <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>What clients expect from Opus Geeks.</h2>
-          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>The original site includes client-review sections. This version keeps the proof section focused on trust, communication, design quality, and reliable delivery.</p>
+          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>Partnership is measured in clarity, responsiveness, design quality, and reliable delivery, not presentation alone.</p>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {testimonialItems.map((item) => (
