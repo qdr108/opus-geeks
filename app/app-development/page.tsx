@@ -165,12 +165,12 @@ export default function AppDevelopmentPage() {
       <section className="relative overflow-hidden border-b border-[#1C1E21]/10 bg-white py-16 md:py-20">
         <div className="pointer-events-none absolute right-0 top-0 h-full w-1/3 bg-[linear-gradient(135deg,transparent,rgba(24,119,242,0.1))]" />
         <div className="section-shell grid gap-8 lg:grid-cols-2 lg:items-center">
-          <motion.h2 initial="hidden" whileInView="show" viewport={{ once: true }} variants={reveal} className="text-balance text-4xl font-semibold leading-tight md:text-6xl">Progressive <span className="text-[#1877F2]">mobile application</span> development.</motion.h2>
-          <motion.p initial="hidden" whileInView="show" viewport={{ once: true }} variants={reveal} className="border-l border-[#1877F2]/40 pl-6 text-lg leading-8 text-[#1C1E21]/60">We specialize in progressive mobile application development that pushes boundaries and delivers unmatched user experiences. From polished design to advanced functionality, our team turns ambitious product ideas into dependable digital products.</motion.p>
+          <h2 className="text-balance text-4xl font-semibold leading-tight md:text-6xl">Progressive <span className="text-[#1877F2]">mobile application</span> development.</h2>
+          <p className="border-l border-[#1877F2]/40 pl-6 text-lg leading-8 text-[#1C1E21]/60">We specialize in progressive mobile application development that pushes boundaries and delivers unmatched user experiences. From polished design to advanced functionality, our team turns ambitious product ideas into dependable digital products.</p>
         </div>
       </section>
 
-      <section id="services" className="relative scroll-mt-32 overflow-hidden bg-[#f0f2f5] py-24 md:py-32">
+      <section id="services" className="relative scroll-mt-32 overflow-hidden bg-[#f0f2f5] py-20 md:py-24">
         <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(rgba(24,119,242,0.14)_1px,transparent_1px)] [background-size:24px_24px]" />
         <div className="section-shell">
           <div className="relative mx-auto max-w-3xl text-center">
@@ -182,7 +182,7 @@ export default function AppDevelopmentPage() {
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <motion.article key={service.title} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, margin: "-60px" }} variants={reveal} transition={{ delay: (index % 4) * 0.05 }} className="group relative min-h-[330px] overflow-hidden rounded-2xl border border-[#1C1E21]/10 bg-white p-7 shadow-[0_18px_45px_rgba(7,16,20,0.06)] transition hover:border-[#1877F2]/40 hover:shadow-[0_24px_60px_rgba(24,119,242,0.14)]">
+                <motion.article key={service.title} initial={false} whileHover={{ y: -6 }} transition={{ duration: 0.2 }} className="group relative min-h-[330px] overflow-hidden rounded-2xl border border-[#1C1E21]/10 bg-white p-7 shadow-[0_18px_45px_rgba(7,16,20,0.06)] transition hover:border-[#1877F2]/40 hover:shadow-[0_24px_60px_rgba(24,119,242,0.14)]">
                   <span className="absolute right-5 top-5 inline-flex h-10 min-w-12 items-center justify-center rounded-lg border border-[#1877F2]/20 bg-[#E7F3FF] px-2 text-lg font-bold text-[#1877F2] shadow-sm">0{index + 1}</span>
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1877F2]/10 text-[#1877F2] transition group-hover:-translate-y-1 group-hover:bg-[#1877F2] group-hover:text-white"><Icon className="h-6 w-6" /></div>
                   <h3 className="mt-7 text-xl font-semibold leading-7">{service.title}</h3>
@@ -201,7 +201,7 @@ export default function AppDevelopmentPage() {
             <div><p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">How we build</p><h2 className="mt-4 text-balance text-4xl font-semibold md:text-5xl">A product process with momentum.</h2><p className="mt-5 max-w-md text-base leading-7 text-[#1C1E21]/55">A transparent four-stage workflow keeps every decision visible and every milestone moving forward.</p></div>
             <div className="grid gap-px overflow-hidden rounded-2xl border border-[#1C1E21]/10 bg-[#1C1E21]/10 shadow-[0_16px_44px_rgba(28,30,33,0.08)] sm:grid-cols-2">
               {["Discover the opportunity", "Prototype the experience", "Engineer the product", "Launch and improve"].map((step, index) => (
-                <motion.div key={step} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} whileHover={{ backgroundColor: "#F0F6FF" }} viewport={{ once: true }} transition={{ delay: index * 0.08 }} className="bg-white p-6 md:p-8"><span className="text-sm font-semibold text-[#1877F2]">0{index + 1}</span><h3 className="mt-5 text-xl font-semibold">{step}</h3><p className="mt-3 text-sm leading-6 text-[#1C1E21]/55">Clear decisions, visible progress, and quality checks keep every stage aligned with the product goal.</p></motion.div>
+                <motion.div key={step} initial={false} whileHover={{ backgroundColor: "#F0F6FF" }} transition={{ duration: 0.2 }} className="bg-white p-6 md:p-8"><span className="text-sm font-semibold text-[#1877F2]">0{index + 1}</span><h3 className="mt-5 text-xl font-semibold">{step}</h3><p className="mt-3 text-sm leading-6 text-[#1C1E21]/55">Clear decisions, visible progress, and quality checks keep every stage aligned with the product goal.</p></motion.div>
               ))}
             </div>
           </div>
@@ -234,7 +234,7 @@ export default function AppDevelopmentPage() {
         </div>
         <div className="section-shell mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {caseStudies.map((study, index) => (
-            <motion.article key={study.title} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true }} variants={reveal} transition={{ delay: index * 0.06 }} className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-[#101a1e] shadow-2xl">
+            <motion.article key={study.title} initial={false} whileHover={{ y: -6 }} transition={{ duration: 0.2 }} className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-[#101a1e] shadow-2xl">
               <Image src={study.image} alt={`${study.title} mobile app case study`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover transition duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/5 to-transparent" />
               <div className="absolute inset-x-5 top-5 flex items-center justify-between text-xs uppercase tracking-[0.15em] text-white/65"><span>Case 0{index + 1}</span><Smartphone className="h-5 w-5" /></div>
