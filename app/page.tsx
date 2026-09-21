@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Premium3DShowcase } from "@/components/Premium3DShowcase";
+import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import {
   caseStudies,
   companyCopy,
@@ -106,7 +107,7 @@ export default function Home() {
     <main className={`relative min-h-screen overflow-hidden transition-colors duration-500 ${shellClass}`}>
       <motion.div className="fixed inset-x-0 top-0 z-[80] h-[3px] origin-left bg-gradient-to-r from-teal via-[#62a5ff] to-coral" style={{ scaleX: smoothScrollProgress }} />
       <div className={`pointer-events-none absolute inset-0 z-0 noise ${theme === "dark" ? "opacity-12" : "opacity-5"}`} />
-      <Header mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} theme={theme} setTheme={setTheme} />
+      <SiteHeader />
 
       <section id="home" className="relative z-10 min-h-screen scroll-mt-28 overflow-hidden pt-32">
         <div className="animated-grid pointer-events-none absolute inset-0 opacity-20" />
@@ -389,7 +390,7 @@ export default function Home() {
       </Section>
 
       <FinalCta theme={theme} />
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }
@@ -940,11 +941,11 @@ function Footer() {
             </a>
             <div className="mt-10 flex gap-3">
               {[
-                { label: "LinkedIn", icon: <Linkedin className="h-5 w-5" /> },
-                { label: "X", icon: <span className="text-lg">X</span> },
-                { label: "Facebook", icon: <Facebook className="h-5 w-5" /> }
+                { label: "LinkedIn", href: "https://www.linkedin.com/company/opusgeeks", icon: <Linkedin className="h-5 w-5" /> },
+                { label: "X", href: "https://x.com/opusgeeks?s=21", icon: <span className="text-lg">X</span> },
+                { label: "Facebook", href: "https://www.facebook.com/people/Opus-Geeks/100083553187361/", icon: <Facebook className="h-5 w-5" /> }
               ].map((social) => (
-                <a key={social.label} href="#" aria-label={`Opus Geeks on ${social.label}`} className="group flex h-11 w-11 items-center justify-center rounded-full border border-ink/15 text-ink/70 transition hover:-translate-y-1 hover:border-teal hover:bg-teal hover:text-white">
+                <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={`Opus Geeks on ${social.label}`} className="group flex h-11 w-11 items-center justify-center rounded-full border border-ink/15 text-ink/70 transition hover:-translate-y-1 hover:border-teal hover:bg-teal hover:text-white">
                   {social.icon}
                 </a>
               ))}

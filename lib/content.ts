@@ -29,8 +29,8 @@ export const navItems = [
   { label: "Portfolio", href: "/portfolio" },
   { label: "Blogs", href: "/blogs" },
   { label: "About", href: "/about" },
-  { label: "Contact Us", href: "#contact" },
-  { label: "FAQs", href: "#faqs" }
+  { label: "Contact Us", href: "/contact-us" },
+  { label: "FAQs", href: "/faqs" }
 ];
 
 export const services = [
