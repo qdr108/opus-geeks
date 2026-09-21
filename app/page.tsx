@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import {
   ArrowRight,
   CalendarCheck,
@@ -23,8 +23,7 @@ import {
   ArrowUp,
   X
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
-import { Premium3DShowcase } from "@/components/Premium3DShowcase";
+import { useMemo, useState } from "react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import {
   caseStudies,
@@ -63,11 +62,8 @@ export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("light");
   const [portfolioFilter, setPortfolioFilter] = useState("All");
   const [sliderValue, setSliderValue] = useState(54);
-  const [viewportMode, setViewportMode] = useState<"desktop" | "mobile" | null>(null);
   const { scrollYProgress } = useScroll();
   const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.2 });
-  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 90]);
-  const heroWords = companyCopy.heroTitle.split(" ");
   const filteredCaseStudies = useMemo(
     () => (portfolioFilter === "All" ? caseStudies : caseStudies.filter((study) => study.category === portfolioFilter)),
     [portfolioFilter]
@@ -76,14 +72,6 @@ export default function Home() {
     theme === "dark"
       ? "bg-ink text-cloud"
       : "bg-[#f0f2f5] text-ink [color-scheme:light]";
-
-  useEffect(() => {
-    const media = window.matchMedia("(min-width: 1024px)");
-    const update = () => setViewportMode(media.matches ? "desktop" : "mobile");
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
 
   const estimate = useMemo(() => {
     const base = budgets[budgetIndex].value;
@@ -109,43 +97,21 @@ export default function Home() {
       <div className={`pointer-events-none absolute inset-0 z-0 noise ${theme === "dark" ? "opacity-12" : "opacity-5"}`} />
       <SiteHeader />
 
-      <section id="home" className="relative z-10 min-h-screen scroll-mt-28 overflow-hidden pt-32">
-        <div className="animated-grid pointer-events-none absolute inset-0 opacity-20" />
-        <motion.div style={{ y: heroY }} className="absolute inset-0">
-          <Image
-            src="/images/opus-hero-command-center.png"
-            alt="Premium digital product command center with mobile and web dashboards"
-            fill
-            priority
-            className={`object-cover ${theme === "dark" ? "opacity-65" : "opacity-20"}`}
-          />
-          <div className={`absolute inset-0 ${theme === "dark" ? "bg-[linear-gradient(90deg,#1c1e21_0%,rgba(28,30,33,0.92)_34%,rgba(28,30,33,0.35)_100%)]" : "bg-[linear-gradient(90deg,#f0f2f5_0%,rgba(240,242,245,0.96)_38%,rgba(240,242,245,0.38)_100%)]"}`} />
-          <div className={`absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t ${theme === "dark" ? "from-ink" : "from-[#f0f2f5]"} to-transparent`} />
-        </motion.div>
-
-        <div className="section-shell relative grid min-h-[calc(100vh-7rem)] items-center pb-16 lg:grid-cols-[0.9fr_1.1fr]">
+      <section id="home" className={`relative z-10 scroll-mt-28 overflow-hidden pt-32 ${theme === "dark" ? "bg-[#18191a]" : "bg-[#f0f2f5]"}`}>
+        <div className="animated-grid pointer-events-none absolute inset-0 opacity-25" />
+        <div className="section-shell relative grid min-h-[760px] items-center gap-12 py-16 lg:grid-cols-[0.88fr_1.12fr] lg:py-20">
           <motion.div
             initial="hidden"
             animate="show"
             transition={{ staggerChildren: 0.08 }}
-            className="max-w-3xl"
+            className="relative z-10 max-w-2xl"
           >
             <motion.div variants={fadeUp} className={`mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm backdrop-blur ${theme === "dark" ? "border-white/15 bg-white/10 text-white/80" : "border-ink/10 bg-white/80 text-ink/65 shadow-sm"}`}>
               <Sparkles className="h-4 w-4 text-teal" />
               {companyCopy.heroEyebrow}
             </motion.div>
-            <motion.h1 variants={fadeUp} className={`text-balance text-5xl font-semibold tracking-normal md:text-7xl lg:text-8xl ${theme === "dark" ? "text-white" : "text-ink"}`}>
-              {heroWords.map((word, index) => (
-                <motion.span
-                  key={`${word}-${index}`}
-                  initial={{ opacity: 0, y: 34, filter: "blur(10px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  transition={{ delay: 0.18 + index * 0.045, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  className="mr-3 inline-block"
-                >
-                  {word}
-                </motion.span>
-              ))}
+            <motion.h1 variants={fadeUp} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} className={`text-balance text-5xl font-semibold leading-[0.98] tracking-normal md:text-6xl xl:text-7xl ${theme === "dark" ? "text-white" : "text-ink"}`}>
+              Build digital products that <span className="text-teal">move business forward.</span>
             </motion.h1>
             <motion.p variants={fadeUp} className={`mt-6 max-w-2xl text-lg leading-8 md:text-xl ${theme === "dark" ? "text-white/72" : "text-ink/70"}`}>
               {companyCopy.heroIntro}
@@ -159,19 +125,6 @@ export default function Home() {
                 See case studies
               </motion.a>
             </motion.div>
-            {viewportMode === "mobile" ? (
-              <motion.div
-                variants={fadeUp}
-                className="relative mt-10 overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.035]"
-              >
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(24, 119, 242,0.2),transparent_44%)]" />
-                <Premium3DShowcase compact />
-                <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-ink/70 px-4 py-3 backdrop-blur-xl">
-                  <div className="text-xs font-semibold uppercase tracking-[0.2em] text-teal">3D Product Lab</div>
-                  <div className="mt-1 text-sm font-semibold text-white/80">Apps • Websites • UI/UX</div>
-                </div>
-              </motion.div>
-            ) : null}
             <motion.div variants={fadeUp} className="mt-10 grid max-w-xl grid-cols-3 gap-3">
               {[
                 ["80+", "Projects"],
@@ -186,17 +139,52 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          {viewportMode === "desktop" ? (
+          <motion.div
+            initial={{ opacity: 0, x: 42, scale: 0.97 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ delay: 0.18, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+            className="relative mx-auto w-full max-w-[720px]"
+          >
+            <div className="absolute -inset-8 rounded-full bg-teal/10 blur-3xl" />
+            <div className={`relative overflow-hidden rounded-[28px] border p-2 shadow-[0_32px_80px_rgba(15,23,42,0.22)] ${theme === "dark" ? "border-white/15 bg-white/10" : "border-white bg-white"}`}>
+              <div className="flex h-10 items-center gap-2 px-3">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+                <span className={`ml-3 h-5 flex-1 rounded-md ${theme === "dark" ? "bg-white/10" : "bg-[#f0f2f5]"}`} />
+              </div>
+              <div className="relative aspect-[16/10] overflow-hidden rounded-[20px] bg-[#09151d]">
+                <Image
+                  src="/images/opus-hero-command-center.png"
+                  alt="Opus Geeks digital product engineering workspace"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 54vw, 100vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(2,10,16,0.82)_100%)]" />
+                <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4 text-white">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#53d6ca]">Product engineering studio</p>
+                    <p className="mt-2 text-xl font-semibold sm:text-2xl">Strategy. Design. Development.</p>
+                  </div>
+                  <div className="hidden rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-right sm:block">
+                    <p className="text-2xl font-semibold">80+</p>
+                    <p className="text-xs text-white/65">products delivered</p>
+                  </div>
+                </div>
+              </div>
+            </div>
             <motion.div
-              initial={{ opacity: 0, scale: 0.92, x: 40 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ delay: 0.35, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-              className="relative hidden min-h-[620px] items-center justify-center lg:flex"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.75, duration: 0.45 }}
+              className="absolute -bottom-5 right-4 rounded-2xl border border-white/80 bg-white px-5 py-4 shadow-xl sm:right-8"
             >
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_54%_48%,rgba(24, 119, 242,0.22),transparent_34%),radial-gradient(circle_at_75%_64%,rgba(66, 183, 42,0.18),transparent_30%)]" />
-              <Premium3DShowcase />
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal">Built for growth</p>
+              <p className="mt-1 font-semibold text-ink">Web · Mobile · UI/UX</p>
             </motion.div>
-          ) : null}
+          </motion.div>
         </div>
       </section>
 
