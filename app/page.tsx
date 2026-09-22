@@ -55,8 +55,8 @@ const featureOptions = ["CMS", "Payments", "AI Bot", "Dashboard", "Mobile App", 
 
 const journeyOutputs = [
   { label: "Product brief approved", metric: "Goals aligned", accent: "bg-[#1877F2]" },
-  { label: "User flow validated", metric: "Paths confirmed", accent: "bg-[#42B72A]" },
-  { label: "Design system approved", metric: "UI signed off", accent: "bg-[#F7B928]" },
+  { label: "User flow validated", metric: "Paths confirmed", accent: "bg-[#1877F2]" },
+  { label: "Design system approved", metric: "UI signed off", accent: "bg-[#1877F2]" },
   { label: "Build ready for QA", metric: "Tests passing", accent: "bg-[#1877F2]" },
   { label: "Release live and monitored", metric: "Launch verified", accent: "bg-[#42B72A]" }
 ];
@@ -731,7 +731,7 @@ function Journey({ theme }: { theme: "dark" | "light" }) {
                 <div className="pointer-events-none absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(24,119,242,.09)_1px,transparent_1px),linear-gradient(90deg,rgba(24,119,242,.09)_1px,transparent_1px)] [background-size:48px_48px]" />
                 <span className="pointer-events-none absolute -bottom-10 -right-2 text-[190px] font-semibold leading-none text-[#1877F2]/[.055] sm:text-[250px]">{String(activeStage + 1).padStart(2, "0")}</span>
                 <div className="relative z-10 w-full max-w-[500px] border border-ink/10 bg-white p-4 shadow-[0_28px_70px_rgba(28,30,33,.15)] sm:p-5">
-                  <div className="flex items-center gap-2 border-b border-ink/10 pb-4"><span className="h-2.5 w-2.5 rounded-full bg-[#F5534B]" /><span className="h-2.5 w-2.5 rounded-full bg-[#F7B928]" /><span className="h-2.5 w-2.5 rounded-full bg-[#42B72A]" /><span className="ml-3 h-7 flex-1 bg-[#F0F2F5]" /></div>
+                  <div className="flex items-center gap-2 border-b border-ink/10 pb-4"><span className="h-2.5 w-2.5 rounded-full bg-[#1877F2]" /><span className="h-2.5 w-2.5 rounded-full bg-[#AAB2BD]" /><span className="h-2.5 w-2.5 rounded-full bg-[#D8DDE5]" /><span className="ml-3 h-7 flex-1 bg-[#F0F2F5]" /></div>
                   <div className="grid min-h-[300px] grid-cols-[72px_1fr] pt-4">
                     <div className="border-r border-ink/10 pr-3"><span className="block h-9 bg-[#1877F2]" /><span className="mt-3 block h-2 bg-ink/10" /><span className="mt-3 block h-2 bg-ink/10" /><span className="mt-3 block h-2 bg-ink/10" /></div>
                     <div className="pl-4">

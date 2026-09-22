@@ -12,8 +12,7 @@ const config: Config = {
         ink: "#1C1E21",
         cloud: "#F0F2F5",
         teal: "#1877F2",
-        coral: "#42B72A",
-        gold: "#F7B928"
+        coral: "#42B72A"
       },
       boxShadow: {
         glow: "0 12px 40px rgba(24, 119, 242, 0.20)",
