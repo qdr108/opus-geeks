@@ -7,8 +7,7 @@ const MOTION_SELECTOR = [
   "main > section:not(:first-of-type) h2",
   "main > section:not(:first-of-type) article",
   "main > section:not(:first-of-type) form",
-  "main > section:not(:first-of-type) aside",
-  "main > section:not(:first-of-type) [class*='grid'] > div"
+  "main > section:not(:first-of-type) aside"
 ].join(",");
 
 export default function ScrollMotion() {

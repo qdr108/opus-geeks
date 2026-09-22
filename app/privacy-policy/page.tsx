@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Baby, Cookie, Database, ExternalLink, Mail, RefreshCw, ShieldCheck } from "lucide-react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 
@@ -17,8 +17,7 @@ const sections = [
 ];
 
 export default function PrivacyPolicyPage(){
-  const {scrollYProgress}=useScroll(); const progress=useSpring(scrollYProgress,{stiffness:110,damping:28,mass:.25});
-  return <main className="min-h-screen bg-[#F0F2F5] text-[#1C1E21]"><motion.div style={{scaleX:progress}} className="fixed inset-x-0 top-0 z-[70] h-[3px] origin-left bg-[#1877F2]"/><SiteHeader/>
+  return <main className="min-h-screen bg-[#F0F2F5] text-[#1C1E21]"><SiteHeader/>
     <section className="relative overflow-hidden border-b border-[#1C1E21]/10 bg-white pt-24"><div className="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(24,119,242,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(24,119,242,.07)_1px,transparent_1px)] [background-size:64px_64px]"/><div className="section-shell relative grid min-h-[430px] items-center gap-10 py-16 lg:grid-cols-[1fr_.65fr]"><motion.div initial={{opacity:0,y:24}} animate={{opacity:1,y:0}}><p className="text-sm font-semibold uppercase tracking-[.2em] text-[#1877F2]">Your information, handled responsibly</p><h1 className="mt-5 text-balance text-5xl font-semibold leading-[1.02] md:text-7xl">Privacy <span className="text-[#1877F2]">Policy.</span></h1><p className="mt-6 max-w-3xl text-lg leading-8 text-[#1C1E21]/60">Opus Geeks is committed to protecting the privacy and security of website visitors and users. This policy explains how we collect, use, and safeguard personal information when you visit our website or interact with us.</p></motion.div><motion.div initial={{opacity:0,scale:.9}} animate={{opacity:1,scale:1}} className="mx-auto flex h-48 w-48 items-center justify-center rounded-full border-[18px] border-[#E7F3FF] bg-[#1877F2] text-white shadow-[0_24px_55px_rgba(24,119,242,.25)]"><ShieldCheck className="h-20 w-20"/></motion.div></div></section>
 
     <section className="py-20 md:py-28"><div className="section-shell grid gap-10 lg:grid-cols-[280px_1fr]"><aside className="lg:sticky lg:top-32 lg:self-start"><div className="rounded-2xl border border-[#1C1E21]/10 bg-white p-5 shadow-sm"><p className="text-xs font-semibold uppercase tracking-[.18em] text-[#1877F2]">On this page</p><nav className="mt-4 space-y-1">{sections.map((section,index)=><a key={section.title} href={`#term-${index+1}`} className="flex gap-3 rounded-lg px-3 py-2.5 text-sm text-[#1C1E21]/55 transition hover:bg-[#E7F3FF] hover:text-[#1877F2]"><span className="font-semibold text-[#1877F2]">{String(index+1).padStart(2,"0")}</span>{section.title}</a>)}</nav></div><div className="mt-4 rounded-2xl bg-[#1877F2] p-5 text-white"><p className="text-sm text-white/70">Questions about your privacy?</p><Link href="/contact-us" className="mt-4 inline-flex items-center gap-2 font-semibold">Contact our team <ArrowRight className="h-4 w-4"/></Link></div></aside>

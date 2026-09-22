@@ -1,18 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Check, Mail, MapPin, Phone, Sparkles } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 110, damping: 28, mass: .25 });
   function submit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); setSubmitted(true); }
   return <main className="min-h-screen bg-[#F0F2F5] text-[#1C1E21]">
-    <motion.div style={{scaleX:progress}} className="fixed inset-x-0 top-0 z-[70] h-[3px] origin-left bg-[#1877F2]"/>
     <SiteHeader/>
     <section className="relative overflow-hidden border-b border-[#1C1E21]/10 bg-white pt-24"><div className="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(24,119,242,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(24,119,242,.07)_1px,transparent_1px)] [background-size:64px_64px]"/><div className="section-shell relative grid min-h-[570px] items-center gap-10 py-14 lg:grid-cols-[.95fr_1.05fr]"><motion.div initial={{opacity:0,y:25}} animate={{opacity:1,y:0}}><p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[.2em] text-[#1877F2]"><Sparkles className="h-4 w-4"/>Start a conversation</p><h1 className="mt-6 text-balance text-5xl font-semibold leading-[1.02] md:text-7xl">Get in touch <span className="text-[#1877F2]">with us.</span></h1><p className="mt-7 max-w-2xl text-lg leading-8 text-[#1C1E21]/60">Ready to take your project to the next level? Whether you have questions, want to discuss ideas, or are ready to get started, we&apos;d love to hear from you.</p><div className="mt-9 space-y-4"><a href="tel:+13466904693" className="flex items-center gap-4"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E7F3FF] text-[#1877F2]"><Phone className="h-5 w-5"/></span><span><small className="block text-[#1C1E21]/45">Call now</small><b>+1 (346) 690-4693</b></span></a><a href="mailto:contact@opusgeeks.com" className="flex items-center gap-4"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E7F3FF] text-[#1877F2]"><Mail className="h-5 w-5"/></span><span><small className="block text-[#1C1E21]/45">Email now</small><b>contact@opusgeeks.com</b></span></a></div></motion.div><motion.div initial={{opacity:0,x:35}} animate={{opacity:1,x:0}} className="relative h-[450px]"><Image src="/images/contact-main.png" alt="Contact Opus Geeks" fill priority className="object-contain drop-shadow-[0_28px_48px_rgba(28,30,33,.18)]"/></motion.div></div></section>
 

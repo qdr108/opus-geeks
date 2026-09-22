@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Building2, ChevronDown, GraduationCap, HeartPulse, Landmark, Lightbulb, Menu, Radio, ShieldCheck, Sparkles, Users, X, Zap } from "lucide-react";
 import { useState } from "react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
@@ -18,10 +18,7 @@ const industryIcons = [Landmark, Radio, Users, HeartPulse, Building2, Zap, Gradu
 
 export default function AboutPage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 110, damping: 28, mass: .25 });
   return <main className="min-h-screen bg-[#F0F2F5] text-[#1C1E21]">
-    <motion.div style={{scaleX:progress}} className="fixed inset-x-0 top-0 z-[70] h-[3px] origin-left bg-[#1877F2]"/>
     <SiteHeader/>
 
     <section className="relative overflow-hidden border-b border-[#1C1E21]/10 bg-white pt-24">

@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useSpring } from "framer-motion";
+import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
   CalendarCheck,
@@ -16,7 +17,7 @@ import {
   MousePointer2,
   Moon,
   Phone,
-  Sparkles,
+  Quote,
   Star,
   Sun,
   ArrowUp,
@@ -36,7 +37,6 @@ import {
   process,
   qualityChecks,
   services,
-  tech,
   testimonials as testimonialItems
 } from "@/lib/content";
 
@@ -61,8 +61,6 @@ export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("light");
   const [portfolioFilter, setPortfolioFilter] = useState("All");
   const [sliderValue, setSliderValue] = useState(54);
-  const { scrollYProgress } = useScroll();
-  const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.2 });
   const filteredCaseStudies = useMemo(
     () => (portfolioFilter === "All" ? caseStudies : caseStudies.filter((study) => study.category === portfolioFilter)),
     [portfolioFilter]
@@ -92,102 +90,77 @@ export default function Home() {
 
   return (
     <main className={`relative min-h-screen overflow-hidden transition-colors duration-500 ${shellClass}`}>
-      <motion.div className="fixed inset-x-0 top-0 z-[80] h-[3px] origin-left bg-gradient-to-r from-teal via-[#62a5ff] to-coral" style={{ scaleX: smoothScrollProgress }} />
       <div className={`pointer-events-none absolute inset-0 z-0 noise ${theme === "dark" ? "opacity-12" : "opacity-5"}`} />
       <SiteHeader />
 
-      <section id="home" className={`relative z-10 scroll-mt-28 overflow-hidden pt-32 ${theme === "dark" ? "bg-[#18191a]" : "bg-[#f0f2f5]"}`}>
-        <div className="animated-grid pointer-events-none absolute inset-0 opacity-25" />
-        <div className="section-shell relative grid min-h-[760px] items-center gap-12 py-16 lg:grid-cols-[0.88fr_1.12fr] lg:py-20">
+      <section id="home" className={`relative z-10 min-h-[820px] scroll-mt-28 overflow-hidden pt-24 ${theme === "dark" ? "bg-[#18191a]" : "bg-[#f7f9fc]"}`}>
+        <motion.div
+          initial={{ opacity: 0, scale: 1.035 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-x-0 bottom-0 top-24"
+        >
+          <Image
+            src="/images/opus-hero-command-center.png"
+            alt="Opus Geeks digital product engineering workspace"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[68%_center] lg:object-right"
+          />
+        </motion.div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 top-24 bg-[linear-gradient(180deg,#f7f9fc_0%,rgba(247,249,252,.98)_54%,rgba(247,249,252,.62)_73%,rgba(247,249,252,.12)_100%)] lg:bg-[linear-gradient(90deg,#f7f9fc_0%,#f7f9fc_43%,rgba(247,249,252,.97)_50%,rgba(247,249,252,.3)_60%,transparent_69%)]" />
+        <div className="animated-grid pointer-events-none absolute inset-0 opacity-20 [mask-image:linear-gradient(90deg,black,transparent_62%)]" />
+        <div className="section-shell relative flex min-h-[720px] items-center py-14 md:py-20">
           <motion.div
             initial="hidden"
             animate="show"
             transition={{ staggerChildren: 0.08 }}
-            className="relative z-10 max-w-2xl"
+            className="relative z-10 w-full max-w-[720px]"
           >
-            <motion.div variants={fadeUp} className={`mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm backdrop-blur ${theme === "dark" ? "border-white/15 bg-white/10 text-white/80" : "border-ink/10 bg-white/80 text-ink/65 shadow-sm"}`}>
-              <Sparkles className="h-4 w-4 text-teal" />
+            <motion.div variants={fadeUp} className="mb-7 flex items-center gap-3 text-xs font-semibold uppercase tracking-[.18em] text-teal">
+              <span className="h-px w-10 bg-teal" />
               {companyCopy.heroEyebrow}
             </motion.div>
-            <motion.h1 variants={fadeUp} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} className={`text-balance text-5xl font-semibold leading-[0.98] tracking-normal md:text-6xl xl:text-7xl ${theme === "dark" ? "text-white" : "text-ink"}`}>
-              Build digital products that <span className="text-teal">move business forward.</span>
+            <motion.h1 variants={fadeUp} transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }} className={`text-balance text-5xl font-semibold leading-[.94] tracking-normal md:text-7xl xl:text-[82px] ${theme === "dark" ? "text-white" : "text-ink"}`}>
+              Build digital products<br className="hidden md:block" /> that move business <span className="relative inline-block text-teal">forward.<span className="absolute -bottom-2 left-0 h-[3px] w-full origin-left bg-teal/30" /></span>
             </motion.h1>
-            <motion.p variants={fadeUp} className={`mt-6 max-w-2xl text-lg leading-8 md:text-xl ${theme === "dark" ? "text-white/72" : "text-ink/70"}`}>
+            <motion.p variants={fadeUp} className={`mt-8 max-w-xl text-base leading-7 md:text-lg md:leading-8 ${theme === "dark" ? "text-white/72" : "text-ink/65"}`}>
               {companyCopy.heroIntro}
             </motion.p>
             <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <motion.a whileHover={{ y: -3, scale: 1.02 }} whileTap={{ scale: 0.98 }} href="#estimator" className="shine group inline-flex items-center justify-center gap-2 rounded-full bg-teal px-6 py-4 font-semibold text-white shadow-[0_14px_34px_rgba(24,119,242,0.24)] transition hover:bg-[#166fe5]">
+              <motion.a whileHover={{ y: -3, scale: 1.01 }} whileTap={{ scale: 0.98 }} href="#estimator" className="shine group inline-flex items-center justify-center gap-2 rounded-lg bg-teal px-6 py-4 font-semibold text-white shadow-[0_14px_34px_rgba(24,119,242,0.24)] transition hover:bg-[#166fe5]">
                 Get free estimate
                 <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
               </motion.a>
-              <motion.a whileHover={{ y: -3 }} whileTap={{ scale: 0.98 }} href="/portfolio" className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-4 font-semibold backdrop-blur transition ${theme === "dark" ? "border-white/15 bg-white/10 text-white hover:border-white/35" : "border-ink/15 bg-white text-ink shadow-sm hover:border-teal/40"}`}>
+              <Link href="/portfolio" className={`inline-flex items-center justify-center gap-2 rounded-lg border px-6 py-4 font-semibold backdrop-blur transition hover:-translate-y-1 ${theme === "dark" ? "border-white/15 bg-white/10 text-white hover:border-white/35" : "border-ink/15 bg-white text-ink shadow-sm hover:border-teal/40"}`}>
                 See case studies
-              </motion.a>
+              </Link>
             </motion.div>
-            <motion.div variants={fadeUp} className="mt-10 grid max-w-xl grid-cols-3 gap-3">
+            <motion.div variants={fadeUp} className="mt-12 grid max-w-2xl grid-cols-3 border-y border-ink/10 bg-white/45 backdrop-blur-sm">
               {[
                 ["80+", "Projects"],
                 ["12", "Industries"],
                 ["4.9/5", "Client rating"]
-              ].map(([value, label]) => (
-                <motion.div key={label} whileHover={{ y: -6, scale: 1.02 }} className={`rounded-2xl border p-4 backdrop-blur ${theme === "dark" ? "glass" : "border-ink/10 bg-white/85 shadow-sm"}`}>
-                  <div className={`text-2xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{value}</div>
-                  <div className={`mt-1 text-sm ${theme === "dark" ? "text-white/55" : "text-ink/55"}`}>{label}</div>
+              ].map(([value, label], index) => (
+                <motion.div key={label} whileHover={{ x: 4 }} className={`py-4 ${index ? "border-l border-ink/10 pl-5 sm:pl-7" : "pr-4"}`}>
+                  <div className={`text-xl font-semibold md:text-2xl ${theme === "dark" ? "text-white" : "text-ink"}`}>{value}</div>
+                  <div className={`mt-1 text-xs uppercase tracking-[.12em] ${theme === "dark" ? "text-white/55" : "text-ink/45"}`}>{label}</div>
                 </motion.div>
               ))}
             </motion.div>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 42, scale: 0.97 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ delay: 0.18, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-auto w-full max-w-[720px]"
-          >
-            <div className="absolute -inset-8 rounded-full bg-teal/10 blur-3xl" />
-            <div className={`relative overflow-hidden rounded-[28px] border p-2 shadow-[0_32px_80px_rgba(15,23,42,0.22)] ${theme === "dark" ? "border-white/15 bg-white/10" : "border-white bg-white"}`}>
-              <div className="flex h-10 items-center gap-2 px-3">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-                <span className={`ml-3 h-5 flex-1 rounded-md ${theme === "dark" ? "bg-white/10" : "bg-[#f0f2f5]"}`} />
-              </div>
-              <div className="relative aspect-[16/10] overflow-hidden rounded-[20px] bg-[#09151d]">
-                <Image
-                  src="/images/opus-hero-command-center.png"
-                  alt="Opus Geeks digital product engineering workspace"
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 54vw, 100vw"
-                  className="object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(2,10,16,0.82)_100%)]" />
-                <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4 text-white">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#53d6ca]">Product engineering studio</p>
-                    <p className="mt-2 text-xl font-semibold sm:text-2xl">Strategy. Design. Development.</p>
-                  </div>
-                  <div className="hidden rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-right sm:block">
-                    <p className="text-2xl font-semibold">80+</p>
-                    <p className="text-xs text-white/65">products delivered</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.75, duration: 0.45 }}
-              className="absolute -bottom-5 right-4 rounded-2xl border border-white/80 bg-white px-5 py-4 shadow-xl sm:right-8"
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal">Built for growth</p>
-              <p className="mt-1 font-semibold text-ink">Web · Mobile · UI/UX</p>
-            </motion.div>
-          </motion.div>
         </div>
+        <div className="absolute right-[7%] top-36 hidden items-center gap-3 text-white/75 xl:flex">
+          <span className="grid h-9 w-9 place-items-center border border-white/30 text-xs font-semibold">01</span>
+          <span className="text-[10px] font-semibold uppercase tracking-[.2em]">Digital product engineering</span>
+        </div>
+        <motion.div initial={{ opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: .7, duration: .5 }} className="absolute bottom-10 right-8 hidden items-center gap-3 text-white lg:flex">
+          <span className="h-px w-12 bg-white/60" /><span className="text-xs font-semibold uppercase tracking-[.2em]">Strategy · Design · Engineering</span>
+        </motion.div>
       </section>
 
-      <LogoTicker theme={theme} />
+      <ServiceRail theme={theme} />
 
       <Section id="services" eyebrow="Capabilities" title="One product team, from strategy to scale." intro="Senior product thinking, thoughtful design, and dependable engineering brought together to launch digital experiences that perform." theme={theme}>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -490,21 +463,47 @@ function Section({
   );
 }
 
-function LogoTicker({ theme }: { theme: "dark" | "light" }) {
+function ServiceRail({ theme }: { theme: "dark" | "light" }) {
+  const featuredServices = [
+    {
+      number: "01",
+      title: "App Development",
+      detail: "Native and cross-platform products",
+      href: "/app-development"
+    },
+    {
+      number: "02",
+      title: "Web Development",
+      detail: "Fast, scalable digital platforms",
+      href: "/web-development"
+    },
+    {
+      number: "03",
+      title: "UX/UI Design",
+      detail: "Clear interfaces built around users",
+      href: "/ux-ui-design"
+    }
+  ];
+
   return (
-    <section className={`relative z-10 border-y py-5 ${theme === "dark" ? "border-white/10 bg-white/[0.03]" : "border-ink/10 bg-white/70"}`}>
-      <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r ${theme === "dark" ? "from-ink" : "from-white"} to-transparent`} />
-      <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l ${theme === "dark" ? "from-ink" : "from-white"} to-transparent`} />
-      <div className="flex overflow-hidden">
-        <div className="flex min-w-max animate-ticker gap-4 px-2">
-          {[...tech, ...tech].map((item, index) => (
-            <span key={`${item}-${index}`} className={`rounded-full border px-5 py-2 text-sm font-semibold shadow-sm ${theme === "dark" ? "border-white/10 bg-white/[0.04] text-white/70" : "border-ink/10 bg-white text-ink/65"}`}>
-              {item}
+    <nav aria-label="Featured services" className={`relative z-10 border-y ${theme === "dark" ? "border-white/10 bg-[#18191a]" : "border-ink/10 bg-white"}`}>
+      <div className="section-shell grid md:grid-cols-3">
+        {featuredServices.map((service, index) => (
+          <Link
+            key={service.title}
+            href={service.href}
+            className={`group flex min-h-32 items-center gap-5 py-6 transition-colors duration-300 md:px-7 ${index ? "border-t md:border-l md:border-t-0" : ""} ${theme === "dark" ? "border-white/10 hover:bg-white/[0.04]" : "border-ink/10 hover:bg-[#f7f9fc]"}`}
+          >
+            <span className="text-xs font-semibold tracking-[0.16em] text-teal">{service.number}</span>
+            <span className="min-w-0 flex-1">
+              <span className={`block text-lg font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{service.title}</span>
+              <span className={`mt-1 block text-sm ${theme === "dark" ? "text-white/55" : "text-ink/55"}`}>{service.detail}</span>
             </span>
-          ))}
-        </div>
+            <ArrowRight className="h-5 w-5 shrink-0 text-teal transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
+        ))}
       </div>
-    </section>
+    </nav>
   );
 }
 
@@ -721,7 +720,7 @@ function CeoMessage({ theme }: { theme: "dark" | "light" }) {
   return (
     <section id="about" className={`relative z-10 scroll-mt-32 border-y py-16 md:py-20 ${theme === "dark" ? "border-white/10 bg-[#202124]" : "border-ink/[0.06] bg-white"}`}>
       <div className="section-shell grid overflow-hidden rounded-3xl border border-ink/10 bg-[#f0f2f5] lg:grid-cols-[0.92fr_1.08fr]">
-        <a href="/about" className="group relative min-h-[430px] overflow-hidden bg-[#0b1820]" aria-label="Read the Opus Geeks story">
+        <Link href="/about" className="group relative min-h-[430px] overflow-hidden bg-[#0b1820]" aria-label="Read the Opus Geeks story">
           <Image src="/images/about-story.png" alt="Opus Geeks team collaborating on digital products" fill sizes="(min-width: 1024px) 46vw, 100vw" className="object-cover transition duration-700 group-hover:scale-[1.03]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#071419] via-[#071419]/20 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 p-7 md:p-9">
@@ -733,7 +732,7 @@ function CeoMessage({ theme }: { theme: "dark" | "light" }) {
               <ArrowRight className="h-6 w-6" />
             </span>
           </div>
-        </a>
+        </Link>
         <div className={`p-8 md:p-12 ${theme === "dark" ? "bg-[#18191a]" : "bg-white"}`}>
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-teal">About the studio</span>
           <h2 className={`mt-5 text-balance text-3xl font-semibold leading-tight md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>{companyCopy.aboutTitle}</h2>
@@ -747,9 +746,9 @@ function CeoMessage({ theme }: { theme: "dark" | "light" }) {
               </div>
             ))}
           </div>
-          <a href="/about" className={`mt-7 inline-flex items-center gap-3 font-semibold transition hover:gap-5 ${theme === "dark" ? "text-white" : "text-ink"}`}>
+          <Link href="/about" className={`mt-7 inline-flex items-center gap-3 font-semibold transition hover:gap-5 ${theme === "dark" ? "text-white" : "text-ink"}`}>
             Discover our story <ArrowRight className="h-5 w-5 text-teal" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>
@@ -854,26 +853,66 @@ function Estimator({
 }
 
 function Testimonials({ theme }: { theme: "dark" | "light" }) {
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const active = testimonialItems[activeTestimonial];
+
   return (
-    <section className="relative z-10 py-20 md:py-28">
-      <div className="section-shell grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
-        <div>
-          <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">Client voice</span>
-          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>What clients expect from Opus Geeks.</h2>
-          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>Partnership is measured in clarity, responsiveness, design quality, and reliable delivery, not presentation alone.</p>
+    <section className={`relative z-10 overflow-hidden border-y py-20 md:py-28 ${theme === "dark" ? "border-white/10 bg-[#18191a]" : "border-ink/10 bg-white"}`}>
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-1/3 bg-[linear-gradient(135deg,transparent_45%,rgba(24,119,242,.055)_45%,rgba(24,119,242,.055)_46%,transparent_46%)] bg-[length:32px_32px]" />
+      <div className="section-shell relative">
+        <div className="mb-12">
+          <div>
+            <span className="mb-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.2em] text-teal"><span className="h-px w-8 bg-teal" /> Client voices</span>
+            <h2 className={`max-w-4xl text-balance text-4xl font-semibold leading-[1.03] md:text-6xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Listen From Our <span className="text-teal">Clients</span></h2>
+          </div>
         </div>
-        <div className="grid gap-4 md:grid-cols-2">
-          {testimonialItems.map((item) => (
-            <div key={item.quote} className={`rounded-3xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
-              <div className="mb-5 flex gap-1 text-gold">
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <Star key={index} className="h-4 w-4 fill-current" />
-                ))}
+
+        <div className={`overflow-hidden border ${theme === "dark" ? "border-white/10" : "border-ink/10"}`}>
+          <div className="grid lg:grid-cols-[1.25fr_.75fr]">
+            <div className="relative flex min-h-[420px] flex-col justify-between overflow-hidden bg-teal p-7 text-white md:p-12 lg:min-h-[500px]">
+              <div className="pointer-events-none absolute -right-16 -top-24 text-[260px] font-black leading-none text-white/[.065]">“</div>
+              <div className="relative flex items-center justify-between">
+                <Quote className="h-9 w-9" strokeWidth={1.5} />
+                <div className="flex gap-1 text-white/85" aria-label="5 out of 5 stars">
+                  {Array.from({ length: 5 }).map((_, index) => <Star key={index} className="h-4 w-4 fill-current" />)}
+                </div>
               </div>
-              <p className={`text-lg leading-7 ${theme === "dark" ? "text-white/82" : "text-ink/82"}`}>{item.quote}</p>
-              <p className="mt-5 text-sm font-semibold text-teal">{item.name} - {item.role}</p>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTestimonial}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative my-10"
+                >
+                  <blockquote className="max-w-3xl text-balance text-2xl font-medium leading-[1.35] md:text-4xl">“{active.quote}”</blockquote>
+                  <div className="mt-9 flex items-center gap-4 border-t border-white/25 pt-6">
+                    <span className="grid h-11 w-11 place-items-center rounded-full bg-white font-semibold text-teal">{String(activeTestimonial + 1).padStart(2, "0")}</span>
+                    <div><p className="font-semibold">{active.name}</p><p className="mt-1 text-sm text-white/68">Client testimonial</p></div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              <p className="relative text-xs font-semibold uppercase tracking-[.2em] text-white/60">Opus Geeks · Client experience</p>
             </div>
-          ))}
+
+            <div className={`max-h-[500px] overflow-y-auto ${theme === "dark" ? "bg-[#202122]" : "bg-white"}`}>
+              {testimonialItems.map((item, index) => (
+                <button
+                  key={item.quote}
+                  type="button"
+                  onClick={() => setActiveTestimonial(index)}
+                  className={`group flex min-h-[105px] w-full items-center gap-5 border-b px-6 text-left transition last:border-b-0 md:px-8 ${theme === "dark" ? "border-white/10" : "border-ink/10"} ${activeTestimonial === index ? theme === "dark" ? "bg-white/[.07]" : "bg-[#e7f3ff]" : theme === "dark" ? "hover:bg-white/[.04]" : "hover:bg-[#f7f9fc]"}`}
+                >
+                  <span className={`text-xs font-semibold ${activeTestimonial === index ? "text-teal" : theme === "dark" ? "text-white/30" : "text-ink/30"}`}>{String(index + 1).padStart(2, "0")}</span>
+                  <span className="min-w-0 flex-1"><span className={`block font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{item.name}</span><span className={`mt-1 block text-sm ${theme === "dark" ? "text-white/45" : "text-ink/45"}`}>Read testimonial</span></span>
+                  <ArrowRight className={`h-5 w-5 transition group-hover:translate-x-1 ${activeTestimonial === index ? "text-teal" : theme === "dark" ? "text-white/25" : "text-ink/25"}`} />
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

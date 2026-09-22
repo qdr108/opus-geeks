@@ -305,27 +305,43 @@ export const companyCopy = {
 
 export const testimonials = [
   {
-    quote:
-      "Opus Geeks understood the idea quickly and turned it into a smooth digital experience with a clean design direction.",
-    name: "Client Review",
-    role: "Mobile app project"
+    quote: "Overall very pleased with Peter and his friendliness with us. Thanks to their knowledge and determination our website looks great and functions really good. He did everything we asked in a timely matter. I will definitely be recommending him to other companies. Thanks for such good work.",
+    name: "GOD Bless You"
   },
   {
-    quote:
-      "The team was responsive, professional, and focused on making the website look modern while keeping it easy to use.",
-    name: "Client Review",
-    role: "Website development"
+    quote: "Mr. Eric Sanchez was my primary point of contact during the development of my website but every individual I spoke with were a pleasure to deal with. Bottom line I am very pleased with the end result and the process was informative and went smoothly. What stood out was that this company truly wants you to be happy with their work and succeed in your endeavors.",
+    name: "Ronald A Hurst"
   },
   {
-    quote:
-      "Their UI/UX approach helped simplify the product flow and made the interface feel more professional.",
-    name: "Client Review",
-    role: "UI/UX design"
+    quote: "I would recommend Opus Geeks to anyone, especially, Eric! He is super professional and responsive, always going above and beyond, making sure I am 100% satisfied with the project. Eric also cares about my concerns and is always willing to address them in a timely manner. Thank you so much, Eric! You are the BEST!",
+    name: "Kristin Watson"
   },
   {
-    quote:
-      "A reliable team for digital product work, from planning and design to development and launch support.",
-    name: "Client Review",
-    role: "Digital product"
+    quote: "Love this company! They are very responsive and professional. I will be hiring them for all future web design needs. I had a great experience and it’s so nice working with a company you can trust with your own business. Highly recommend!!",
+    name: "Madison Bullington"
+  },
+  {
+    quote: "I had a wonderful experience with Opus Geeks working on my website. They are knowledgable and very helpful. They were able to get exactly what I was going for with the design and functions of the site as well. It was easy to communicate with Peter and I am so thankful for all their help!",
+    name: "Christineh"
+  },
+  {
+    quote: "This guys are awesome, profesional, accurate and fast. Peter is the man, very responsive and profesional, my site looks amazing. I recommend this team 100% They will not disappointed you! Give them them your job.",
+    name: "Neptali Martinez"
+  },
+  {
+    quote: "worked with Peter to make updates on our website and he was very helpful and got my job completed in the time promised. I will definitely work with them again on any additional jobs going forward.",
+    name: "Vanessa Soto"
+  },
+  {
+    quote: "Both Eric & Peter are great to work with! They are very responsive, provide valuable feedback and try their best to incorporate our inputs. I highly recommend this team",
+    name: "Savanne Holdings"
+  },
+  {
+    quote: "The website is taking shape nicely, thanks to the hard work and diligence of Peter and team. Very pleasant company to deal with and accommodate all change requests. The website is functioning exactly as requested, and would certainly recommend Opus Geeks to others, particularly for those who like me have struggled to develop a website for themselves.",
+    name: "Adrian"
+  },
+  {
+    quote: "My friend referred me after a disastrous and costly debacle with another developer. Within a week the team had delivered EXACTLY what I was looking for in my website revision! I could not be any happier or more satisfied with their professionalism and efficiency!",
+    name: "Gabrielle Johnson"
   }
 ];

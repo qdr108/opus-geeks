@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, ChevronDown, Code2, Component, Menu, Smartphone, Sparkles, X } from "lucide-react";
 import { useState } from "react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
@@ -23,13 +23,10 @@ const filters = ["All", "Web Development", "App Development", "UI/UX Design"];
 export default function PortfolioPage() {
   const [active, setActive] = useState("All");
   const [menuOpen, setMenuOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 110, damping: 28, mass: 0.25 });
   const visible = active === "All" ? projects : projects.filter((project) => project.category === active);
 
   return (
     <main id="top" className="min-h-screen bg-[#F0F2F5] text-[#1C1E21]">
-      <motion.div style={{ scaleX: progress }} className="fixed inset-x-0 top-0 z-[70] h-[3px] origin-left bg-[#1877F2]" />
       <SiteHeader />
 
       <section className="relative overflow-hidden border-b border-[#1C1E21]/10 bg-white pt-24">

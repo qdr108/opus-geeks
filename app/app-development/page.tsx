@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ArrowRight,
   ArrowUp,
@@ -94,8 +94,6 @@ export default function AppDevelopmentPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 110, damping: 28, mass: 0.25 });
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
@@ -116,7 +114,6 @@ export default function AppDevelopmentPage() {
 
   return (
     <main id="top" className="min-h-screen overflow-hidden bg-[#f0f2f5] text-[#1C1E21]">
-      <motion.div className="fixed inset-x-0 top-0 z-[70] h-[3px] origin-left bg-gradient-to-r from-[#1877F2] via-[#09aee8] to-[#d2a95d]" style={{ scaleX: smoothProgress }} />
       <SiteHeader />
 
       <section className="relative min-h-[780px] overflow-hidden border-b border-[#1C1E21]/10 pt-28 lg:min-h-[860px]">
