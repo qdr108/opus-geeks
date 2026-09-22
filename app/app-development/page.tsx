@@ -151,10 +151,10 @@ export default function AppDevelopmentPage() {
 
           <motion.div initial={{ opacity: 0, scale: 0.9, x: 40 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="relative mx-auto h-[480px] w-full max-w-[590px] md:h-[590px]">
             <div className="absolute inset-x-8 bottom-8 h-24 rounded-full bg-[#d2a95d]/20 blur-3xl" />
-            <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute inset-0">
+            <motion.div animate={{ y: [8, 0] }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="absolute inset-0">
               <Image src="/images/app-phones.png" alt="Le Cavalier Cellars mobile application on two phones" fill priority sizes="(max-width: 1024px) 90vw, 46vw" className="object-contain drop-shadow-[0_35px_55px_rgba(0,0,0,0.5)]" />
             </motion.div>
-            <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-8 right-0 rounded-2xl border border-white/15 bg-[#0b171b]/95 px-5 py-4 shadow-xl backdrop-blur">
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.45 }} className="absolute bottom-8 right-0 rounded-2xl border border-white/15 bg-[#0b171b]/95 px-5 py-4 shadow-xl">
               <p className="text-xs uppercase tracking-[0.18em] text-[#d2a95d]">Featured launch</p>
               <p className="mt-1 text-sm font-semibold">Commerce experience · iOS &amp; Android</p>
             </motion.div>
