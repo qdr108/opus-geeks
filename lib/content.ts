@@ -84,7 +84,7 @@ export const caseStudies = [
     sector: "Fintech",
     category: "Web Development",
     result: "Built for secure digital finance workflows",
-    image: "linear-gradient(135deg, #16262d 0%, #0e7c78 52%, #ff7a59 100%)",
+    image: "/images/portfolio-fintech-platform.jpg",
     summary:
       "A web platform concept aligned with Opus Geeks' fintech industry focus, covering onboarding, dashboards, payment flows, and reporting.",
     stack: ["Web app", "Dashboard", "Payments", "Security"]
@@ -94,7 +94,7 @@ export const caseStudies = [
     sector: "Healthcare",
     category: "App Development",
     result: "Designed for patient-friendly access",
-    image: "linear-gradient(135deg, #102027 0%, #16d1c2 48%, #f7c948 100%)",
+    image: "/images/portfolio-healthcare-experience.jpg",
     summary:
       "A healthcare app direction focused on appointment flows, patient communication, reminders, and simple mobile usability.",
     stack: ["Mobile app", "UX flows", "Notifications", "Secure data"]
@@ -104,7 +104,7 @@ export const caseStudies = [
     sector: "Retail",
     category: "Web Development",
     result: "Structured for online sales growth",
-    image: "linear-gradient(135deg, #111827 0%, #ff7a59 45%, #16d1c2 100%)",
+    image: "/images/portfolio-retail-system.jpg",
     summary:
       "A retail website and ecommerce direction based on product discovery, checkout clarity, customer trust, and conversion-focused design.",
     stack: ["Ecommerce", "CMS", "Analytics", "Responsive web"]
@@ -114,7 +114,7 @@ export const caseStudies = [
     sector: "Real Estate",
     category: "UI/UX Design",
     result: "Built around property discovery",
-    image: "linear-gradient(135deg, #101418 0%, #f7c948 42%, #16d1c2 100%)",
+    image: "/images/portfolio-real-estate-ux.jpg",
     summary:
       "A real estate interface direction with better listing cards, search experience, property detail pages, and inquiry-focused CTAs.",
     stack: ["Figma", "Design System", "Next.js", "Analytics"]
@@ -124,7 +124,7 @@ export const caseStudies = [
     sector: "Business",
     category: "UI/UX Design",
     result: "Focused on brand image and trust",
-    image: "linear-gradient(135deg, #151a22 0%, #16d1c2 36%, #ffffff 100%)",
+    image: "/images/portfolio-brand-redesign.jpg",
     summary:
       "A premium website design direction for companies that want stronger credibility, better storytelling, and clearer lead generation.",
     stack: ["UI/UX", "Branding", "Web design", "Lead capture"]
@@ -134,7 +134,7 @@ export const caseStudies = [
     sector: "Engagement",
     category: "Game Development",
     result: "Made for stronger user engagement",
-    image: "linear-gradient(135deg, #071014 0%, #ff7a59 44%, #f5f7fa 100%)",
+    image: "/images/portfolio-game-experience.jpg",
     summary:
       "A lightweight game or interactive web experience concept for campaigns, product education, and memorable brand interaction.",
     stack: ["Game UI", "Web game", "Animation", "Engagement"]

@@ -8,13 +8,13 @@ import {
   CalendarCheck,
   Check,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   Facebook,
   Linkedin,
   MapPin,
   Mail,
   Menu,
-  MousePointer2,
   Moon,
   Phone,
   Quote,
@@ -23,7 +23,7 @@ import {
   ArrowUp,
   X
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import {
   caseStudies,
@@ -53,6 +53,14 @@ const budgets = [
 
 const featureOptions = ["CMS", "Payments", "AI Bot", "Dashboard", "Mobile App", "Analytics"];
 
+const journeyOutputs = [
+  { label: "Product brief approved", metric: "Goals aligned", accent: "bg-[#1877F2]" },
+  { label: "User flow validated", metric: "Paths confirmed", accent: "bg-[#42B72A]" },
+  { label: "Design system approved", metric: "UI signed off", accent: "bg-[#F7B928]" },
+  { label: "Build ready for QA", metric: "Tests passing", accent: "bg-[#1877F2]" },
+  { label: "Release live and monitored", metric: "Launch verified", accent: "bg-[#42B72A]" }
+];
+
 export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [serviceIndex, setServiceIndex] = useState(0);
@@ -60,11 +68,29 @@ export default function Home() {
   const [budgetIndex, setBudgetIndex] = useState(1);
   const [theme, setTheme] = useState<"dark" | "light">("light");
   const [portfolioFilter, setPortfolioFilter] = useState("All");
+  const [activeWorkIndex, setActiveWorkIndex] = useState(0);
   const [sliderValue, setSliderValue] = useState(54);
   const filteredCaseStudies = useMemo(
     () => (portfolioFilter === "All" ? caseStudies : caseStudies.filter((study) => study.category === portfolioFilter)),
     [portfolioFilter]
   );
+  const activeCaseStudy = filteredCaseStudies[activeWorkIndex] ?? filteredCaseStudies[0];
+
+  useEffect(() => {
+    const preloadPortfolio = () => {
+      caseStudies.slice(1).forEach((study) => {
+        const image = new window.Image();
+        image.src = study.image;
+        void image.decode?.().catch(() => undefined);
+      });
+    };
+    const idleId = window.requestIdleCallback?.(preloadPortfolio, { timeout: 1800 });
+    const timeoutId = idleId === undefined ? window.setTimeout(preloadPortfolio, 700) : undefined;
+    return () => {
+      if (idleId !== undefined) window.cancelIdleCallback?.(idleId);
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+    };
+  }, []);
   const shellClass =
     theme === "dark"
       ? "bg-ink text-cloud"
@@ -81,11 +107,17 @@ export default function Home() {
       timeline: budgets[budgetIndex].timeline
     };
   }, [budgetIndex, selectedFeatures.length, serviceIndex]);
+  const activeService = services[serviceIndex];
+  const ActiveServiceIcon = activeService.icon;
 
   function toggleFeature(feature: string) {
     setSelectedFeatures((current) =>
       current.includes(feature) ? current.filter((item) => item !== feature) : [...current, feature]
     );
+  }
+
+  function moveWork(direction: number) {
+    setActiveWorkIndex((current) => (current + direction + filteredCaseStudies.length) % filteredCaseStudies.length);
   }
 
   return (
@@ -163,107 +195,131 @@ export default function Home() {
       <ServiceRail theme={theme} />
 
       <Section id="services" eyebrow="Capabilities" title="One product team, from strategy to scale." intro="Senior product thinking, thoughtful design, and dependable engineering brought together to launch digital experiences that perform." theme={theme}>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.button
-                key={service.title}
-                initial={false}
-                whileHover={{ y: -10, scale: 1.015 }}
-                whileTap={{ scale: 0.985 }}
-                transition={{ duration: 0.2 }}
-                onClick={() => setServiceIndex(index)}
-                className={`premium-border group relative overflow-hidden rounded-2xl border p-6 text-left transition ${serviceIndex === index ? "border-teal bg-teal/10 shadow-glow" : theme === "dark" ? "border-white/10 bg-white/[0.04] hover:border-white/25" : "border-ink/10 bg-white hover:border-ink/25"}`}
+        <div className={`grid overflow-hidden border shadow-[0_24px_70px_rgba(28,30,33,.07)] lg:grid-cols-[0.72fr_1.28fr] ${theme === "dark" ? "border-white/12 bg-white/[0.025]" : "border-ink/10 bg-white"}`}>
+          <div className={`p-3 sm:p-5 lg:border-r lg:p-7 ${theme === "dark" ? "border-white/10" : "border-ink/10"}`}>
+            <p className={`px-3 pb-4 pt-2 text-[11px] font-semibold uppercase tracking-[0.18em] ${theme === "dark" ? "text-white/38" : "text-ink/38"}`}>Select a capability</p>
+            <div className="grid grid-cols-2 gap-1 lg:grid-cols-1">
+              {services.map((service, index) => {
+                const Icon = service.icon;
+                const selected = serviceIndex === index;
+                return (
+                  <button
+                    key={service.title}
+                    type="button"
+                    onClick={() => setServiceIndex(index)}
+                    aria-pressed={selected}
+                    className={`group flex min-h-[76px] items-center gap-3 px-3 py-3 text-left transition-colors duration-200 sm:gap-4 sm:px-4 ${selected ? "bg-[#E7F3FF] text-[#1877F2]" : theme === "dark" ? "text-white/68 hover:bg-white/[0.05] hover:text-white" : "text-ink/66 hover:bg-[#F0F2F5] hover:text-ink"}`}
+                  >
+                    <span className={`hidden text-[10px] font-semibold tracking-[0.14em] sm:block ${selected ? "text-[#1877F2]" : "opacity-45"}`}>{String(index + 1).padStart(2, "0")}</span>
+                    <Icon className="h-5 w-5 shrink-0" strokeWidth={1.8} />
+                    <span className="min-w-0 flex-1 text-sm font-semibold leading-5 sm:text-base">{service.title}</span>
+                    <ChevronRight className={`hidden h-4 w-4 shrink-0 transition-transform sm:block ${selected ? "translate-x-0 opacity-100" : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"}`} />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="relative min-h-[520px] overflow-hidden bg-[#F7F9FC] p-7 text-ink sm:p-10 lg:p-14">
+            <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(24,119,242,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(24,119,242,.07)_1px,transparent_1px)] [background-size:48px_48px]" />
+            <span className="pointer-events-none absolute -right-3 -top-12 text-[180px] font-semibold leading-none text-[#1877F2]/[0.055] sm:text-[240px]">{String(serviceIndex + 1).padStart(2, "0")}</span>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeService.title}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22 }}
+                className="relative z-10 flex h-full flex-col"
               >
-                <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl text-teal ${theme === "dark" ? "bg-white/10" : "bg-ink/[0.04]"}`}>
-                  <motion.span whileHover={{ rotate: -8, scale: 1.08 }}>
-                    <Icon className="h-6 w-6" />
-                  </motion.span>
+                <div className="flex items-start justify-between gap-5">
+                  <span className="flex h-14 w-14 items-center justify-center bg-[#E7F3FF] text-[#1877F2]">
+                    <ActiveServiceIcon className="h-7 w-7" strokeWidth={1.7} />
+                  </span>
+                  <span className="text-xs font-semibold tracking-[0.18em] text-ink/38">{String(serviceIndex + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}</span>
                 </div>
-                <h3 className={`text-xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{service.title}</h3>
-                <p className={`mt-3 min-h-24 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{service.description}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {service.deliverables.map((item) => (
-                    <span key={item} className={`rounded-full px-3 py-1 text-xs ${theme === "dark" ? "bg-white/8 text-white/70" : "bg-ink/[0.04] text-ink/70"}`}>
-                      {item}
+                <p className="mt-10 text-xs font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Selected capability</p>
+                <h3 className="mt-3 max-w-2xl text-4xl font-semibold leading-tight sm:text-5xl">{activeService.title}</h3>
+                <p className="mt-6 max-w-2xl text-base leading-7 text-ink/60 sm:text-lg sm:leading-8">{activeService.description}</p>
+                <div className="mt-9 grid grid-cols-2 border-y border-ink/12 sm:grid-cols-3">
+                  {activeService.deliverables.map((item, index) => (
+                    <span key={item} className={`flex min-h-16 items-center gap-2 border-ink/10 py-3 text-sm font-medium text-ink/72 ${index % 2 ? "border-l pl-4 sm:border-l-0 sm:pl-0" : "pr-3"} ${index % 3 ? "sm:border-l sm:pl-4" : "sm:pr-3"}`}>
+                      <Check className="h-4 w-4 shrink-0 text-[#1877F2]" />{item}
                     </span>
                   ))}
                 </div>
-              </motion.button>
-            );
-          })}
+                <a href="#estimator" className="group mt-auto inline-flex w-fit items-center gap-3 pt-9 font-semibold text-ink">
+                  Plan this project <span className="flex h-10 w-10 items-center justify-center bg-[#1877F2] text-white transition-transform group-hover:translate-x-1"><ArrowRight className="h-5 w-5" /></span>
+                </a>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </Section>
 
       <Section id="work" eyebrow="Selected work" title="Digital products designed around business outcomes." intro="Explore product directions across fintech, healthcare, commerce, and emerging platforms, each shaped around a distinct customer and growth challenge." theme={theme}>
-        <div className="mb-6 flex flex-wrap gap-2">
+        <div className="mb-8 flex w-fit max-w-full flex-wrap gap-1" role="group" aria-label="Filter case studies">
           {["All", "App Development", "Web Development", "UI/UX Design", "Game Development"].map((filter) => (
             <button
               key={filter}
-              onClick={() => setPortfolioFilter(filter)}
-              className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+              onClick={() => { setPortfolioFilter(filter); setActiveWorkIndex(0); }}
+              className={`border px-4 py-3 text-sm font-semibold transition-colors sm:px-5 ${
                 portfolioFilter === filter
-                  ? "border-teal bg-teal text-white"
+                  ? "border-[#1877F2] bg-[#1877F2] text-white"
                   : theme === "dark"
-                    ? "border-white/10 bg-white/[0.04] text-white/65"
-                    : "border-ink/10 bg-white text-ink/65"
+                    ? "border-white/10 bg-white/[0.025] text-white/60 hover:bg-white/[0.06] hover:text-white"
+                    : "border-ink/10 bg-white text-ink/55 hover:bg-[#F0F2F5] hover:text-ink"
               }`}
             >
               {filter}
             </button>
           ))}
         </div>
-        <div className="grid gap-5 lg:grid-cols-3">
-          {filteredCaseStudies.map((study) => (
-            <motion.article
-              key={study.title}
-              initial={false}
-              whileHover={{ y: -8 }}
-              transition={{ duration: 0.2 }}
-              className={`premium-border group relative overflow-hidden rounded-2xl border transition hover:-translate-y-1 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
-            >
-              <div className="relative h-56 overflow-hidden" style={{ background: study.image }}>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.26),transparent_28%),linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.24))]" />
-                <div className="absolute inset-5 rounded-3xl border border-white/24 bg-black/24 p-5 backdrop-blur-md transition duration-500 group-hover:scale-[1.03]">
-                  <div className="mb-5 flex items-center justify-between">
-                    <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white">{study.sector}</span>
-                    <motion.span whileHover={{ rotate: 8, scale: 1.08 }} className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-ink shadow-lg">
-                      <MousePointer2 className="h-4 w-4" />
-                    </motion.span>
-                  </div>
-                  <div className="min-h-24">
-                    <div className="text-xs font-bold uppercase tracking-[0.18em] text-white/65">Opus Geeks Case Study</div>
-                    <h3 className="mt-2 max-w-xs text-2xl font-semibold leading-tight text-white">{study.title}</h3>
-                    <p className="mt-2 line-clamp-2 text-sm leading-5 text-white/72">{study.result}</p>
-                  </div>
-                  <div className="mt-5 grid grid-cols-3 gap-2">
-                    {study.stack.slice(0, 3).map((item) => (
-                      <motion.div
-                        key={item}
-                        whileHover={{ y: -4 }}
-                        className="rounded-2xl bg-white/18 p-3 text-xs font-semibold text-white shadow-sm"
-                      >
-                        {item}
-                      </motion.div>
-                    ))}
-                  </div>
+        <div className={`overflow-hidden rounded-lg border ${theme === "dark" ? "border-white/10 bg-[#18191a]" : "border-ink/10 bg-white"}`}>
+            <article className="grid lg:grid-cols-[1.35fr_.65fr]">
+              <div className="group relative flex min-h-[430px] items-center justify-center overflow-hidden bg-[#E9EDF2] px-6 py-20 sm:min-h-[560px] sm:px-10 lg:min-h-[680px]">
+                <div className="pointer-events-none absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(28,30,33,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(28,30,33,.08)_1px,transparent_1px)] [background-size:52px_52px]" />
+                <span className="pointer-events-none absolute -bottom-12 -left-3 text-[170px] font-semibold leading-none text-ink/[0.045] sm:text-[230px]">{String(activeWorkIndex + 1).padStart(2, "0")}</span>
+                <Image
+                  src={activeCaseStudy.image}
+                  alt={`${activeCaseStudy.title} project mockup`}
+                  width={1586}
+                  height={992}
+                  priority
+                  unoptimized
+                  sizes="(max-width: 1024px) 90vw, 760px"
+                  className="relative z-10 h-auto w-[calc(100%_-_1rem)] max-w-[760px] rounded-lg shadow-[0_28px_70px_rgba(28,30,33,.22)] transition-transform duration-500 ease-out group-hover:-translate-y-1"
+                />
+                <div className="absolute left-5 top-5 z-20 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.14em] sm:left-7 sm:top-7 sm:gap-3 sm:text-[11px] sm:tracking-[0.16em]">
+                  <span className="bg-ink px-3 py-2 text-white">{activeCaseStudy.sector}</span>
+                  <span className="border border-ink/15 bg-white px-3 py-2 text-ink">{activeCaseStudy.category}</span>
                 </div>
+                <p className="absolute bottom-6 left-6 right-6 z-20 border-l-2 border-[#1877F2] bg-white/90 px-4 py-3 text-sm font-medium leading-6 text-ink shadow-sm sm:bottom-8 sm:left-8 sm:right-auto sm:max-w-lg">{activeCaseStudy.result}</p>
               </div>
-              <div className="p-6">
-                <div className="mb-3 text-sm font-semibold text-teal">{study.result}</div>
-                <h3 className={`text-2xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{study.title}</h3>
-                <p className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{study.summary}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {study.stack.map((item) => (
-                    <span key={item} className={`rounded-full border px-3 py-1 text-xs ${theme === "dark" ? "border-white/10 text-white/65" : "border-ink/10 text-ink/65"}`}>
-                      {item}
-                    </span>
+
+              <div className={`flex min-h-[500px] flex-col p-6 sm:p-9 lg:min-h-[680px] lg:p-10 ${theme === "dark" ? "text-white" : "text-ink"}`}>
+                <div className="flex items-center justify-between border-b border-current/10 pb-6">
+                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1877F2]">Featured case study</span>
+                  <span className="text-xs font-semibold tracking-[0.16em] opacity-40">{String(activeWorkIndex + 1).padStart(2, "0")} / {String(filteredCaseStudies.length).padStart(2, "0")}</span>
+                </div>
+                <h3 className="mt-10 text-3xl font-semibold leading-tight sm:text-4xl">{activeCaseStudy.title}</h3>
+                <p className={`mt-6 text-base leading-7 ${theme === "dark" ? "text-white/60" : "text-ink/60"}`}>{activeCaseStudy.summary}</p>
+                <div className="mt-9 border-y border-current/10 py-2">
+                  {activeCaseStudy.stack.map((item, index) => (
+                    <div key={item} className="flex items-center justify-between border-b border-current/10 py-3 text-sm last:border-b-0">
+                      <span className="opacity-50">{String(index + 1).padStart(2, "0")}</span><span className="font-medium">{item}</span>
+                    </div>
                   ))}
                 </div>
+                <div className="mt-auto flex items-end justify-between gap-5 pt-10">
+                  <Link href="/portfolio" className="group inline-flex items-center gap-3 font-semibold text-[#1877F2]">View full portfolio <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" /></Link>
+                  <div className="flex">
+                    <button type="button" onClick={() => moveWork(-1)} aria-label="Previous project" className="flex h-12 w-12 items-center justify-center border border-ink/15 transition hover:border-[#1877F2] hover:bg-[#1877F2] hover:text-white"><ChevronLeft className="h-5 w-5" /></button>
+                    <button type="button" onClick={() => moveWork(1)} aria-label="Next project" className="flex h-12 w-12 items-center justify-center border-y border-r border-ink/15 transition hover:border-[#1877F2] hover:bg-[#1877F2] hover:text-white"><ChevronRight className="h-5 w-5" /></button>
+                  </div>
+                </div>
               </div>
-            </motion.article>
-          ))}
+            </article>
         </div>
       </Section>
 
@@ -603,45 +659,96 @@ function BeforeAfter({
 }
 
 function Journey({ theme }: { theme: "dark" | "light" }) {
+  const [activeStage, setActiveStage] = useState(0);
+  const activeStep = journey[activeStage];
+  const activeOutput = journeyOutputs[activeStage];
+  const ActiveIcon = activeStep.icon;
+
+  function moveStage(direction: number) {
+    setActiveStage((current) => (current + direction + journey.length) % journey.length);
+  }
+
   return (
-    <section id="journey" className="relative z-10 py-20 md:py-28">
+    <section id="journey" className="relative z-10 scroll-mt-24 border-y border-ink/10 bg-[#F7F9FC] py-20 md:py-28">
       <div className="section-shell">
-        <div className="mb-12 max-w-3xl">
-          <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">Interactive journey</span>
-          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Idea to wireframe to design to code to launch.</h2>
-          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>Five accountable stages keep decisions visible, reduce rework, and carry one product vision from discovery through launch.</p>
+        <div className="mb-12 grid items-end gap-6 lg:grid-cols-[.9fr_1.1fr]">
+          <div>
+            <span className="text-xs font-semibold uppercase tracking-[.2em] text-[#1877F2]">Delivery system</span>
+            <h2 className="mt-4 max-w-2xl text-balance text-4xl font-semibold leading-[1.04] text-ink md:text-6xl">One product vision. Five controlled stages.</h2>
+          </div>
+          <div className="border-l-2 border-[#1877F2] pl-6 lg:mb-1">
+            <p className="max-w-xl text-base leading-7 text-ink/62 md:text-lg md:leading-8">From first decision to production release, every phase has a clear purpose, visible output, and accountable handoff.</p>
+          </div>
         </div>
-        <div className="relative grid gap-4 lg:grid-cols-5">
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: "-120px" }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute left-0 top-6 hidden h-px w-full origin-left bg-gradient-to-r from-teal via-coral to-teal lg:block"
-          />
-          {journey.map((step, index) => {
-            const Icon = step.icon;
-            return (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 34 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -8 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ delay: index * 0.12 }}
-                className={`premium-border relative rounded-3xl border p-5 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
-              >
-                <div className="mb-5 flex items-center justify-between">
-                  <motion.div whileHover={{ scale: 1.08 }} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal text-white shadow-[0_0_28px_rgba(24, 119, 242,0.22)]">
-                    <Icon className="h-6 w-6" />
-                  </motion.div>
-                  <span className={`text-sm font-semibold ${theme === "dark" ? "text-white/35" : "text-ink/35"}`}>0{index + 1}</span>
+
+        <div className="overflow-hidden border border-ink/10 bg-white shadow-[0_28px_80px_rgba(28,30,33,.08)]">
+          <div className="grid lg:grid-cols-[280px_1fr]">
+            <div className="border-b border-ink/10 bg-[#EEF2F7] p-3 lg:border-b-0 lg:border-r lg:p-5">
+              <p className="px-3 pb-3 pt-2 text-[10px] font-semibold uppercase tracking-[.2em] text-ink/38">Product roadmap</p>
+              <div className="grid grid-cols-5 gap-1 lg:grid-cols-1">
+                {journey.map((step, index) => {
+                  const Icon = step.icon;
+                  const selected = activeStage === index;
+                  return (
+                    <button
+                      key={step.title}
+                      type="button"
+                      onClick={() => setActiveStage(index)}
+                      aria-pressed={selected}
+                      className={`group flex min-h-16 items-center justify-center gap-3 px-2 py-3 text-left transition-colors duration-200 lg:justify-start lg:px-3 ${selected ? "bg-[#1877F2] text-white" : "text-ink/58 hover:bg-white hover:text-ink"}`}
+                    >
+                      <span className={`hidden text-[10px] font-semibold tracking-[.16em] sm:block ${selected ? "text-white/65" : "text-ink/30"}`}>{String(index + 1).padStart(2, "0")}</span>
+                      <Icon className="h-5 w-5 shrink-0" strokeWidth={1.7} />
+                      <span className="hidden flex-1 text-sm font-semibold lg:block">{step.title}</span>
+                      <ChevronRight className={`hidden h-4 w-4 transition-transform lg:block ${selected ? "translate-x-0 opacity-100" : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"}`} />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="grid min-h-[570px] md:grid-cols-[.92fr_1.08fr]">
+              <div className="flex flex-col border-b border-ink/10 p-7 sm:p-10 md:border-b-0 md:border-r lg:p-12">
+                <div className="flex items-start justify-between gap-6">
+                  <span className="flex h-14 w-14 items-center justify-center bg-[#E7F3FF] text-[#1877F2]"><ActiveIcon className="h-7 w-7" strokeWidth={1.7} /></span>
+                  <span className="text-xs font-semibold tracking-[.18em] text-ink/35">{String(activeStage + 1).padStart(2, "0")} / {String(journey.length).padStart(2, "0")}</span>
                 </div>
-                <h3 className={`text-xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{step.title}</h3>
-                <p className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{step.text}</p>
-              </motion.div>
-            );
-          })}
+                <motion.div key={activeStep.title} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .22, ease: "easeOut" }}>
+                  <p className="mt-12 text-xs font-semibold uppercase tracking-[.2em] text-[#1877F2]">Current phase</p>
+                  <h3 className="mt-3 text-4xl font-semibold leading-tight text-ink sm:text-5xl">{activeStep.title}</h3>
+                  <p className="mt-6 text-base leading-7 text-ink/62 sm:text-lg sm:leading-8">{activeStep.text}</p>
+                </motion.div>
+                <div className="mt-auto flex items-center justify-between border-t border-ink/10 pt-7">
+                  <span className="text-xs font-semibold uppercase tracking-[.16em] text-ink/38">Stage control</span>
+                  <div className="flex">
+                    <button type="button" onClick={() => moveStage(-1)} aria-label="Previous stage" className="flex h-11 w-11 items-center justify-center border border-ink/15 text-ink transition-colors hover:border-[#1877F2] hover:bg-[#1877F2] hover:text-white"><ChevronLeft className="h-5 w-5" /></button>
+                    <button type="button" onClick={() => moveStage(1)} aria-label="Next stage" className="flex h-11 w-11 items-center justify-center border-y border-r border-ink/15 bg-[#1877F2] text-white transition-colors hover:bg-[#166FE5]"><ChevronRight className="h-5 w-5" /></button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative flex min-h-[440px] items-center justify-center overflow-hidden bg-[#E8EDF4] p-6 sm:p-10">
+                <div className="pointer-events-none absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(24,119,242,.09)_1px,transparent_1px),linear-gradient(90deg,rgba(24,119,242,.09)_1px,transparent_1px)] [background-size:48px_48px]" />
+                <span className="pointer-events-none absolute -bottom-10 -right-2 text-[190px] font-semibold leading-none text-[#1877F2]/[.055] sm:text-[250px]">{String(activeStage + 1).padStart(2, "0")}</span>
+                <div className="relative z-10 w-full max-w-[500px] border border-ink/10 bg-white p-4 shadow-[0_28px_70px_rgba(28,30,33,.15)] sm:p-5">
+                  <div className="flex items-center gap-2 border-b border-ink/10 pb-4"><span className="h-2.5 w-2.5 rounded-full bg-[#F5534B]" /><span className="h-2.5 w-2.5 rounded-full bg-[#F7B928]" /><span className="h-2.5 w-2.5 rounded-full bg-[#42B72A]" /><span className="ml-3 h-7 flex-1 bg-[#F0F2F5]" /></div>
+                  <div className="grid min-h-[300px] grid-cols-[72px_1fr] pt-4">
+                    <div className="border-r border-ink/10 pr-3"><span className="block h-9 bg-[#1877F2]" /><span className="mt-3 block h-2 bg-ink/10" /><span className="mt-3 block h-2 bg-ink/10" /><span className="mt-3 block h-2 bg-ink/10" /></div>
+                    <div className="pl-4">
+                      <div className="flex items-center justify-between"><span className="h-3 w-28 bg-ink/80" /><span className="h-8 w-8 bg-[#E7F3FF]" /></div>
+                      <div className="mt-6 grid grid-cols-3 gap-3">{[0,1,2].map((item) => <span key={item} className={`h-16 transition-colors duration-200 ${item === activeStage % 3 ? activeOutput.accent : "bg-[#F0F2F5]"}`} />)}</div>
+                      <div className="mt-5 h-24 border border-ink/10 p-3"><div className="flex h-full items-end gap-2">{[35,58,46,76,64,92].map((height, index) => <span key={index} className={`flex-1 transition-[height,background-color] duration-300 ${activeOutput.accent}`} style={{ height: `${Math.max(18, height - activeStage * 4 + index * 2)}%` }} />)}</div></div>
+                      <div className="mt-4 flex items-center gap-3"><span className="h-9 flex-1 bg-[#1C1E21]" /><span className="h-9 w-20 border border-ink/12" /></div>
+                    </div>
+                  </div>
+                </div>
+                <motion.div key={activeOutput.label} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .2 }} className="absolute bottom-5 left-5 z-20 border-l-2 border-[#1877F2] bg-white px-4 py-3 sm:bottom-8 sm:left-8">
+                  <span className="block text-[10px] font-semibold uppercase tracking-[.16em] text-[#1877F2]">{activeOutput.metric}</span>
+                  <span className="mt-1 block text-xs font-semibold uppercase tracking-[.12em] text-ink">{activeOutput.label}</span>
+                </motion.div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
