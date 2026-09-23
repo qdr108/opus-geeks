@@ -9,7 +9,7 @@ import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 
 const articles = [
   { title: "How to plan a mobile app that users keep", category: "App Development", time: "7 min", excerpt: "A practical framework for turning a product idea into a focused roadmap, useful feature set, and confident launch.", color: "#E7F3FF" },
-  { title: "Core Web Vitals: speed that supports growth", category: "Web Development", time: "6 min", excerpt: "Why performance affects conversion, visibility, and trust, plus the improvements that create the biggest impact.", color: "#E9F8E5" },
+  { title: "Core Web Vitals: speed that supports growth", category: "Web Development", time: "6 min", excerpt: "Why performance affects conversion, visibility, and trust, plus the improvements that create the biggest impact.", color: "#E7F3FF" },
   { title: "Design systems that scale beyond one screen", category: "UI/UX Design", time: "8 min", excerpt: "Build consistent digital products faster with reusable components, accessible patterns, and shared design decisions.", color: "#FFF3D6" },
   { title: "Choosing between native and cross-platform apps", category: "App Development", time: "9 min", excerpt: "Compare performance, cost, timelines, and maintenance before selecting the right mobile technology approach.", color: "#F1EAFE" },
   { title: "From visitor to customer: better website journeys", category: "Web Development", time: "5 min", excerpt: "Use clearer hierarchy, stronger proof, and intentional calls to action to remove friction from the buying journey.", color: "#FFECE8" },

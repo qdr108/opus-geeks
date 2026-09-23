@@ -228,7 +228,7 @@ html.intro-active body {
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(24, 119, 242, 0.7), transparent 34%, rgba(66, 183, 42, 0.55));
+  background: linear-gradient(135deg, rgba(24, 119, 242, 0.72), transparent 48%, rgba(24, 119, 242, 0.34));
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
   pointer-events: none;
@@ -358,11 +358,11 @@ html.intro-active body {
 }
 
 .device-topbar span:nth-child(1) {
-  background: #42b72a;
+  background: #1877f2;
 }
 
 .device-topbar span:nth-child(2) {
-  background: #f7c948;
+  background: #aab2bd;
 }
 
 .device-topbar span:nth-child(3) {
@@ -429,14 +429,6 @@ html.intro-active body {
   background: #1877f2;
 }
 
-.coral-line {
-  background: #42b72a;
-}
-
-.gold-line {
-  background: #f7c948;
-}
-
 .chart {
   display: flex;
   align-items: flex-end;
@@ -460,7 +452,7 @@ html.intro-active body {
 .b1 { height: 44%; }
 .b2 { height: 76%; }
 .b3 { height: 58%; }
-.b4 { height: 88%; background: linear-gradient(180deg, #42b72a, rgba(66, 183, 42, 0.2)); }
+.b4 { height: 88%; background: linear-gradient(180deg, #1877f2, rgba(24, 119, 242, 0.2)); }
 
 .list {
   display: grid;
@@ -503,7 +495,7 @@ html.intro-active body {
   border-radius: 28px;
   background:
     radial-gradient(circle, rgba(7, 16, 20, 0.8) 0 42%, transparent 43%),
-    conic-gradient(#1877f2 0 58%, #42b72a 58% 80%, rgba(255,255,255,0.18) 80%);
+    conic-gradient(#1877f2 0 80%, rgba(255,255,255,0.18) 80%);
 }
 
 .phone-row {
@@ -520,7 +512,7 @@ html.intro-active body {
   width: 54px;
   height: 54px;
   border-radius: 18px;
-  background: linear-gradient(135deg, #1877f2, #42b72a);
+  background: #1877f2;
   margin-bottom: 22px;
 }
 
@@ -549,11 +541,11 @@ html.intro-active body {
 }
 
 .node-flow span:nth-child(2) {
-  background: #42b72a;
+  background: #1877f2;
 }
 
 .node-flow span:nth-child(3) {
-  background: #f7c948;
+  background: #aab2bd;
 }
 
 .connector {
@@ -594,7 +586,7 @@ html.intro-active body {
   inset: 132px auto auto 120px;
   width: 260px;
   height: 260px;
-  border-color: rgba(66, 183, 42, 0.22);
+  border-color: rgba(24, 119, 242, 0.16);
 }
 
 .scene-label {

@@ -58,7 +58,7 @@ const journeyOutputs = [
   { label: "User flow validated", metric: "Paths confirmed", accent: "bg-[#1877F2]" },
   { label: "Design system approved", metric: "UI signed off", accent: "bg-[#1877F2]" },
   { label: "Build ready for QA", metric: "Tests passing", accent: "bg-[#1877F2]" },
-  { label: "Release live and monitored", metric: "Launch verified", accent: "bg-[#42B72A]" }
+  { label: "Release live and monitored", metric: "Launch verified", accent: "bg-[#1877F2]" }
 ];
 
 export default function Home() {
@@ -345,7 +345,7 @@ export default function Home() {
                 className={`rounded-2xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
               >
                 <div className="mb-6 flex items-center justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-coral/15 text-coral">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal/15 text-teal">
                     <Icon className="h-6 w-6" />
                   </div>
                   <span className="text-4xl font-semibold text-white/15">0{index + 1}</span>
@@ -577,7 +577,7 @@ function BeforeAfter({
       <div className="section-shell grid items-center gap-12 lg:grid-cols-[0.76fr_1.24fr]">
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
           <span className="mb-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-teal">
-            <span className="h-2 w-2 rounded-full bg-[#42b72a]" />
+            <span className="h-2 w-2 rounded-full bg-[#1877F2]" />
             Design transformation
           </span>
           <h2 className={`text-balance text-4xl font-semibold leading-tight md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>
@@ -629,7 +629,7 @@ function BeforeAfter({
                   </div>
                   <div className="grid grid-cols-[1.05fr_0.95fr] items-center gap-8 py-9">
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#53d6ca]">Digital product studio</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1877F2]">Digital product studio</p>
                       <p className="mt-4 text-4xl font-semibold leading-tight">Products engineered for real growth.</p>
                       <p className="mt-4 max-w-sm text-sm leading-6 text-white/55">Strategy, design and engineering aligned around measurable business outcomes.</p>
                       <div className="mt-6 flex gap-3"><span className="rounded-full bg-teal px-5 py-2 text-xs font-semibold">Get an estimate</span><span className="rounded-full border border-white/15 px-5 py-2 text-xs">View work</span></div>
@@ -638,7 +638,7 @@ function BeforeAfter({
                       <div className="flex items-end gap-2">
                         {[42, 64, 52, 82, 70, 96].map((height, index) => <span key={index} className="flex-1 rounded-t bg-teal" style={{ height }} />)}
                       </div>
-                      <div className="mt-5 flex justify-between border-t border-white/10 pt-4"><span className="text-xs text-white/40">Conversion growth</span><span className="text-lg font-semibold text-[#53d6ca]">+38.4%</span></div>
+                      <div className="mt-5 flex justify-between border-t border-white/10 pt-4"><span className="text-xs text-white/40">Conversion growth</span><span className="text-lg font-semibold text-[#1877F2]">+38.4%</span></div>
                     </div>
                   </div>
                 </div>
@@ -763,7 +763,7 @@ function FailurePrevention({ theme }: { theme: "dark" | "light" }) {
           const Icon = item.icon;
           return (
             <div key={item.problem} className={`rounded-3xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
-              <Icon className="mb-5 h-7 w-7 text-coral" />
+              <Icon className="mb-5 h-7 w-7 text-teal" />
               <h3 className={`text-lg font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{item.problem}</h3>
               <p className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{item.fix}</p>
             </div>
@@ -794,14 +794,14 @@ function ProjectDashboard({ theme }: { theme: "dark" | "light" }) {
                   <span className="text-sm font-semibold text-teal">{task.status}</span>
                 </div>
                 <div className={`h-2 overflow-hidden rounded-full ${theme === "dark" ? "bg-white/10" : "bg-ink/10"}`}>
-                  <div className="h-full rounded-full bg-coral" style={{ width: `${task.progress}%` }} />
+                  <div className="h-full rounded-full bg-teal" style={{ width: `${task.progress}%` }} />
                 </div>
               </div>
             ))}
           </div>
         </div>
         <div className="self-center">
-          <span className="mb-4 inline-flex rounded-full border border-coral/30 bg-coral/10 px-3 py-1 text-sm font-semibold text-coral">Transparent delivery</span>
+          <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">Transparent delivery</span>
           <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Make the website feel like the company already runs mature projects.</h2>
           <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
             A mini dashboard suggests weekly demos, clear milestones, QA discipline, and a team clients can trust remotely.
@@ -898,7 +898,7 @@ function Estimator({
               <span className="grid h-9 w-9 place-items-center rounded-full bg-teal text-sm font-semibold text-white">OG</span>
               <div><p className={`text-sm font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>Scope builder</p><p className={`text-xs ${theme === "dark" ? "text-white/45" : "text-ink/45"}`}>Three quick decisions</p></div>
             </div>
-            <div className="flex items-center gap-2 text-xs font-semibold text-teal"><span className="h-2 w-2 rounded-full bg-[#42b72a]" /> Live estimate</div>
+            <div className="flex items-center gap-2 text-xs font-semibold text-teal"><span className="h-2 w-2 rounded-full bg-[#1877F2]" /> Live estimate</div>
           </div>
 
           <div className="grid lg:grid-cols-[1fr_360px]">
@@ -1107,11 +1107,11 @@ function Footer() {
             </div>
 
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-coral">Services</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal">Services</p>
               <nav className="mt-6 flex flex-col gap-4" aria-label="Services navigation">
                 {serviceNavItems.map((item) => (
                   <a key={item.label} href={item.href} className="group flex w-fit items-center gap-2 text-sm text-ink/60 transition hover:text-teal">
-                    <span className="h-px w-0 bg-coral transition-all group-hover:w-4" />
+                    <span className="h-px w-0 bg-teal transition-all group-hover:w-4" />
                     {item.label}
                   </a>
                 ))}

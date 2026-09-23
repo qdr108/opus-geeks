@@ -31,7 +31,7 @@ export function Premium3DShowcase({ compact = false }: { compact?: boolean }) {
               <div className="metric-title">Launch Dashboard</div>
               <div className="metric-copy">Discovery, design, development and QA tracked in one clear product cockpit.</div>
               <div className="metric-line teal-line">Strategy sprint</div>
-              <div className="metric-line coral-line">Build progress</div>
+              <div className="metric-line teal-line">Build progress</div>
             </div>
             <div className="metric chart">
               <strong>Growth</strong>
@@ -53,8 +53,8 @@ export function Premium3DShowcase({ compact = false }: { compact?: boolean }) {
           <div className="phone-notch" />
           <div className="phone-card ring-card" />
           <div className="phone-row teal-line">App</div>
-          <div className="phone-row coral-line">UX</div>
-          <div className="phone-row gold-line">Launch</div>
+          <div className="phone-row teal-line">UX</div>
+          <div className="phone-row teal-line">Launch</div>
         </div>
 
         <div className="floating-panel panel-one">
