@@ -1,12 +1,30 @@
 import type { Metadata } from "next";
 import ScrollMotion from "@/components/ScrollMotion";
-import SiteIntro from "@/components/SiteIntro";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Opus Geeks | Product Engineering Studio",
+  metadataBase: new URL("https://opusgeeks.com"),
+  title: {
+    default: "Opus Geeks | Digital Product Engineering Studio",
+    template: "%s | Opus Geeks"
+  },
   description:
-    "A premium redesign concept for Opus Geeks, focused on web apps, mobile apps, UI/UX, AI automation, and measurable product outcomes."
+    "Opus Geeks designs and engineers dependable web platforms, mobile products, and digital experiences for ambitious teams.",
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "Opus Geeks",
+    title: "Opus Geeks | Digital Product Engineering Studio",
+    description: "Strategy, design, and engineering for dependable digital products.",
+    images: [{ url: "/images/opus-hero-command-center.png", width: 2048, height: 1138, alt: "Opus Geeks digital product engineering workspace" }]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Opus Geeks | Digital Product Engineering Studio",
+    description: "Strategy, design, and engineering for dependable digital products.",
+    images: ["/images/opus-hero-command-center.png"]
+  },
+  robots: { index: true, follow: true }
 };
 
 export default function RootLayout({
@@ -17,7 +35,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SiteIntro />
         {children}
         <ScrollMotion />
       </body>

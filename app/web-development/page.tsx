@@ -82,10 +82,10 @@ const services = [
 ];
 
 const stats = [
-  ["40+", "Happy Clients"],
-  ["540+", "Projects Completed"],
-  ["300+", "Dedicated Members"],
-  ["25+", "Awards Won"]
+  ["01", "Product Strategy"],
+  ["02", "System Design"],
+  ["03", "Engineering"],
+  ["04", "Release Support"]
 ];
 
 const caseStudies = [

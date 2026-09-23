@@ -17,7 +17,8 @@ const config: Config = {
         glow: "0 12px 40px rgba(24, 119, 242, 0.20)"
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "Segoe UI", "Arial", "sans-serif"]
+        sans: ["Avenir Next", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif"],
+        display: ["Iowan Old Style", "Baskerville", "Times New Roman", "serif"]
       },
       keyframes: {
         floaty: {

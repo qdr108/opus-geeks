@@ -50,10 +50,10 @@ const services = [
 ];
 
 const stats = [
-  ["40+", "Happy Clients"],
-  ["540+", "Projects Completed"],
-  ["300+", "Dedicated Members"],
-  ["25+", "Awards Won"]
+  ["01", "Product Research"],
+  ["02", "Interaction Design"],
+  ["03", "Design Systems"],
+  ["04", "Usability Review"]
 ];
 
 const caseStudies = [

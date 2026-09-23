@@ -152,28 +152,28 @@ export default function Home() {
           >
             <motion.div variants={fadeUp} className="mb-7 flex items-center gap-3 text-xs font-semibold uppercase tracking-[.18em] text-teal">
               <span className="h-px w-10 bg-teal" />
-              {companyCopy.heroEyebrow}
+              Independent digital product studio
             </motion.div>
             <motion.h1 variants={fadeUp} transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }} className={`text-balance text-5xl font-semibold leading-[.94] tracking-normal md:text-7xl xl:text-[82px] ${theme === "dark" ? "text-white" : "text-ink"}`}>
-              Build digital products<br className="hidden md:block" /> that move business <span className="relative inline-block text-teal">forward.<span className="absolute -bottom-2 left-0 h-[3px] w-full origin-left bg-teal/30" /></span>
+              Product thinking.<br className="hidden md:block" /> Engineered to <span className="relative inline-block text-teal">hold up.<span className="absolute -bottom-2 left-0 h-[3px] w-full origin-left bg-teal/30" /></span>
             </motion.h1>
             <motion.p variants={fadeUp} className={`mt-8 max-w-xl text-base leading-7 md:text-lg md:leading-8 ${theme === "dark" ? "text-white/72" : "text-ink/65"}`}>
-              {companyCopy.heroIntro}
+              Opus Geeks brings product strategy, interface design, and production engineering into one accountable team for web and mobile products.
             </motion.p>
             <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row">
               <motion.a whileHover={{ y: -3, scale: 1.01 }} whileTap={{ scale: 0.98 }} href="#estimator" className="shine group inline-flex items-center justify-center gap-2 rounded-lg bg-teal px-6 py-4 font-semibold text-white shadow-[0_14px_34px_rgba(24,119,242,0.24)] transition hover:bg-[#166fe5]">
-                Get free estimate
+                Scope a product
                 <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
               </motion.a>
               <Link href="/portfolio" className={`inline-flex items-center justify-center gap-2 rounded-lg border px-6 py-4 font-semibold backdrop-blur transition hover:-translate-y-1 ${theme === "dark" ? "border-white/15 bg-white/10 text-white hover:border-white/35" : "border-ink/15 bg-white text-ink shadow-sm hover:border-teal/40"}`}>
-                See case studies
+                View selected work
               </Link>
             </motion.div>
             <motion.div variants={fadeUp} className="mt-12 grid max-w-2xl grid-cols-3 border-y border-ink/10 bg-white/45 backdrop-blur-sm">
               {[
-                ["80+", "Projects"],
-                ["12", "Industries"],
-                ["4.9/5", "Client rating"]
+                ["01", "Product strategy"],
+                ["02", "Interface systems"],
+                ["03", "Production engineering"]
               ].map(([value, label], index) => (
                 <motion.div key={label} whileHover={{ x: 4 }} className={`py-4 ${index ? "border-l border-ink/10 pl-5 sm:pl-7" : "pr-4"}`}>
                   <div className={`text-xl font-semibold md:text-2xl ${theme === "dark" ? "text-white" : "text-ink"}`}>{value}</div>
