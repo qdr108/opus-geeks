@@ -182,8 +182,21 @@ html.intro-active body {
 }
 
 .section-shell {
-  width: min(1180px, calc(100vw - 32px));
+  width: calc(100% - 32px);
+  max-width: 1680px;
   margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .section-shell {
+    width: calc(100% - 64px);
+  }
+}
+
+@media (min-width: 1280px) {
+  .section-shell {
+    width: calc(100% - 96px);
+  }
 }
 
 .animated-grid {

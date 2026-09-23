@@ -129,8 +129,8 @@ export default function WebDevelopmentPage() {
       <section className="relative min-h-[700px] overflow-hidden border-b border-[#1C1E21]/10 pt-24 lg:min-h-[760px]">
         <div className="absolute inset-0 bg-[linear-gradient(120deg,#f8fbfd_0%,#edf6fa_58%,#dceef6_100%)]" />
         <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(24,119,242,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(24,119,242,0.08)_1px,transparent_1px)] [background-size:72px_72px]" />
-        <div className="pointer-events-none absolute right-[-12%] top-20 h-[680px] w-[680px] rounded-full border border-[#1877F2]/20" />
-        <div className="pointer-events-none absolute right-[-5%] top-40 h-[480px] w-[480px] rounded-full border border-[#d2a95d]/30" />
+        <div className="pointer-events-none absolute right-[-12%] top-20 hidden h-[680px] w-[680px] rounded-full border border-[#1877F2]/20 md:block" />
+        <div className="pointer-events-none absolute right-[-5%] top-40 hidden h-[480px] w-[480px] rounded-full border border-[#1C1E21]/10 md:block" />
 
         <div className="section-shell relative grid min-h-[620px] items-center gap-8 py-8 lg:grid-cols-[0.9fr_1.1fr] lg:py-10">
           <motion.div initial="hidden" animate="show" transition={{ staggerChildren: 0.08 }}>

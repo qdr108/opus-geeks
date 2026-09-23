@@ -116,45 +116,64 @@ export default function AppDevelopmentPage() {
     <main id="top" className="min-h-screen overflow-hidden bg-[#f0f2f5] text-[#1C1E21]">
       <SiteHeader />
 
-      <section className="relative min-h-[780px] overflow-hidden border-b border-[#1C1E21]/10 pt-28 lg:min-h-[860px]">
-        <div className="absolute inset-0 bg-[linear-gradient(120deg,#f8fbfd_0%,#edf6fa_58%,#dceef6_100%)]" />
-        <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(24,119,242,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(24,119,242,0.08)_1px,transparent_1px)] [background-size:72px_72px]" />
-        <div className="pointer-events-none absolute right-[-12%] top-20 h-[680px] w-[680px] rounded-full border border-[#1877F2]/20" />
-        <div className="pointer-events-none absolute right-[-5%] top-40 h-[480px] w-[480px] rounded-full border border-[#d2a95d]/30" />
+      <section className="relative overflow-hidden border-b border-[#1C1E21]/10 bg-[#F0F2F5] pt-24 lg:pt-28">
+        <div className="pointer-events-none absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(28,30,33,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(28,30,33,0.055)_1px,transparent_1px)] [background-size:80px_80px]" />
+        <div className="section-shell relative py-10 md:py-14 lg:py-16">
+          <div className="grid items-center gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16">
+            <motion.div initial="hidden" animate="show" transition={{ staggerChildren: 0.08 }} className="relative">
+              <motion.div variants={reveal} className="mb-8 flex items-center gap-4">
+                <span className="grid h-10 w-10 place-items-center border border-[#1877F2] text-xs font-bold text-[#1877F2]">01</span>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Mobile product engineering</p>
+                  <p className="mt-1 text-xs text-[#1C1E21]/45">Strategy / Design / Development</p>
+                </div>
+              </motion.div>
+              <motion.h1 variants={reveal} className="max-w-[680px] text-balance text-[clamp(3.25rem,5.2vw,5.6rem)] font-semibold leading-[0.98]">
+                Innovative mobile apps built to <span className="text-[#1877F2]">move business.</span>
+              </motion.h1>
+              <motion.p variants={reveal} className="mt-7 max-w-[590px] text-base leading-7 text-[#1C1E21]/62 md:text-lg md:leading-8">
+                Are you ready to take your business to the next level? Opus Geeks creates high-performance, user-friendly mobile applications tailored to your goals, audience, and growth plan.
+              </motion.p>
+              <motion.div variants={reveal} className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <button onClick={() => setModalOpen(true)} className="group inline-flex min-h-14 items-center justify-between gap-10 bg-[#1877F2] px-6 font-semibold text-white shadow-[0_14px_32px_rgba(24,119,242,0.2)] transition duration-300 hover:bg-[#1C1E21] sm:min-w-[210px]">
+                  Get a quote <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </button>
+                <a href="#services" className="inline-flex min-h-14 items-center justify-center border border-[#1C1E21]/15 bg-white/60 px-6 font-semibold text-[#1C1E21]/75 transition duration-300 hover:border-[#1C1E21] hover:bg-white hover:text-[#1C1E21]">Explore capabilities</a>
+              </motion.div>
+            </motion.div>
 
-        <div className="section-shell relative grid min-h-[650px] items-center gap-12 py-16 lg:grid-cols-[0.92fr_1.08fr] lg:py-20">
-          <motion.div initial="hidden" animate="show" transition={{ staggerChildren: 0.08 }}>
-            <motion.p variants={reveal} className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">
-              <Sparkles className="h-4 w-4" /> Mobile product engineering
-            </motion.p>
-            <motion.h1 variants={reveal} className="text-balance text-5xl font-semibold leading-[1.02] md:text-7xl">
-              Innovative mobile apps built to <span className="text-[#1877F2]">move business.</span>
-            </motion.h1>
-            <motion.p variants={reveal} className="mt-7 max-w-xl text-lg leading-8 text-[#1C1E21]/65">
-              Are you ready to take your business to the next level? Opus Geeks creates high-performance, user-friendly mobile applications tailored to your goals, audience, and growth plan.
-            </motion.p>
-            <motion.div variants={reveal} className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <button onClick={() => setModalOpen(true)} className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#1877F2] px-6 py-4 font-semibold text-white shadow-[0_16px_40px_rgba(24,119,242,0.25)] transition hover:bg-[#1C1E21]">
-                Get a quote <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
-              </button>
-              <a href="#services" className="inline-flex items-center justify-center rounded-full border border-[#1C1E21]/15 bg-white/50 px-6 py-4 font-semibold text-[#1C1E21]/80 transition hover:border-[#1877F2] hover:text-[#1877F2]">Explore capabilities</a>
+            <motion.div initial={{ opacity: 0, x: 36 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }} className="relative mx-auto w-full max-w-[690px]">
+              <div className="absolute -left-4 top-10 hidden h-[72%] w-px bg-[#1877F2] lg:block" />
+              <div className="relative h-[500px] overflow-hidden border border-[#1C1E21]/10 bg-white/48 md:h-[620px]">
+                <div className="absolute left-5 top-5 z-10 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1C1E21]/50">
+                  <span className="h-2 w-2 bg-[#1877F2]" /> Featured launch
+                </div>
+                <div className="absolute right-5 top-5 z-10 text-[11px] font-semibold tracking-[0.18em] text-[#1C1E21]/38">OG / 24</div>
+                <div className="absolute inset-x-[12%] bottom-[8%] h-[28%] bg-[#1877F2]/8 blur-3xl" />
+                <motion.div initial={{ y: 18, scale: 0.97 }} animate={{ y: 0, scale: 1 }} transition={{ delay: 0.16, duration: 0.85, ease: [0.22, 1, 0.36, 1] }} className="absolute inset-5 top-12 md:inset-8 md:top-14">
+                  <Image src="/images/app-phones-hd.png" alt="Le Cavalier Cellars mobile application on two phones" fill priority quality={95} sizes="(max-width: 767px) 92vw, (max-width: 1024px) 650px, 48vw" className="object-contain drop-shadow-[0_26px_38px_rgba(28,30,33,0.25)]" />
+                </motion.div>
+                <div className="absolute bottom-0 left-0 right-0 z-10 grid grid-cols-2 border-t border-[#1C1E21]/10 bg-white/90 backdrop-blur-sm">
+                  <div className="border-r border-[#1C1E21]/10 px-5 py-4">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1C1E21]/42">Platform</p>
+                    <p className="mt-1 text-sm font-semibold">iOS + Android</p>
+                  </div>
+                  <div className="px-5 py-4">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1C1E21]/42">Product</p>
+                    <p className="mt-1 text-sm font-semibold">Mobile commerce</p>
+                  </div>
+                </div>
+              </div>
             </motion.div>
-            <motion.div variants={reveal} className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm text-[#1C1E21]/55">
-              {["Product strategy", "Native & cross-platform", "Launch support"].map((item) => (
-                <span key={item} className="flex items-center gap-2"><Check className="h-4 w-4 text-[#1877F2]" />{item}</span>
-              ))}
-            </motion.div>
-          </motion.div>
+          </div>
 
-          <motion.div initial={{ opacity: 0, scale: 0.9, x: 40 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="relative mx-auto h-[480px] w-full max-w-[590px] md:h-[590px]">
-            <div className="absolute inset-x-8 bottom-8 h-24 rounded-full bg-[#d2a95d]/20 blur-3xl" />
-            <motion.div animate={{ y: [8, 0] }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="absolute inset-0">
-              <Image src="/images/app-phones.png" alt="Le Cavalier Cellars mobile application on two phones" fill priority sizes="(max-width: 1024px) 90vw, 46vw" className="object-contain drop-shadow-[0_35px_55px_rgba(0,0,0,0.5)]" />
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.45 }} className="absolute bottom-8 right-0 rounded-2xl border border-white/15 bg-[#0b171b]/95 px-5 py-4 shadow-xl">
-              <p className="text-xs uppercase tracking-[0.18em] text-[#d2a95d]">Featured launch</p>
-              <p className="mt-1 text-sm font-semibold">Commerce experience · iOS &amp; Android</p>
-            </motion.div>
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.48, duration: 0.55 }} className="mt-10 grid border-y border-[#1C1E21]/10 bg-white/35 sm:grid-cols-3">
+            {["Product strategy", "Native & cross-platform", "Launch support"].map((item, index) => (
+              <div key={item} className="flex min-h-16 items-center gap-4 border-b border-[#1C1E21]/10 px-5 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+                <span className="text-xs font-semibold text-[#1877F2]">0{index + 1}</span>
+                <span className="text-sm font-medium text-[#1C1E21]/68">{item}</span>
+              </div>
+            ))}
           </motion.div>
         </div>
       </section>

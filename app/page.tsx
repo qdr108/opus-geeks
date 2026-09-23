@@ -198,7 +198,7 @@ export default function Home() {
         <div className={`grid overflow-hidden border shadow-[0_24px_70px_rgba(28,30,33,.07)] lg:grid-cols-[0.72fr_1.28fr] ${theme === "dark" ? "border-white/12 bg-white/[0.025]" : "border-ink/10 bg-white"}`}>
           <div className={`p-3 sm:p-5 lg:border-r lg:p-7 ${theme === "dark" ? "border-white/10" : "border-ink/10"}`}>
             <p className={`px-3 pb-4 pt-2 text-[11px] font-semibold uppercase tracking-[0.18em] ${theme === "dark" ? "text-white/38" : "text-ink/38"}`}>Select a capability</p>
-            <div className="grid grid-cols-2 gap-1 lg:grid-cols-1">
+            <div className="grid grid-cols-1 gap-1 min-[360px]:grid-cols-2 lg:grid-cols-1">
               {services.map((service, index) => {
                 const Icon = service.icon;
                 const selected = serviceIndex === index;
@@ -744,7 +744,7 @@ function FailurePrevention({ theme }: { theme: "dark" | "light" }) {
                 <div><span className="text-5xl font-semibold">6/6</span><p className="mt-2 text-xs font-semibold uppercase tracking-[.16em] text-white/42">Controls mapped</p></div>
                 <div className="text-right"><span className="text-sm font-semibold text-[#7DB5FF]">Release confidence</span><p className="mt-2 text-xs uppercase tracking-[.14em] text-white/42">Visible at every gate</p></div>
               </div>
-              <div className="mt-6 grid grid-cols-6 gap-1.5">{failurePrevention.map((item, index) => <button key={item.problem} type="button" onClick={() => setActiveRisk(index)} aria-label={`Open ${item.problem}`} className={`h-1.5 transition-colors ${index <= activeRisk ? "bg-[#1877F2]" : "bg-white/15"}`} />)}</div>
+              <div className="mt-3 grid grid-cols-6 gap-1.5">{failurePrevention.map((item, index) => <button key={item.problem} type="button" onClick={() => setActiveRisk(index)} aria-label={`Open ${item.problem}`} className="group flex min-h-11 items-center"><span className={`block h-1.5 w-full transition-colors ${index <= activeRisk ? "bg-[#1877F2]" : "bg-white/15 group-hover:bg-white/30"}`} /></button>)}</div>
             </div>
 
             <div className="relative z-10 mt-auto pt-10">
@@ -822,10 +822,10 @@ function ProcessShowcase({ theme }: { theme: "dark" | "light" }) {
               const StageIcon = item.icon;
               const selected = index === activeStep;
               return (
-                <button key={item.title} type="button" onClick={() => setActiveStep(index)} aria-pressed={selected} className={`group relative flex min-h-[108px] items-center gap-4 border-b px-5 text-left transition-colors last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0 ${dark ? "border-white/10" : "border-ink/10"} ${selected ? "bg-teal text-white" : dark ? "bg-[#17191c] text-white hover:bg-white/[0.04]" : "bg-white text-ink hover:bg-[#f7f8fa]"}`}>
+                <button key={item.title} type="button" onClick={() => setActiveStep(index)} aria-pressed={selected} className={`group relative flex min-h-[108px] min-w-0 items-center gap-3 border-b px-4 text-left transition-colors last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0 lg:gap-4 lg:px-5 ${dark ? "border-white/10" : "border-ink/10"} ${selected ? "bg-teal text-white" : dark ? "bg-[#17191c] text-white hover:bg-white/[0.04]" : "bg-white text-ink hover:bg-[#f7f8fa]"}`}>
                   <span className={`text-[10px] font-semibold tracking-[0.16em] ${selected ? "text-white/68" : dark ? "text-white/32" : "text-ink/32"}`}>{String(index + 1).padStart(2, "0")}</span>
                   <StageIcon className={`h-5 w-5 shrink-0 ${selected ? "text-white" : "text-teal"}`} strokeWidth={1.8} />
-                  <span className="font-semibold">{item.title}</span>
+                  <span className="min-w-0 text-sm font-semibold lg:text-base">{item.title}</span>
                   <span className={`absolute inset-x-0 bottom-0 h-[3px] origin-left bg-white transition-transform duration-300 ${selected ? "scale-x-100" : "scale-x-0"}`} />
                 </button>
               );
@@ -1055,9 +1055,9 @@ function Estimator({
               <div className="mb-4 flex items-center gap-3"><span className="grid h-7 w-7 place-items-center rounded-full bg-teal text-xs font-semibold text-white">1</span><span className={`font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>What are we building?</span></div>
               <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
                 {services.slice(0, 6).map((service, index) => (
-                  <button key={service.title} onClick={() => setServiceIndex(index)} className={`flex min-h-14 items-center justify-between rounded-xl border px-4 py-3 text-left text-sm font-medium transition ${serviceIndex === index ? "border-teal bg-teal/10 text-teal" : theme === "dark" ? "border-white/10 bg-white/[0.03] text-white/65 hover:border-white/30" : "border-ink/10 bg-white text-ink/65 hover:border-teal/40"}`}>
-                    {service.title}
-                    {serviceIndex === index ? <Check className="h-4 w-4" /> : null}
+                  <button key={service.title} onClick={() => setServiceIndex(index)} className={`flex min-h-14 min-w-0 items-center justify-between gap-2 rounded-xl border px-3 py-3 text-left text-xs font-medium transition sm:px-4 sm:text-sm ${serviceIndex === index ? "border-teal bg-teal/10 text-teal" : theme === "dark" ? "border-white/10 bg-white/[0.03] text-white/65 hover:border-white/30" : "border-ink/10 bg-white text-ink/65 hover:border-teal/40"}`}>
+                    <span className="min-w-0 leading-5">{service.title}</span>
+                    {serviceIndex === index ? <Check className="h-4 w-4 shrink-0" /> : null}
                   </button>
                 ))}
               </div>
@@ -1066,8 +1066,8 @@ function Estimator({
               <div className="mb-4 flex items-center gap-3"><span className="grid h-7 w-7 place-items-center rounded-full bg-teal text-xs font-semibold text-white">2</span><span className={`font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>Add key capabilities</span></div>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {featureOptions.map((feature) => (
-                  <button key={feature} onClick={() => toggleFeature(feature)} className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-sm transition ${selectedFeatures.includes(feature) ? "border-teal bg-teal/10 font-semibold text-teal" : theme === "dark" ? "border-white/10 text-white/60" : "border-ink/10 bg-white text-ink/60"}`}>
-                    <span className={`grid h-5 w-5 place-items-center rounded border ${selectedFeatures.includes(feature) ? "border-teal bg-teal text-white" : "border-current/25"}`}>{selectedFeatures.includes(feature) ? <Check className="h-3.5 w-3.5" /> : null}</span>{feature}
+                  <button key={feature} onClick={() => toggleFeature(feature)} className={`flex min-w-0 items-center gap-2 rounded-xl border px-3 py-3 text-xs transition sm:gap-3 sm:px-4 sm:text-sm ${selectedFeatures.includes(feature) ? "border-teal bg-teal/10 font-semibold text-teal" : theme === "dark" ? "border-white/10 text-white/60" : "border-ink/10 bg-white text-ink/60"}`}>
+                    <span className={`grid h-5 w-5 shrink-0 place-items-center rounded border ${selectedFeatures.includes(feature) ? "border-teal bg-teal text-white" : "border-current/25"}`}>{selectedFeatures.includes(feature) ? <Check className="h-3.5 w-3.5" /> : null}</span><span className="min-w-0">{feature}</span>
                   </button>
                 ))}
               </div>
