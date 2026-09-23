@@ -333,30 +333,7 @@ export default function Home() {
 
       <CeoMessage theme={theme} />
 
-      <Section id="process" eyebrow="Delivery model" title="A clear path from first decision to launch." intro="Every engagement moves through focused discovery, rapid validation, disciplined engineering, and measurable post-launch improvement." theme={theme}>
-        <div className="relative grid gap-4 lg:grid-cols-4">
-          {process.map((step, index) => {
-            const Icon = step.icon;
-            return (
-              <motion.div
-                key={step.title}
-                initial={false}
-                transition={{ duration: 0.2 }}
-                className={`rounded-2xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}
-              >
-                <div className="mb-6 flex items-center justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal/15 text-teal">
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <span className="text-4xl font-semibold text-white/15">0{index + 1}</span>
-                </div>
-                <h3 className={`text-xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{step.title}</h3>
-                <p className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{step.text}</p>
-              </motion.div>
-            );
-          })}
-        </div>
-      </Section>
+      <ProcessShowcase theme={theme} />
 
       <Estimator
         selectedFeatures={selectedFeatures}
@@ -385,16 +362,7 @@ export default function Home() {
 
       <Testimonials theme={theme} />
 
-      <Section id="faqs" eyebrow="FAQs" title="The practical details, answered clearly." intro="What to expect from scope and collaboration through delivery, launch, and ongoing product support." theme={theme}>
-        <div className="grid gap-4 lg:grid-cols-2">
-          {faqs.map((item) => (
-            <div key={item.q} className={`rounded-3xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
-              <h3 className={`text-lg font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{item.q}</h3>
-              <p className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{item.a}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
+      <FaqPreview theme={theme} />
 
       <FinalCta theme={theme} />
       <SiteFooter />
@@ -756,66 +724,237 @@ function Journey({ theme }: { theme: "dark" | "light" }) {
 }
 
 function FailurePrevention({ theme }: { theme: "dark" | "light" }) {
+  const [activeRisk, setActiveRisk] = useState(0);
+  const activeControl = failurePrevention[activeRisk];
+
   return (
-    <Section id="failures" eyebrow="Risk control" title="The risks are predictable. Our process addresses them early." intro="Clear ownership, validated scope, frequent demonstrations, and quality gates keep delivery aligned before small issues become expensive ones." theme={theme}>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {failurePrevention.map((item) => {
-          const Icon = item.icon;
-          return (
-            <div key={item.problem} className={`rounded-3xl border p-6 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
-              <Icon className="mb-5 h-7 w-7 text-teal" />
-              <h3 className={`text-lg font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{item.problem}</h3>
-              <p className={`mt-3 text-sm leading-6 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>{item.fix}</p>
+    <section id="failures" className="relative z-10 scroll-mt-24 overflow-hidden border-y border-ink/10 bg-[#F7F9FC] py-20 md:py-28">
+      <div className="section-shell">
+        <div className="grid overflow-hidden border border-ink/10 bg-white shadow-[0_30px_90px_rgba(28,30,33,.09)] lg:grid-cols-[.82fr_1.18fr]">
+          <div className="relative flex flex-col overflow-hidden border-b border-ink/10 bg-[#1C1E21] p-7 text-white sm:p-10 lg:min-h-[720px] lg:border-b-0 lg:border-r lg:p-12">
+            <div className="pointer-events-none absolute inset-0 opacity-[.08] [background-image:linear-gradient(rgba(255,255,255,.28)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.28)_1px,transparent_1px)] [background-size:52px_52px]" />
+            <div className="relative z-10">
+              <span className="text-xs font-semibold uppercase tracking-[.2em] text-[#7DB5FF]">Delivery assurance</span>
+              <h2 className="mt-5 max-w-xl text-balance text-4xl font-semibold leading-[1.04] sm:text-5xl lg:text-6xl">Risks managed before they become expensive.</h2>
+              <p className="mt-7 max-w-lg text-base leading-7 text-white/62">Every engagement carries explicit controls for scope, experience, quality, security, measurement, and handover.</p>
             </div>
-          );
-        })}
+
+            <div className="relative z-10 mt-12 border-y border-white/12 py-7">
+              <div className="flex items-end justify-between gap-5">
+                <div><span className="text-5xl font-semibold">6/6</span><p className="mt-2 text-xs font-semibold uppercase tracking-[.16em] text-white/42">Controls mapped</p></div>
+                <div className="text-right"><span className="text-sm font-semibold text-[#7DB5FF]">Release confidence</span><p className="mt-2 text-xs uppercase tracking-[.14em] text-white/42">Visible at every gate</p></div>
+              </div>
+              <div className="mt-6 grid grid-cols-6 gap-1.5">{failurePrevention.map((item, index) => <button key={item.problem} type="button" onClick={() => setActiveRisk(index)} aria-label={`Open ${item.problem}`} className={`h-1.5 transition-colors ${index <= activeRisk ? "bg-[#1877F2]" : "bg-white/15"}`} />)}</div>
+            </div>
+
+            <div className="relative z-10 mt-auto pt-10">
+              <p className="text-[10px] font-semibold uppercase tracking-[.18em] text-white/40">Selected control</p>
+              <motion.p key={activeControl.problem} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .2 }} className="mt-3 text-2xl font-semibold">{activeControl.problem}</motion.p>
+            </div>
+          </div>
+
+          <div className="p-3 sm:p-5 lg:p-7">
+            <div className="flex items-center justify-between px-3 pb-5 pt-2">
+              <div><p className="text-[10px] font-semibold uppercase tracking-[.18em] text-ink/38">Control register</p><p className="mt-1 text-sm text-ink/50">Select a risk to inspect its prevention gate.</p></div>
+              <span className="text-xs font-semibold tracking-[.16em] text-[#1877F2]">{String(activeRisk + 1).padStart(2, "0")} / {String(failurePrevention.length).padStart(2, "0")}</span>
+            </div>
+
+            <div className="border-t border-ink/10">
+              {failurePrevention.map((item, index) => {
+                const Icon = item.icon;
+                const selected = activeRisk === index;
+                return (
+                  <button key={item.problem} type="button" onClick={() => setActiveRisk(index)} aria-expanded={selected} className={`group w-full border-b border-ink/10 px-3 text-left transition-colors duration-200 ${selected ? "bg-[#E7F3FF]" : "hover:bg-[#F7F9FC]"}`}>
+                    <div className="grid min-h-[82px] grid-cols-[38px_44px_1fr_28px] items-center gap-3">
+                      <span className={`text-[10px] font-semibold tracking-[.16em] ${selected ? "text-[#1877F2]" : "text-ink/30"}`}>{String(index + 1).padStart(2, "0")}</span>
+                      <span className={`flex h-10 w-10 items-center justify-center border transition-colors ${selected ? "border-[#1877F2] bg-[#1877F2] text-white" : "border-ink/10 bg-white text-ink/52"}`}><Icon className="h-5 w-5" strokeWidth={1.8} /></span>
+                      <span className={`text-base font-semibold sm:text-lg ${selected ? "text-ink" : "text-ink/68"}`}>{item.problem}</span>
+                      <ChevronRight className={`h-5 w-5 transition-transform duration-200 ${selected ? "rotate-90 text-[#1877F2]" : "text-ink/25 group-hover:translate-x-1 group-hover:text-ink/60"}`} />
+                    </div>
+                    <div className={`grid transition-[grid-template-rows] duration-300 ease-out ${selected ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+                      <div className="overflow-hidden">
+                        <div className="ml-[98px] border-t border-[#1877F2]/18 pb-7 pt-5">
+                          <p className="max-w-xl text-sm leading-6 text-ink/62 sm:text-base sm:leading-7">{item.fix}</p>
+                          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[10px] font-semibold uppercase tracking-[.14em] text-ink/38"><span>Owner: Product lead</span><span>Gate: Required</span><span className="text-[#1877F2]">Status: Controlled</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex justify-end px-3 pt-6"><a href="#estimator" className="group inline-flex items-center gap-3 text-sm font-semibold text-[#1877F2]">Plan a controlled build <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></a></div>
+          </div>
+        </div>
       </div>
-    </Section>
+    </section>
+  );
+}
+
+const processOutcomes = [
+  ["Direction brief", "Audience model", "Success criteria"],
+  ["Validated flows", "Clickable prototype", "Scope confidence"],
+  ["Production build", "Quality gates", "Release candidate"],
+  ["Live product", "Performance review", "Growth backlog"]
+];
+
+function ProcessShowcase({ theme }: { theme: "dark" | "light" }) {
+  const [activeStep, setActiveStep] = useState(0);
+  const step = process[activeStep];
+  const Icon = step.icon;
+  const dark = theme === "dark";
+
+  return (
+    <section id="process" className={`relative z-10 scroll-mt-32 border-b py-20 md:py-28 ${dark ? "border-white/10 bg-ink" : "border-ink/[0.06] bg-[#f0f2f5]"}`}>
+      <div className="section-shell">
+        <div className="grid gap-8 lg:grid-cols-[0.84fr_1.16fr] lg:items-end">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal">Delivery model</p>
+            <h2 className={`mt-5 max-w-xl text-balance text-4xl font-semibold leading-[1.03] md:text-6xl ${dark ? "text-white" : "text-ink"}`}>A clear path from first decision to launch.</h2>
+          </div>
+          <p className={`max-w-2xl text-lg leading-8 lg:justify-self-end ${dark ? "text-white/60" : "text-ink/60"}`}>Every engagement moves through focused discovery, rapid validation, disciplined engineering, and measurable post-launch improvement.</p>
+        </div>
+
+        <div className={`mt-12 overflow-hidden border ${dark ? "border-white/12 bg-[#17191c]" : "border-ink/10 bg-white"}`}>
+          <div className={`grid border-b ${dark ? "border-white/10" : "border-ink/10"} md:grid-cols-4`}>
+            {process.map((item, index) => {
+              const StageIcon = item.icon;
+              const selected = index === activeStep;
+              return (
+                <button key={item.title} type="button" onClick={() => setActiveStep(index)} aria-pressed={selected} className={`group relative flex min-h-[108px] items-center gap-4 border-b px-5 text-left transition-colors last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0 ${dark ? "border-white/10" : "border-ink/10"} ${selected ? "bg-teal text-white" : dark ? "bg-[#17191c] text-white hover:bg-white/[0.04]" : "bg-white text-ink hover:bg-[#f7f8fa]"}`}>
+                  <span className={`text-[10px] font-semibold tracking-[0.16em] ${selected ? "text-white/68" : dark ? "text-white/32" : "text-ink/32"}`}>{String(index + 1).padStart(2, "0")}</span>
+                  <StageIcon className={`h-5 w-5 shrink-0 ${selected ? "text-white" : "text-teal"}`} strokeWidth={1.8} />
+                  <span className="font-semibold">{item.title}</span>
+                  <span className={`absolute inset-x-0 bottom-0 h-[3px] origin-left bg-white transition-transform duration-300 ${selected ? "scale-x-100" : "scale-x-0"}`} />
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="grid lg:grid-cols-[0.78fr_1.22fr]">
+            <div className={`relative min-h-[430px] overflow-hidden p-7 md:p-10 lg:border-r lg:p-12 ${dark ? "border-white/10 bg-[#111315]" : "border-ink/10 bg-ink text-white"}`}>
+              <span aria-hidden="true" className="absolute -bottom-14 -right-5 text-[15rem] font-semibold leading-none text-white/[0.045]">{String(activeStep + 1).padStart(2, "0")}</span>
+              <AnimatePresence mode="wait">
+                <motion.div key={step.title} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.22 }} className="relative z-10 flex h-full flex-col">
+                  <div className="flex h-14 w-14 items-center justify-center border border-white/18 text-teal"><Icon className="h-7 w-7" strokeWidth={1.7} /></div>
+                  <p className="mt-16 text-xs font-semibold uppercase tracking-[0.18em] text-teal">Phase {String(activeStep + 1).padStart(2, "0")}</p>
+                  <h3 className="mt-3 text-4xl font-semibold text-white md:text-5xl">{step.title}</h3>
+                  <p className="mt-6 max-w-lg text-base leading-8 text-white/62">{step.text}</p>
+                  <div className="mt-auto flex items-center gap-3 pt-10 text-xs font-semibold uppercase tracking-[0.16em] text-white/44"><span className="h-px w-10 bg-teal" /> Select a phase to explore</div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            <div className={`flex min-h-[430px] flex-col justify-between p-7 md:p-10 lg:p-12 ${dark ? "bg-[#202226]" : "bg-white"}`}>
+              <AnimatePresence mode="wait">
+                <motion.div key={`outcomes-${activeStep}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+                  <div className="flex items-center justify-between gap-5">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal">Phase outputs</p>
+                    <span className={`text-xs font-semibold ${dark ? "text-white/35" : "text-ink/35"}`}>0{activeStep + 1} / 04</span>
+                  </div>
+                  <div className={`mt-8 border-t ${dark ? "border-white/10" : "border-ink/10"}`}>
+                    {processOutcomes[activeStep].map((outcome, index) => (
+                      <div key={outcome} className={`grid grid-cols-[42px_1fr_auto] items-center gap-4 border-b py-5 ${dark ? "border-white/10" : "border-ink/10"}`}>
+                        <span className={`text-xs font-semibold ${dark ? "text-white/28" : "text-ink/28"}`}>0{index + 1}</span>
+                        <span className={`text-lg font-semibold ${dark ? "text-white" : "text-ink"}`}>{outcome}</span>
+                        <Check className="h-5 w-5 text-teal" strokeWidth={2} />
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+              <div className={`mt-12 grid gap-px ${dark ? "bg-white/10" : "bg-ink/10"} sm:grid-cols-2`}>
+                <div className={dark ? "bg-[#202226] p-5" : "bg-white p-5"}><p className={`text-[10px] font-semibold uppercase tracking-[0.16em] ${dark ? "text-white/35" : "text-ink/35"}`}>Review rhythm</p><p className={`mt-2 font-semibold ${dark ? "text-white" : "text-ink"}`}>Weekly working demo</p></div>
+                <div className={dark ? "bg-[#202226] p-5" : "bg-white p-5"}><p className={`text-[10px] font-semibold uppercase tracking-[0.16em] ${dark ? "text-white/35" : "text-ink/35"}`}>Decision rule</p><p className={`mt-2 font-semibold ${dark ? "text-white" : "text-ink"}`}>Evidence before expansion</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
 function ProjectDashboard({ theme }: { theme: "dark" | "light" }) {
+  const [activeTask, setActiveTask] = useState(1);
+  const selectedTask = dashboardTasks[activeTask];
+
   return (
-    <section className="relative z-10 py-20 md:py-28">
-      <div className="section-shell grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className={`rounded-[32px] border p-5 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h2 className={`text-2xl font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>Project progress dashboard</h2>
-              <p className={`mt-1 text-sm ${theme === "dark" ? "text-white/55" : "text-ink/55"}`}>A visual trust signal for international clients.</p>
-            </div>
-            <span className="rounded-full bg-teal px-3 py-1 text-sm font-semibold text-ink">Week 2 / 10</span>
+    <section className="relative z-10 border-y border-ink/[0.06] bg-white py-20 md:py-28">
+      <div className="section-shell">
+        <div className="grid items-end gap-8 border-b border-ink/10 pb-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal">Delivery intelligence</p>
+            <h2 className="mt-5 max-w-2xl text-balance text-4xl font-semibold leading-[1.02] text-ink md:text-6xl">Every milestone visible. Every decision accountable.</h2>
           </div>
-          <div className="space-y-3">
-            {dashboardTasks.map((task) => (
-              <div key={task.label} className={`rounded-2xl p-4 ${theme === "dark" ? "bg-white/[0.05]" : "bg-ink/[0.035]"}`}>
-                <div className="mb-3 flex justify-between gap-3">
-                  <span className={`font-medium ${theme === "dark" ? "text-white" : "text-ink"}`}>{task.label}</span>
-                  <span className="text-sm font-semibold text-teal">{task.status}</span>
-                </div>
-                <div className={`h-2 overflow-hidden rounded-full ${theme === "dark" ? "bg-white/10" : "bg-ink/10"}`}>
-                  <div className="h-full rounded-full bg-teal" style={{ width: `${task.progress}%` }} />
-                </div>
-              </div>
-            ))}
+          <div className="lg:pb-1">
+            <p className="max-w-2xl text-lg leading-8 text-ink/62">A shared delivery view keeps clients close to progress, review cycles, and launch readiness without adding more meetings.</p>
+            <div className="mt-6 flex flex-wrap gap-x-7 gap-y-3">
+              {qualityChecks.map((check) => {
+                const Icon = check.icon;
+                return <span key={check.label} className="inline-flex items-center gap-2 text-sm font-semibold text-ink/68"><Icon className="h-4 w-4 text-teal" strokeWidth={2} />{check.label}</span>;
+              })}
+            </div>
           </div>
         </div>
-        <div className="self-center">
-          <span className="mb-4 inline-flex rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-sm font-semibold text-teal">Transparent delivery</span>
-          <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Make the website feel like the company already runs mature projects.</h2>
-          <p className={`mt-5 text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
-            A mini dashboard suggests weekly demos, clear milestones, QA discipline, and a team clients can trust remotely.
-          </p>
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            {qualityChecks.map((check) => {
-              const Icon = check.icon;
-              return (
-                <div key={check.label} className={`flex items-center gap-3 rounded-2xl border p-4 ${theme === "dark" ? "border-white/10 bg-white/[0.04]" : "border-ink/10 bg-white"}`}>
-                  <Icon className="h-5 w-5 text-teal" />
-                  <span className={`text-sm font-semibold ${theme === "dark" ? "text-white/75" : "text-ink/75"}`}>{check.label}</span>
-                </div>
-              );
-            })}
+
+        <div className="mt-10 overflow-hidden border border-ink/10 bg-[#f0f2f5] shadow-[0_24px_70px_rgba(28,30,33,0.08)]">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-ink/10 bg-white px-5 py-4 md:px-7">
+            <div className="flex items-center gap-3">
+              <span className="flex h-9 w-9 items-center justify-center bg-ink text-xs font-bold text-white">OG</span>
+              <div><p className="text-sm font-semibold text-ink">Project control room</p><p className="text-xs text-ink/45">Live delivery overview</p></div>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="hidden items-center gap-2 text-xs font-semibold text-ink/50 sm:inline-flex"><span className="h-2 w-2 rounded-full bg-teal" /> Updated today</span>
+              <span className="inline-flex min-h-9 items-center bg-teal px-4 text-sm font-semibold text-white">Week 2 / 10</span>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="border-b border-ink/10 bg-white lg:border-b-0 lg:border-r">
+              <div className="flex items-center justify-between border-b border-ink/10 px-5 py-4 md:px-7">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink/45">Delivery roadmap</p>
+                <p className="text-xs font-semibold text-ink/40">{activeTask + 1} / {dashboardTasks.length}</p>
+              </div>
+              <div>
+                {dashboardTasks.map((task, index) => {
+                  const selected = index === activeTask;
+                  return (
+                    <button key={task.label} type="button" onClick={() => setActiveTask(index)} aria-pressed={selected} className={`group grid w-full grid-cols-[34px_1fr_auto] items-center gap-3 border-b border-ink/[0.07] px-5 py-5 text-left transition-colors last:border-b-0 md:px-7 ${selected ? "bg-[#e7f3ff]" : "bg-white hover:bg-[#f7f8fa]"}`}>
+                      <span className={`text-[10px] font-semibold tracking-[0.16em] ${selected ? "text-teal" : "text-ink/30"}`}>{String(index + 1).padStart(2, "0")}</span>
+                      <span>
+                        <span className="block text-base font-semibold text-ink">{task.label}</span>
+                        <span className="mt-2 block h-1.5 overflow-hidden bg-ink/10"><motion.span className="block h-full bg-teal" animate={{ width: `${task.progress}%` }} transition={{ duration: 0.45, ease: "easeOut" }} /></span>
+                      </span>
+                      <span className={`min-w-[72px] text-right text-xs font-semibold ${selected ? "text-teal" : "text-ink/45"}`}>{task.status}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="relative flex min-h-[500px] flex-col justify-between overflow-hidden p-6 md:p-10 lg:p-12">
+              <span aria-hidden="true" className="pointer-events-none absolute -bottom-12 -right-3 text-[15rem] font-semibold leading-none text-teal/[0.055]">{String(activeTask + 1).padStart(2, "0")}</span>
+              <AnimatePresence mode="wait">
+                <motion.div key={selectedTask.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.22 }} className="relative z-10">
+                  <div className="flex items-start justify-between gap-6">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal">Current focus</p>
+                      <h3 className="mt-4 text-4xl font-semibold text-ink md:text-5xl">{selectedTask.label}</h3>
+                    </div>
+                    <span className="border border-teal/25 bg-white px-3 py-2 text-xs font-semibold text-teal">{selectedTask.progress}% complete</span>
+                  </div>
+                  <p className="mt-7 max-w-xl text-lg leading-8 text-ink/62">Work, feedback, and approval are tracked in one place so progress stays visible and the next action is always clear.</p>
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="relative z-10 mt-14 grid gap-px bg-ink/10 sm:grid-cols-3">
+                <div className="bg-white p-5"><p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-ink/38">Owner</p><p className="mt-2 font-semibold text-ink">Product team</p></div>
+                <div className="bg-white p-5"><p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-ink/38">Next review</p><p className="mt-2 font-semibold text-ink">Thursday, 3 PM</p></div>
+                <div className="bg-white p-5"><p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-ink/38">Health</p><p className="mt-2 inline-flex items-center gap-2 font-semibold text-ink"><Check className="h-4 w-4 text-teal" /> On track</p></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -881,6 +1020,15 @@ function Estimator({
   setServiceIndex: (index: number) => void;
   toggleFeature: (feature: string) => void;
 }) {
+  const estimateBrief = [
+    `Service: ${services[serviceIndex].title}`,
+    `Capabilities: ${selectedFeatures.join(", ") || "To be discussed"}`,
+    `Delivery depth: ${budgets[budgetIndex].label}`,
+    `Estimated investment: $${estimate.low.toLocaleString()} - $${estimate.high.toLocaleString()}`,
+    `Estimated timeline: ${estimate.timeline}`
+  ].join("\n");
+  const estimateContactHref = `/contact-us?service=${encodeURIComponent(services[serviceIndex].title)}&brief=${encodeURIComponent(estimateBrief)}`;
+
   return (
     <section id="estimator" className={`relative z-10 border-y py-16 md:py-20 ${theme === "dark" ? "border-white/10 bg-[#202124]" : "border-ink/[0.06] bg-white"}`}>
       <div className="section-shell">
@@ -948,9 +1096,9 @@ function Estimator({
                 </div>
                 <p className="mt-6 text-sm leading-6 text-white/50">This is an initial planning range. Final scope follows a short discovery call.</p>
               </div>
-              <a href={`mailto:${companyCopy.contactEmail}?subject=Project estimate request`} className="group mt-10 inline-flex w-full items-center justify-between rounded-xl bg-teal px-5 py-4 font-semibold text-white transition hover:bg-[#166fe5]">
+              <Link href={estimateContactHref} className="group mt-10 inline-flex w-full items-center justify-between rounded-xl bg-teal px-5 py-4 font-semibold text-white transition hover:bg-[#166fe5]">
                 Discuss this estimate <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
-              </a>
+              </Link>
             </aside>
           </div>
         </div>
@@ -964,23 +1112,23 @@ function Testimonials({ theme }: { theme: "dark" | "light" }) {
   const active = testimonialItems[activeTestimonial];
 
   return (
-    <section className={`relative z-10 overflow-hidden border-y py-20 md:py-28 ${theme === "dark" ? "border-white/10 bg-[#18191a]" : "border-ink/10 bg-white"}`}>
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-1/3 bg-[linear-gradient(135deg,transparent_45%,rgba(24,119,242,.055)_45%,rgba(24,119,242,.055)_46%,transparent_46%)] bg-[length:32px_32px]" />
+    <section className={`relative z-10 overflow-hidden border-y py-20 md:py-28 ${theme === "dark" ? "border-white/10 bg-[#18191a]" : "border-ink/10 bg-[#f0f2f5]"}`}>
       <div className="section-shell relative">
-        <div className="mb-12">
+        <div className="mb-12 grid gap-6 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
           <div>
             <span className="mb-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.2em] text-teal"><span className="h-px w-8 bg-teal" /> Client voices</span>
-            <h2 className={`max-w-4xl text-balance text-4xl font-semibold leading-[1.03] md:text-6xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Listen From Our <span className="text-teal">Clients</span></h2>
+            <h2 className={`max-w-3xl text-balance text-4xl font-semibold leading-[1.03] md:text-6xl ${theme === "dark" ? "text-white" : "text-ink"}`}>What partnership feels like.</h2>
           </div>
+          <p className={`max-w-xl text-lg leading-8 lg:justify-self-end ${theme === "dark" ? "text-white/55" : "text-ink/55"}`}>Direct feedback from teams that trusted Opus Geeks to shape, build, and improve their digital products.</p>
         </div>
 
-        <div className={`overflow-hidden border ${theme === "dark" ? "border-white/10" : "border-ink/10"}`}>
-          <div className="grid lg:grid-cols-[1.25fr_.75fr]">
-            <div className="relative flex min-h-[420px] flex-col justify-between overflow-hidden bg-teal p-7 text-white md:p-12 lg:min-h-[500px]">
-              <div className="pointer-events-none absolute -right-16 -top-24 text-[260px] font-black leading-none text-white/[.065]">“</div>
+        <div className={`overflow-hidden border shadow-[0_24px_70px_rgba(28,30,33,.07)] ${theme === "dark" ? "border-white/10" : "border-ink/10"}`}>
+          <div className="grid items-start lg:grid-cols-[1.3fr_.7fr]">
+            <div className={`relative flex min-h-[430px] flex-col overflow-hidden p-7 md:p-12 lg:h-[616px] ${theme === "dark" ? "bg-[#202124] text-white" : "bg-white text-ink"}`}>
+              <div className="pointer-events-none absolute bottom-0 left-0 h-1 w-full bg-ink/[.04]"><motion.span className="block h-full bg-teal" animate={{ width: `${((activeTestimonial + 1) / testimonialItems.length) * 100}%` }} transition={{ duration: .35 }} /></div>
               <div className="relative flex items-center justify-between">
-                <Quote className="h-9 w-9" strokeWidth={1.5} />
-                <div className="flex gap-1 text-white/85" aria-label="5 out of 5 stars">
+                <span className="flex h-12 w-12 items-center justify-center border border-teal/25 text-teal"><Quote className="h-6 w-6" strokeWidth={1.6} /></span>
+                <div className="flex gap-1 text-teal" aria-label="5 out of 5 stars">
                   {Array.from({ length: 5 }).map((_, index) => <Star key={index} className="h-4 w-4 fill-current" />)}
                 </div>
               </div>
@@ -992,30 +1140,31 @@ function Testimonials({ theme }: { theme: "dark" | "light" }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative my-10"
+                  className="relative mt-9"
                 >
-                  <blockquote className="max-w-3xl text-balance text-2xl font-medium leading-[1.35] md:text-4xl">“{active.quote}”</blockquote>
-                  <div className="mt-9 flex items-center gap-4 border-t border-white/25 pt-6">
-                    <span className="grid h-11 w-11 place-items-center rounded-full bg-white font-semibold text-teal">{String(activeTestimonial + 1).padStart(2, "0")}</span>
-                    <div><p className="font-semibold">{active.name}</p><p className="mt-1 text-sm text-white/68">Client testimonial</p></div>
+                  <blockquote className={`max-w-3xl text-pretty text-2xl font-medium leading-[1.4] md:text-[1.75rem] ${theme === "dark" ? "text-white" : "text-ink"}`}>“{active.quote}”</blockquote>
+                  <div className={`mt-8 flex items-center gap-4 border-t pt-5 ${theme === "dark" ? "border-white/12" : "border-ink/10"}`}>
+                    <span className="grid h-10 w-10 place-items-center bg-teal text-sm font-semibold text-white">{String(activeTestimonial + 1).padStart(2, "0")}</span>
+                    <div><p className="font-semibold">{active.name}</p><p className={`mt-1 text-sm ${theme === "dark" ? "text-white/48" : "text-ink/48"}`}>Verified client feedback</p></div>
                   </div>
                 </motion.div>
               </AnimatePresence>
 
-              <p className="relative text-xs font-semibold uppercase tracking-[.2em] text-white/60">Opus Geeks · Client experience</p>
+              <p className={`relative mt-8 text-xs font-semibold uppercase tracking-[.2em] ${theme === "dark" ? "text-white/35" : "text-ink/35"}`}>Opus Geeks · Client experience</p>
             </div>
 
-            <div className={`max-h-[500px] overflow-y-auto ${theme === "dark" ? "bg-[#202122]" : "bg-white"}`}>
+            <div className={`flex max-h-[616px] flex-col overflow-y-auto overscroll-contain [scrollbar-color:#1877F2_transparent] [scrollbar-width:thin] ${theme === "dark" ? "bg-[#18191a]" : "bg-[#f7f8fa]"}`}>
               {testimonialItems.map((item, index) => (
                 <button
                   key={item.quote}
                   type="button"
                   onClick={() => setActiveTestimonial(index)}
-                  className={`group flex min-h-[105px] w-full items-center gap-5 border-b px-6 text-left transition last:border-b-0 md:px-8 ${theme === "dark" ? "border-white/10" : "border-ink/10"} ${activeTestimonial === index ? theme === "dark" ? "bg-white/[.07]" : "bg-[#e7f3ff]" : theme === "dark" ? "hover:bg-white/[.04]" : "hover:bg-[#f7f9fc]"}`}
+                  className={`group relative flex min-h-[88px] w-full shrink-0 items-center gap-5 border-b px-6 py-4 text-left transition last:border-b-0 md:px-8 ${theme === "dark" ? "border-white/10" : "border-ink/10"} ${activeTestimonial === index ? theme === "dark" ? "bg-white/[.06]" : "bg-white" : theme === "dark" ? "hover:bg-white/[.035]" : "hover:bg-white/70"}`}
                 >
+                  <span className={`absolute inset-y-0 left-0 w-[3px] bg-teal transition-transform ${activeTestimonial === index ? "scale-y-100" : "scale-y-0"}`} />
                   <span className={`text-xs font-semibold ${activeTestimonial === index ? "text-teal" : theme === "dark" ? "text-white/30" : "text-ink/30"}`}>{String(index + 1).padStart(2, "0")}</span>
-                  <span className="min-w-0 flex-1"><span className={`block font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{item.name}</span><span className={`mt-1 block text-sm ${theme === "dark" ? "text-white/45" : "text-ink/45"}`}>Read testimonial</span></span>
-                  <ArrowRight className={`h-5 w-5 transition group-hover:translate-x-1 ${activeTestimonial === index ? "text-teal" : theme === "dark" ? "text-white/25" : "text-ink/25"}`} />
+                  <span className="min-w-0 flex-1"><span className={`block font-semibold ${theme === "dark" ? "text-white" : "text-ink"}`}>{item.name}</span><span className={`mt-1 block text-xs uppercase tracking-[.12em] ${theme === "dark" ? "text-white/35" : "text-ink/35"}`}>{activeTestimonial === index ? "Now reading" : "View feedback"}</span></span>
+                  <ChevronRight className={`h-5 w-5 transition group-hover:translate-x-1 ${activeTestimonial === index ? "text-teal" : theme === "dark" ? "text-white/20" : "text-ink/20"}`} />
                 </button>
               ))}
             </div>
@@ -1026,25 +1175,76 @@ function Testimonials({ theme }: { theme: "dark" | "light" }) {
   );
 }
 
+function FaqPreview({ theme }: { theme: "dark" | "light" }) {
+  const [openFaq, setOpenFaq] = useState(0);
+  const dark = theme === "dark";
+
+  return (
+    <section id="faqs" className={`relative z-10 scroll-mt-32 border-b py-20 md:py-28 ${dark ? "border-white/10" : "border-ink/[0.06]"}`}>
+      <div className="section-shell grid gap-12 lg:grid-cols-[.72fr_1.28fr]">
+        <div className="lg:sticky lg:top-36 lg:self-start">
+          <p className="text-xs font-semibold uppercase tracking-[.2em] text-teal">Frequently asked</p>
+          <h2 className={`mt-5 max-w-lg text-balance text-4xl font-semibold leading-[1.04] md:text-6xl ${dark ? "text-white" : "text-ink"}`}>Clarity before the first call.</h2>
+          <p className={`mt-6 max-w-md text-base leading-7 ${dark ? "text-white/55" : "text-ink/55"}`}>Straight answers about capabilities, redesigns, mobile products, and how a project gets started.</p>
+          <Link href="/faqs" className="group mt-8 inline-flex items-center gap-3 text-sm font-semibold text-teal">Explore all questions <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></Link>
+        </div>
+
+        <div>
+          <div className={`border-t ${dark ? "border-white/12" : "border-ink/12"}`}>
+            {faqs.slice(0, 4).map((item, index) => {
+              const selected = openFaq === index;
+              return (
+                <button key={item.q} type="button" onClick={() => setOpenFaq(index)} aria-pressed={selected} className={`group grid min-h-[88px] w-full grid-cols-[38px_1fr_28px] items-center gap-4 border-b px-4 text-left transition-colors md:px-6 ${dark ? "border-white/12" : "border-ink/12"} ${selected ? dark ? "bg-white/[.04]" : "bg-white" : "bg-transparent"}`}>
+                  <span className={`text-[10px] font-semibold tracking-[.16em] ${selected ? "text-teal" : dark ? "text-white/28" : "text-ink/28"}`}>{String(index + 1).padStart(2, "0")}</span>
+                  <span className={`text-base font-semibold md:text-lg ${dark ? "text-white" : "text-ink"}`}>{item.q}</span>
+                  <ChevronRight className={`h-5 w-5 transition-transform ${selected ? "rotate-90 text-teal" : dark ? "text-white/25 group-hover:translate-x-1" : "text-ink/25 group-hover:translate-x-1"}`} />
+                </button>
+              );
+            })}
+          </div>
+
+          <div className={`min-h-[190px] border-b border-l-[3px] border-b-ink/10 border-l-teal p-6 md:p-8 ${dark ? "bg-white/[.035]" : "bg-white"}`}>
+            <AnimatePresence mode="wait">
+              <motion.div key={openFaq} initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -8 }} transition={{ duration: .18 }}>
+                <p className="text-[10px] font-semibold uppercase tracking-[.18em] text-teal">Answer {String(openFaq + 1).padStart(2, "0")}</p>
+                <p className={`mt-4 max-w-2xl text-base leading-7 ${dark ? "text-white/62" : "text-ink/62"}`}>{faqs[openFaq].a}</p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalCta({ theme }: { theme: "dark" | "light" }) {
   return (
-    <section id="contact" className="relative z-10 scroll-mt-32 pb-10 md:pb-16">
-      <div className={`section-shell overflow-hidden rounded-[36px] border p-8 md:p-12 ${theme === "dark" ? "border-white/10 bg-white/[0.05]" : "border-ink/10 bg-white"}`}>
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
-          <div>
-            <h2 className={`text-balance text-3xl font-semibold md:text-5xl ${theme === "dark" ? "text-white" : "text-ink"}`}>Ready to build your next digital product?</h2>
-            <p className={`mt-5 max-w-2xl text-lg leading-8 ${theme === "dark" ? "text-white/62" : "text-ink/62"}`}>
-              {companyCopy.aboutText}
-            </p>
+    <section id="contact" className="relative z-10 scroll-mt-32 overflow-hidden border-b border-ink/10 bg-white">
+      <div className="section-shell py-16 md:py-24">
+        <div className="grid overflow-hidden border border-ink/10 lg:grid-cols-[1.15fr_.85fr]">
+          <div className="relative p-7 md:p-12 lg:p-14">
+            <span aria-hidden="true" className="pointer-events-none absolute -bottom-14 right-5 text-[13rem] font-semibold leading-none text-teal/[.045]">01</span>
+            <div className="relative z-10">
+              <p className="text-xs font-semibold uppercase tracking-[.2em] text-teal">Start with clarity</p>
+              <h2 className="mt-5 max-w-3xl text-balance text-4xl font-semibold leading-[1.04] text-ink md:text-6xl">Turn your idea into a plan the team can build.</h2>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-ink/55">Choose the product, capabilities, and delivery depth. Receive a useful planning range before the first conversation.</p>
+              <div className="mt-10 flex flex-wrap gap-x-8 gap-y-4 text-sm font-semibold text-ink/62">
+                {["No obligation", "Instant planning range", "Human follow-up"].map((item) => <span key={item} className="inline-flex items-center gap-2"><Check className="h-4 w-4 text-teal" />{item}</span>)}
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-            <a href="#estimator" className="inline-flex items-center justify-center gap-2 rounded-full bg-teal px-6 py-4 font-semibold text-ink transition hover:bg-white">
-              Estimate a project
-              <ArrowRight className="h-5 w-5" />
-            </a>
-            <a href={`mailto:${companyCopy.contactEmail}`} className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-4 font-semibold transition ${theme === "dark" ? "border-white/15 text-white hover:border-white/40" : "border-ink/15 text-ink hover:border-ink/40"}`}>
-              Contact team
-            </a>
+          <div className="flex flex-col justify-between border-t border-ink/10 bg-[#f0f2f5] p-7 md:p-10 lg:border-l lg:border-t-0 lg:p-12">
+            <div>
+              <div className="flex items-center justify-between"><p className="text-xs font-semibold uppercase tracking-[.18em] text-ink/38">Project entry</p><span className="flex h-9 w-9 items-center justify-center bg-white text-xs font-semibold text-teal">OG</span></div>
+              <div className="mt-8 border-y border-ink/10 py-5">
+                <div className="flex items-center justify-between gap-5"><span className="text-sm text-ink/48">Typical response</span><strong className="text-right text-sm text-ink">Within one business day</strong></div>
+                <div className="mt-5 flex items-center justify-between gap-5"><span className="text-sm text-ink/48">First step</span><strong className="text-right text-sm text-ink">Scope alignment</strong></div>
+              </div>
+            </div>
+            <div className="mt-12 space-y-3">
+              <a href="#estimator" className="group flex min-h-16 items-center justify-between bg-teal px-6 font-semibold text-white transition-colors hover:bg-[#166fe5]">Build my estimate <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" /></a>
+              <Link href="/contact-us" className="group flex min-h-16 items-center justify-between border border-ink/12 bg-white px-6 font-semibold text-ink transition-colors hover:border-teal/50">Talk to the team <ArrowRight className="h-5 w-5 text-ink/35 transition-transform group-hover:translate-x-1" /></Link>
+            </div>
           </div>
         </div>
       </div>
