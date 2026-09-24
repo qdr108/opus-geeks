@@ -8,20 +8,26 @@ import { useState } from "react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 
 const projects = [
-  { title: "Digital Commerce Experience", category: "Web Development", industry: "Retail", image: "/images/portfolio-1.png" },
-  { title: "Service Operations Platform", category: "Web Development", industry: "Business", image: "/images/portfolio-2.png" },
-  { title: "Healthcare Product Journey", category: "UI/UX Design", industry: "Healthcare", image: "/images/portfolio-3.png" },
-  { title: "Aviation Brand Platform", category: "Web Development", industry: "Aviation", image: "/images/portfolio-4.png" },
-  { title: "Restaurant Service App", category: "App Development", industry: "Hospitality", image: "/images/portfolio-5.png" },
-  { title: "Customer Booking Flow", category: "App Development", industry: "Services", image: "/images/portfolio-6.png" },
-  { title: "Mobile Product System", category: "UI/UX Design", industry: "Technology", image: "/images/portfolio-7.png" },
-  { title: "On-demand Experience", category: "App Development", industry: "Marketplace", image: "/images/portfolio-8.png" }
+  { title: "Digital Commerce Experience", category: "Web Development", industry: "Retail", image: "/images/portfolio-aviation-hd.png" },
+  { title: "Service Operations Platform", category: "Web Development", industry: "Business", image: "/images/portfolio-kelstech-hd.png" },
+  { title: "Healthcare Product Journey", category: "UI/UX Design", industry: "Healthcare", image: "/images/ux-case-2-hd.jpg" },
+  { title: "Aviation Brand Platform", category: "Web Development", industry: "Aviation", image: "/images/web-case-1-hd.jpg" },
+  { title: "Restaurant Service App", category: "App Development", industry: "Hospitality", image: "/images/portfolio-restaurant-hd.png" },
+  { title: "Customer Booking Flow", category: "App Development", industry: "Services", image: "/images/ux-case-4-hd.jpg" },
+  { title: "Mobile Product System", category: "UI/UX Design", industry: "Technology", image: "/images/ux-case-3-hd.jpg" },
+  { title: "On-demand Experience", category: "App Development", industry: "Marketplace", image: "/images/ux-case-1-hd.jpg" }
 ];
 
 const filters = ["All", "Web Development", "App Development", "UI/UX Design"];
 
+const heroCases = [
+  { index: "01", title: "XU Stream Aviation", discipline: "Aviation platform", image: "/images/portfolio-aviation-hd.png", metric: "Web", outcome: "Premium digital presence" },
+  { index: "02", title: "Restaurant Experience", discipline: "Digital commerce", image: "/images/portfolio-restaurant-hd.png", metric: "Food", outcome: "Responsive ordering journey" }
+];
+
 export default function PortfolioPage() {
   const [active, setActive] = useState("All");
+  const [heroCase, setHeroCase] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const visible = active === "All" ? projects : projects.filter((project) => project.category === active);
 
@@ -31,17 +37,24 @@ export default function PortfolioPage() {
 
       <section className="relative overflow-hidden border-b border-[#1C1E21]/10 bg-white pt-24">
         <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(24,119,242,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(24,119,242,.07)_1px,transparent_1px)] [background-size:64px_64px]" />
-        <div className="section-shell relative grid min-h-[570px] items-center gap-12 py-16 lg:grid-cols-[1.05fr_.95fr]">
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+        <div className="section-shell relative grid min-h-[680px] items-center gap-12 py-14 lg:grid-cols-[.78fr_1.22fr] lg:py-16">
+          <motion.div initial={false} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]"><Sparkles className="h-4 w-4" />Selected work · measurable impact</p>
             <h1 className="mt-6 max-w-3xl text-balance text-5xl font-semibold leading-[1.02] md:text-7xl">Explore our <span className="text-[#1877F2]">case studies.</span></h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-[#1C1E21]/60">Explore real-world projects where Opus Geeks partnered with clients to overcome challenges through strategic insight, creative solutions, and dependable digital execution.</p>
             <div className="mt-9 flex flex-wrap gap-3"><a href="#work" className="inline-flex items-center gap-3 rounded-full bg-[#1877F2] px-6 py-4 font-semibold text-white shadow-[0_14px_35px_rgba(24,119,242,.25)]">View our work <ArrowRight className="h-5 w-5" /></a><Link href="/#contact" className="rounded-full border border-[#1C1E21]/15 bg-white px-6 py-4 font-semibold">Start a project</Link></div>
           </motion.div>
-          <motion.div initial={{ opacity: 0, x: 36 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="relative h-[420px]">
-            <motion.div initial={{ opacity: 0, x: -20, rotate: -3 }} animate={{ opacity: 1, x: 0, rotate: -2 }} transition={{ duration: 0.75 }} className="absolute left-0 top-6 h-[300px] w-[52%] overflow-hidden rounded-2xl border-4 border-white bg-[#DDE8F7] shadow-2xl"><Image src="/images/portfolio-1.png" alt="Opus Geeks website project" fill priority className="object-cover" /></motion.div>
-            <motion.div initial={{ opacity: 0, x: 20, rotate: 4 }} animate={{ opacity: 1, x: 0, rotate: 2 }} transition={{ delay: 0.12, duration: 0.75 }} className="absolute right-0 top-20 h-[300px] w-[52%] overflow-hidden rounded-2xl border-4 border-white bg-[#DDE8F7] shadow-2xl"><Image src="/images/portfolio-5.png" alt="Opus Geeks mobile project" fill priority className="object-cover" /></motion.div>
-            <div className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-xl border border-[#1877F2]/15 bg-white px-5 py-4 shadow-xl"><p className="text-xs uppercase tracking-[.18em] text-[#1877F2]">Portfolio index</p><p className="mt-1 whitespace-nowrap font-semibold">Web · Mobile · Product Design</p></div>
+          <motion.div initial={false} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="grid min-w-0 border border-[#1C1E21]/12 bg-white shadow-[0_28px_70px_rgba(28,30,33,.13)] sm:grid-cols-[1fr_170px]">
+            <div className="min-w-0">
+              <div className="flex h-12 items-center justify-between border-b border-[#1C1E21]/10 px-4 sm:px-5"><div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#1877F2]"/><span className="text-[10px] font-semibold uppercase tracking-[.18em] text-[#1C1E21]/48">Featured work / {heroCases[heroCase].index}</span></div><span className="text-[10px] font-semibold uppercase tracking-[.15em] text-[#1877F2]">Live portfolio</span></div>
+              <div className="relative aspect-[16/10] overflow-hidden bg-[#E7EEF7]">
+                {heroCases.map((item,index)=><Image key={item.image} src={item.image} alt={`${item.title} responsive product presentation`} fill priority sizes="(max-width: 1024px) 100vw, 48vw" className={`object-cover transition-opacity duration-500 motion-reduce:transition-none ${heroCase===index?'z-10 opacity-100':'z-0 opacity-0'}`} />)}
+              </div>
+              <div className="grid min-h-24 bg-[#1C1E21] p-5 text-white sm:grid-cols-[1fr_auto] sm:items-end sm:p-6"><div><p className="text-[10px] font-semibold uppercase tracking-[.18em] text-[#78B7FF]">{heroCases[heroCase].discipline}</p><h2 className="mt-2 text-xl font-semibold sm:text-2xl">{heroCases[heroCase].title}</h2></div><div className="mt-4 flex items-baseline gap-2 sm:mt-0"><strong className="text-xl text-white sm:text-2xl">{heroCases[heroCase].metric}</strong><span className="text-xs text-white/55">{heroCases[heroCase].outcome}</span></div></div>
+            </div>
+            <div className="grid grid-cols-3 border-t border-[#1C1E21]/10 sm:grid-cols-1 sm:border-l sm:border-t-0">
+              {heroCases.map((item,index)=><button key={item.title} type="button" onClick={()=>setHeroCase(index)} aria-pressed={heroCase===index} className={`group relative min-h-24 border-r border-[#1C1E21]/10 p-3 text-left transition last:border-r-0 sm:border-b sm:border-r-0 sm:p-5 sm:last:border-b-0 ${heroCase===index?'bg-[#1877F2] text-white':'bg-white hover:bg-[#F0F2F5]'}`}><span className={`text-[10px] font-semibold uppercase tracking-[.16em] ${heroCase===index?'text-white/65':'text-[#1877F2]'}`}>{item.index}</span><span className="mt-3 block text-sm font-semibold leading-tight">{item.title}</span><ArrowRight className={`absolute bottom-4 right-4 h-4 w-4 transition-transform group-hover:translate-x-1 ${heroCase===index?'text-white':'text-[#1C1E21]/28'}`}/></button>)}
+            </div>
           </motion.div>
         </div>
       </section>
@@ -62,7 +75,18 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      <section className="bg-[#1877F2] py-16 text-white md:py-20"><div className="section-shell grid gap-8 md:grid-cols-3"><div className="md:col-span-2"><p className="text-sm uppercase tracking-[.2em] text-white/65">Your next case study</p><h2 className="mt-4 max-w-3xl text-balance text-4xl font-semibold md:text-6xl">Let&apos;s build something worth showing.</h2></div><div className="flex items-end md:justify-end"><Link href="/#contact" className="inline-flex items-center gap-3 rounded-full bg-white px-6 py-4 font-semibold text-[#1877F2]">Start a conversation <ArrowRight className="h-5 w-5"/></Link></div></div></section>
+      <section className="relative overflow-hidden border-y border-[#1C1E21]/10 bg-white">
+        <div className="pointer-events-none absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(24,119,242,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(24,119,242,.06)_1px,transparent_1px)] [background-size:64px_64px]" />
+        <div className="section-shell relative grid lg:grid-cols-[1.05fr_.95fr]">
+          <div className="border-b border-[#1C1E21]/10 py-14 lg:border-b-0 lg:border-r lg:py-16 lg:pr-16">
+            <div className="flex items-center gap-4"><span className="h-px w-10 bg-[#1877F2]"/><p className="text-xs font-semibold uppercase tracking-[.2em] text-[#1877F2]">From evidence to execution</p></div>
+            <h2 className="mt-6 max-w-2xl text-balance text-4xl font-semibold leading-[1.04] md:text-5xl">A strong portfolio starts with a <span className="font-display font-normal italic text-[#1877F2]">clear first decision.</span></h2>
+          </div>
+          <div className="grid sm:grid-cols-3">
+            {[["01","Align","Goals and scope"],["02","Shape","Experience and system"],["03","Ship","Build and improve"]].map(([number,title,copy])=><div key={number} className="group relative min-h-40 border-b border-[#1C1E21]/10 p-6 last:border-b-0 sm:min-h-full sm:border-b-0 sm:border-r sm:last:border-r-0 lg:flex lg:flex-col lg:justify-center"><span className="text-xs font-semibold text-[#1877F2]">{number}</span><strong className="mt-7 block text-lg">{title}</strong><span className="mt-2 block text-sm leading-6 text-[#1C1E21]/48">{copy}</span><span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[#1877F2] transition-transform duration-500 group-hover:scale-x-100"/></div>)}
+          </div>
+        </div>
+      </section>
       <SiteFooter />
     </main>
   );

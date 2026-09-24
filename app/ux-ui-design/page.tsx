@@ -49,18 +49,25 @@ const services = [
   }
 ];
 
+const serviceDeliverables = [
+  ["Responsive page system", "Conversion journey", "Developer-ready handoff"],
+  ["Native interaction flows", "Clickable prototype", "Platform UI specification"],
+  ["Research synthesis", "Reusable component system", "Accessibility review"],
+  ["Visual identity direction", "Brand application system", "Launch-ready guidelines"]
+];
+
 const stats = [
-  ["01", "Product Research"],
-  ["02", "Interaction Design"],
-  ["03", "Design Systems"],
-  ["04", "Usability Review"]
+  ["01", "Product Research", "Find the behavior, friction, and commercial context behind the brief.", "Research synthesis"],
+  ["02", "Interaction Design", "Turn critical journeys into clear flows, states, and responsive prototypes.", "Validated prototype"],
+  ["03", "Design Systems", "Create reusable foundations that keep product teams fast and consistent.", "Component library"],
+  ["04", "Usability Review", "Test the experience against real tasks before expensive engineering begins.", "Prioritized findings"]
 ];
 
 const caseStudies = [
-  { title: "Product Experience 01", type: "Interface design", image: "/images/ux-case-1.png" },
-  { title: "Product Experience 02", type: "Mobile UX", image: "/images/ux-case-2.png" },
-  { title: "Product Experience 03", type: "Design system", image: "/images/ux-case-3.png" },
-  { title: "Product Experience 04", type: "Brand experience", image: "/images/ux-case-4.png" }
+  { title: "Strategy Experience", type: "Interface direction", image: "/images/ux-case-1-hd.jpg", outcome: "A structured digital narrative that turns complex capability into a clear product story." },
+  { title: "Travel Companion", type: "Mobile experience", image: "/images/ux-case-2-hd.jpg", outcome: "A calm, task-focused journey designed for confidence while moving between places." },
+  { title: "Care Platform", type: "Design system", image: "/images/ux-case-3-hd.jpg", outcome: "A modular healthcare system built for clarity, accessibility, and consistent delivery." },
+  { title: "Connected Home", type: "Product interface", image: "/images/ux-case-4-hd.jpg", outcome: "An approachable control system that makes complex home technology feel effortless." }
 ];
 
 const reveal = {
@@ -72,6 +79,10 @@ export default function UxUiDesignPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [activeCase, setActiveCase] = useState(0);
+  const [flippedService, setFlippedService] = useState<number | null>(null);
+
+  const featuredCase = caseStudies[activeCase];
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
@@ -101,7 +112,7 @@ export default function UxUiDesignPage() {
         <div className="pointer-events-none absolute right-[-5%] top-40 hidden h-[480px] w-[480px] rounded-full border border-[#1C1E21]/10 md:block" />
 
         <div className="section-shell relative grid min-h-[650px] items-center gap-12 py-16 lg:grid-cols-[0.92fr_1.08fr] lg:py-20">
-          <motion.div initial="hidden" animate="show" transition={{ staggerChildren: 0.08 }}>
+          <motion.div initial={false} animate="show" transition={{ staggerChildren: 0.08 }}>
             <motion.p variants={reveal} className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">
               <Sparkles className="h-4 w-4" /> Experience design &amp; brand systems
             </motion.p>
@@ -124,13 +135,13 @@ export default function UxUiDesignPage() {
             </motion.div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, scale: 0.92, x: 40 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="relative mx-auto h-[480px] w-full max-w-[610px] [perspective:1200px] md:h-[590px]">
+          <motion.div initial={false} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="relative mx-auto h-[480px] w-full max-w-[610px] [perspective:1200px] md:h-[590px]">
             <div className="absolute inset-x-8 bottom-8 h-24 rounded-full bg-[#1877F2]/20 blur-3xl" />
-            <motion.div initial={{ opacity: 0, y: 18, rotateY: -2 }} animate={{ opacity: 1, y: 0, rotateY: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="absolute inset-x-3 top-8 overflow-hidden rounded-2xl border border-[#1C1E21]/15 bg-white shadow-[0_35px_70px_rgba(28,30,33,0.2)] md:inset-x-0 md:top-14">
+            <motion.div initial={false} animate={{ opacity: 1, y: 0, rotateY: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="absolute inset-x-3 top-8 overflow-hidden rounded-2xl border border-[#1C1E21]/15 bg-white shadow-[0_35px_70px_rgba(28,30,33,0.2)] md:inset-x-0 md:top-14">
               <div className="flex h-12 items-center justify-between border-b border-[#1C1E21]/10 bg-[#F7F8FA] px-4"><div className="flex items-center gap-2"><PenTool className="h-4 w-4 text-[#1877F2]"/><b className="text-xs">Opus Design Lab</b></div><span className="rounded-md bg-[#E7F3FF] px-2 py-1 text-[10px] font-semibold text-[#1877F2]">Prototype · Live</span></div>
               <div className="grid h-[375px] grid-cols-[64px_1fr] bg-[#F0F2F5] md:h-[430px] md:grid-cols-[84px_1fr]"><aside className="space-y-3 border-r border-[#1C1E21]/10 bg-white p-3">{[LayoutTemplate, Component, Palette, PenTool].map((Icon,index)=><motion.div key={index} whileHover={{scale:1.08}} className={`flex h-10 items-center justify-center rounded-lg ${index===1?'bg-[#1877F2] text-white':'bg-[#F0F2F5] text-[#1C1E21]/45'}`}><Icon className="h-4 w-4"/></motion.div>)}</aside><div className="relative overflow-hidden p-4 md:p-6"><div className="flex items-center justify-between"><div><p className="text-[10px] uppercase tracking-[0.18em] text-[#1877F2]">Checkout redesign</p><h3 className="mt-1 text-lg font-semibold md:text-2xl">Design system workspace</h3></div><div className="flex -space-x-2">{["A","M","S"].map((item,index)=><span key={item} className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-[#1877F2] text-[9px] font-bold text-white" style={{opacity:1-index*.16}}>{item}</span>)}</div></div><div className="mt-5 grid grid-cols-[1.2fr_.8fr] gap-3"><div className="rounded-xl bg-white p-4 shadow-sm"><div className="h-20 rounded-lg bg-[#1877F2] p-3 text-white"><div className="h-2 w-1/2 rounded bg-white/80"/><div className="mt-3 h-2 w-3/4 rounded bg-white/35"/><div className="mt-2 h-2 w-2/3 rounded bg-white/35"/></div><div className="mt-3 grid grid-cols-2 gap-2"><div className="h-20 rounded-lg bg-[#E7F3FF]"/><div className="h-20 rounded-lg bg-[#F0F2F5]"/></div></div><div className="space-y-3"><div className="rounded-xl bg-white p-3 shadow-sm"><p className="text-[9px] text-[#1C1E21]/45">Components</p><b className="mt-1 block text-xl text-[#1877F2]">48</b></div><div className="rounded-xl bg-white p-3 shadow-sm"><p className="text-[9px] text-[#1C1E21]/45">Accessibility</p><b className="mt-1 block text-xl text-[#1877F2]">AA</b></div><div className="flex gap-2 rounded-xl bg-white p-3 shadow-sm">{["#1877F2","#1C1E21","#F0F2F5"].map(color=><i key={color} className="h-6 flex-1 rounded" style={{backgroundColor:color}}/>)}</div></div></div></div></div>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65, duration: 0.45 }} className="absolute bottom-4 right-0 rounded-xl border border-[#1877F2]/15 bg-white px-5 py-4 shadow-xl"><p className="text-xs uppercase tracking-[0.18em] text-[#1877F2]">Validated flow</p><p className="mt-1 text-sm font-semibold">Research · Prototype · Test</p></motion.div>
+            <motion.div initial={false} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65, duration: 0.45 }} className="absolute bottom-4 right-0 rounded-xl border border-[#1877F2]/15 bg-white px-5 py-4 shadow-xl"><p className="text-xs uppercase tracking-[0.18em] text-[#1877F2]">Validated flow</p><p className="mt-1 text-sm font-semibold">Research · Prototype · Test</p></motion.div>
           </motion.div>
         </div>
       </section>
@@ -143,27 +154,34 @@ export default function UxUiDesignPage() {
         </div>
       </section>
 
-      <section id="services" className="relative scroll-mt-32 overflow-hidden bg-[#f0f2f5] py-20 md:py-24">
-        <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(rgba(24,119,242,0.14)_1px,transparent_1px)] [background-size:24px_24px]" />
-        <div className="section-shell">
-          <div className="relative mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Design capabilities</p>
-            <h2 className="mt-4 text-balance text-4xl font-semibold md:text-6xl">Design services for every touchpoint.</h2>
-            <p className="mt-6 text-lg leading-8 text-[#1C1E21]/55">We intensify the connection between people and interfaces through strategic thinking, clear visual systems, and experiences built around real user needs.</p>
+      <section id="services" className="relative scroll-mt-32 overflow-hidden border-y border-[#1C1E21]/10 bg-[#F0F2F5] py-20 md:py-28">
+        <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(28,30,33,.055)_1px,transparent_1px),linear-gradient(90deg,rgba(28,30,33,.055)_1px,transparent_1px)] [background-size:80px_80px]" />
+        <div className="section-shell relative grid gap-14 lg:grid-cols-[.36fr_.64fr] lg:items-start xl:gap-20">
+          <div className="lg:sticky lg:top-32">
+            <div className="flex items-center gap-4"><span className="h-px w-10 bg-[#1877F2]" /><p className="text-xs font-semibold uppercase tracking-[.2em] text-[#1877F2]">Experience design practice</p></div>
+            <h2 className="mt-6 max-w-xl text-balance text-4xl font-semibold leading-[1.02] md:text-6xl">Four disciplines. <span className="font-display font-normal italic text-[#1877F2]">One coherent experience.</span></h2>
+            <p className="mt-6 max-w-md text-base leading-7 text-[#1C1E21]/56">Each capability connects user insight, interface craft, and a production-ready handoff. Flip a card to inspect what the engagement delivers.</p>
+            <div className="mt-10 border-y border-[#1C1E21]/12 py-5"><div className="flex items-center justify-between"><span className="text-[10px] font-semibold uppercase tracking-[.16em] text-[#1C1E21]/38">Interaction</span><span className="text-xs font-semibold text-[#1877F2]">Hover / Tap to flip</span></div></div>
+            <button onClick={() => setModalOpen(true)} className="group mt-8 inline-flex min-h-14 items-center justify-between gap-10 bg-[#1C1E21] px-6 font-semibold text-white transition hover:bg-[#1877F2]">Shape your experience <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" /></button>
           </div>
-          <div className="relative mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <motion.article key={service.title} initial={false} whileHover={{ y: -6 }} transition={{ duration: 0.2 }} className="group relative min-h-[330px] overflow-hidden rounded-2xl border border-[#1C1E21]/10 bg-white p-7 shadow-[0_18px_45px_rgba(7,16,20,0.06)] transition hover:border-[#1877F2]/40 hover:shadow-[0_24px_60px_rgba(24,119,242,0.14)]">
-                  <span className="absolute right-5 top-5 inline-flex h-10 min-w-12 items-center justify-center rounded-lg border border-[#1877F2]/20 bg-[#E7F3FF] px-2 text-lg font-bold text-[#1877F2] shadow-sm">0{index + 1}</span>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1877F2]/10 text-[#1877F2] transition group-hover:-translate-y-1 group-hover:bg-[#1877F2] group-hover:text-white"><Icon className="h-6 w-6" /></div>
-                  <h3 className="mt-7 text-xl font-semibold leading-7">{service.title}</h3>
-                  <p className="mt-4 text-sm leading-6 text-[#1C1E21]/55">{service.description}</p>
-                  <div className="absolute inset-x-7 bottom-0 h-px origin-left scale-x-0 bg-gradient-to-r from-[#1877F2] to-transparent transition-transform duration-300 group-hover:scale-x-100" />
-                </motion.article>
-              );
-            })}
+
+          <div className="grid gap-5 md:grid-cols-2">
+            {services.map((service,index)=>{const Icon=service.icon;return(
+              <button type="button" key={service.title} aria-label={`${flippedService===index?"Hide":"Show"} ${service.title} deliverables`} aria-pressed={flippedService===index} onClick={()=>setFlippedService(flippedService===index?null:index)} className="group h-[340px] text-left [perspective:1400px] focus:outline-none">
+                <span className={`relative block h-full w-full transition-transform duration-700 [transform-style:preserve-3d] [transition-timing-function:cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none lg:group-hover:[transform:rotateY(180deg)] lg:group-focus-visible:[transform:rotateY(180deg)] ${flippedService===index?"[transform:rotateY(180deg)]":""}`}>
+                  <span className="absolute inset-0 flex flex-col overflow-hidden border border-[#1C1E21]/12 bg-white p-6 shadow-[0_20px_55px_rgba(28,30,33,.06)] [backface-visibility:hidden] md:p-7">
+                    <span className="absolute -right-3 -top-8 font-display text-[9rem] leading-none text-[#1C1E21]/[.035]">{String(index+1).padStart(2,"0")}</span>
+                    <span className="relative flex items-start justify-between border-b border-[#1C1E21]/10 pb-5"><span className="grid h-11 w-11 place-items-center border border-[#1877F2]/24 text-[#1877F2]"><Icon className="h-5 w-5" /></span><span className="text-[10px] font-semibold uppercase tracking-[.18em] text-[#1C1E21]/35">Discipline {String(index+1).padStart(2,"0")}</span></span>
+                    <span className="relative flex flex-1 flex-col pt-7"><span className="text-2xl font-semibold leading-tight">{service.title}</span><span className="mt-4 line-clamp-4 text-sm leading-6 text-[#1C1E21]/54">{service.description}</span><span className="mt-auto flex items-center justify-between border-t border-[#1C1E21]/10 pt-5 text-[10px] font-semibold uppercase tracking-[.16em] text-[#1877F2]"><span>Inspect deliverables</span><ArrowRight className="h-4 w-4" /></span></span>
+                  </span>
+                  <span className="absolute inset-0 flex flex-col overflow-hidden bg-[#1C1E21] p-6 text-white [backface-visibility:hidden] [transform:rotateY(180deg)] md:p-7">
+                    <span className="absolute -right-3 -top-8 font-display text-[9rem] leading-none text-white/[.035]">{String(index+1).padStart(2,"0")}</span>
+                    <span className="relative flex items-center justify-between border-b border-white/15 pb-5"><span className="text-[10px] font-semibold uppercase tracking-[.18em] text-[#78B7FF]">Engagement output</span><Icon className="h-5 w-5 text-white/48" /></span>
+                    <span className="relative mt-7 text-2xl font-semibold">{service.title}</span><span className="relative mt-7 space-y-4">{serviceDeliverables[index].map(item=><span key={item} className="flex items-center gap-3 text-sm text-white/72"><Check className="h-4 w-4 shrink-0 text-[#1877F2]" />{item}</span>)}</span>
+                    <span className="relative mt-auto flex items-center justify-between border-t border-white/15 pt-5 text-[10px] font-semibold uppercase tracking-[.16em] text-white/52"><span>Tap to return</span><ArrowRight className="h-4 w-4 -rotate-180" /></span>
+                  </span>
+                </span>
+              </button>);})}
           </div>
         </div>
       </section>
@@ -182,40 +200,51 @@ export default function UxUiDesignPage() {
       </section>
 
       <section className="relative overflow-hidden border-y border-[#1C1E21]/10 bg-[#F0F2F5] py-20 text-[#1C1E21] md:py-28">
-        <Image src="/images/app-team.png" alt="Opus Geeks product team collaborating" fill sizes="100vw" className="object-cover opacity-[0.06] grayscale" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#F0F2F5_0%,rgba(240,242,245,0.94)_52%,rgba(240,242,245,0.76)_100%)]" />
-        <div className="section-shell relative grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Performance at scale</p>
-            <h2 className="mt-4 text-balance text-4xl font-semibold md:text-5xl">Metrics that reflect delivery experience.</h2>
-            <p className="mt-6 text-lg leading-8 text-[#1C1E21]/60">We focus on the indicators that shape successful experiences: useful research, accessible systems, confident decisions, and lasting customer engagement.</p>
-            <button onClick={() => setModalOpen(true)} className="group mt-8 inline-flex items-center gap-3 rounded-full bg-[#1877F2] px-6 py-4 font-semibold text-white shadow-[0_12px_30px_rgba(24,119,242,0.2)] transition hover:bg-[#166FE5]">Get a quote <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></button>
+        <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(28,30,33,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(28,30,33,.045)_1px,transparent_1px)] [background-size:72px_72px]" />
+        <div className="section-shell relative">
+          <div className="grid gap-8 border-b border-[#1C1E21]/15 pb-10 lg:grid-cols-[1fr_.8fr] lg:items-end">
+            <div><div className="flex items-center gap-4"><span className="h-px w-10 bg-[#1877F2]" /><p className="text-xs font-semibold uppercase tracking-[.2em] text-[#1877F2]">Design evidence / 01-04</p></div><h2 className="mt-6 max-w-3xl text-balance text-4xl font-semibold leading-[1.03] md:text-6xl">Every design decision <span className="font-display font-normal italic text-[#1877F2]">earns its place.</span></h2></div>
+            <div className="lg:justify-self-end"><p className="max-w-xl text-base leading-7 text-[#1C1E21]/58 md:text-lg md:leading-8">We replace subjective preference with research, prototypes, reusable systems, and evidence teams can act on.</p><button onClick={() => setModalOpen(true)} className="group mt-6 inline-flex items-center gap-3 font-semibold">Discuss your product <span className="grid h-10 w-10 place-items-center border border-[#1C1E21]/18 transition group-hover:border-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white"><ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></span></button></div>
           </div>
-          <div className="grid grid-cols-2 overflow-hidden rounded-2xl border-l border-t border-[#1C1E21]/10 bg-white shadow-[0_16px_44px_rgba(28,30,33,0.08)]">
-            {stats.map(([value, label]) => (
-              <motion.div key={label} whileHover={{ backgroundColor: "#F0F6FF" }} className="border-b border-r border-[#1C1E21]/10 p-6 md:p-10"><p className="text-4xl font-semibold text-[#1877F2] md:text-6xl">{value}</p><p className="mt-3 text-sm text-[#1C1E21]/55 md:text-base">{label}</p></motion.div>
+
+          <div className="grid border-b border-[#1C1E21]/15 lg:grid-cols-2">
+            {stats.map(([value, label, description, output], index) => (
+              <motion.article key={label} initial={false} whileHover="active" className={`group relative grid gap-5 border-t border-[#1C1E21]/15 py-8 sm:grid-cols-[76px_1fr] sm:gap-7 lg:min-h-[270px] lg:p-9 ${index % 2 === 0 ? "lg:border-r" : ""} ${index < 2 ? "lg:border-t-0" : ""}`}>
+                <motion.span variants={{ active: { y: -4 } }} transition={{ duration: 0.22 }} className="font-display text-5xl leading-none text-[#1C1E21]/16 transition-colors group-hover:text-[#1877F2] md:text-6xl">{value}</motion.span>
+                <div className="flex min-w-0 flex-col"><p className="text-[10px] font-semibold uppercase tracking-[.18em] text-[#1877F2]">Discipline</p><h3 className="mt-3 text-2xl font-semibold">{label}</h3><p className="mt-4 max-w-lg text-sm leading-6 text-[#1C1E21]/55">{description}</p><div className="mt-auto pt-7"><span className="block border-t border-[#1C1E21]/12 pt-4 text-[9px] font-semibold uppercase tracking-[.18em] text-[#1C1E21]/38">Evidence produced</span><strong className="mt-2 block text-sm font-semibold">{output}</strong></div></div>
+                <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#1877F2] transition-all duration-500 group-hover:w-full" />
+              </motion.article>
             ))}
           </div>
         </div>
       </section>
 
       <section className="relative overflow-hidden border-y border-[#1C1E21]/10 bg-white py-20 md:py-28">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(85,174,224,0.18),transparent_30%)]" />
-        <div className="section-shell grid gap-8 lg:grid-cols-2 lg:items-end">
-          <h2 className="relative text-balance text-4xl font-semibold leading-tight md:text-6xl">Our UI/UX development <span className="text-[#1877F2]">case studies.</span></h2>
-          <p className="relative text-lg leading-8 text-[#1C1E21]/60">Explore how Opus Geeks transforms digital experiences through stronger engagement, clearer navigation, and design decisions grounded in real customer journeys.</p>
-        </div>
-        <div className="section-shell mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {caseStudies.map((study, index) => (
-            <motion.article key={study.title} initial={false} whileHover={{ y: -6 }} transition={{ duration: 0.2 }} className="group relative aspect-[6/5] overflow-hidden rounded-2xl border border-white/10 bg-[#101a1e] shadow-2xl">
-              <Image src={study.image} alt={`${study.title} mobile app case study`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover transition duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/5 to-transparent" />
-              <div className="absolute inset-x-5 top-5 flex items-center justify-between text-xs uppercase tracking-[0.15em] text-white/65"><span>Case 0{index + 1}</span><Smartphone className="h-5 w-5" /></div>
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-5 pt-16"><p className="text-xs text-teal">{study.type}</p><h3 className="mt-1 text-xl font-semibold">{study.title}</h3></div>
+        <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(28,30,33,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(28,30,33,.045)_1px,transparent_1px)] [background-size:72px_72px]" />
+        <div className="section-shell relative">
+          <div className="grid gap-8 border-b border-[#1C1E21]/12 pb-10 lg:grid-cols-[1fr_.8fr] lg:items-end"><div><p className="text-xs font-semibold uppercase tracking-[.2em] text-[#1877F2]">Selected experience systems / 01-04</p><h2 className="mt-5 max-w-3xl text-balance text-4xl font-semibold leading-[1.02] md:text-6xl">Interfaces shaped around <span className="font-display font-normal italic text-[#1877F2]">real human decisions.</span></h2></div><p className="max-w-xl text-base leading-7 text-[#1C1E21]/58 lg:justify-self-end md:text-lg md:leading-8">Explore product experiences where research, interaction design, and visual systems work as one coherent whole.</p></div>
+
+          <div className="mt-8 grid gap-4 lg:grid-cols-[1.25fr_.75fr]">
+            <motion.article key={featuredCase.title} initial={false} animate={{ opacity: 1 }} className="group relative min-h-[520px] overflow-hidden bg-[#1C1E21] sm:min-h-[650px] lg:min-h-[760px]">
+              <Image src={featuredCase.image} alt={`${featuredCase.title} UX case study`} fill sizes="(max-width:1024px) 100vw, 62vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.025]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1E21] via-transparent to-transparent" />
+              <div className="absolute inset-x-5 top-5 flex items-center justify-between text-[10px] font-semibold uppercase tracking-[.2em] text-white/75 sm:inset-x-7 sm:top-7"><span>Featured experience / {String(activeCase + 1).padStart(2,"0")}</span><span className="grid h-10 w-10 place-items-center border border-white/25"><Smartphone className="h-4 w-4" /></span></div>
+              <div className="absolute inset-x-5 bottom-5 border-t border-white/25 pt-5 text-white sm:inset-x-7 sm:bottom-7 sm:grid sm:grid-cols-[1fr_1fr] sm:items-end sm:gap-8 sm:pt-7"><div><p className="text-xs font-semibold uppercase tracking-[.16em] text-[#78B7FF]">{featuredCase.type}</p><h3 className="mt-2 text-3xl font-semibold sm:text-4xl">{featuredCase.title}</h3></div><p className="mt-4 max-w-md text-sm leading-6 text-white/72 sm:mt-0">{featuredCase.outcome}</p></div>
             </motion.article>
-          ))}
+
+            <div className="grid gap-px border border-[#1C1E21]/12 bg-[#1C1E21]/12">
+              {caseStudies.map((study, index) => (
+                <button key={study.title} onClick={() => setActiveCase(index)} aria-pressed={activeCase === index} className={`group grid min-h-[150px] grid-cols-[82px_1fr_auto] items-center gap-4 bg-white p-4 text-left outline-none transition sm:grid-cols-[120px_1fr_auto] sm:p-5 ${activeCase === index ? "bg-[#E7F3FF]" : "hover:bg-[#F0F2F5]"}`}>
+                  <span className="relative aspect-square overflow-hidden bg-[#F0F2F5]"><Image src={study.image} alt="" fill sizes="120px" className="object-cover transition-transform duration-500 group-hover:scale-105" /></span>
+                  <span className="min-w-0"><span className="block text-[9px] font-semibold uppercase tracking-[.16em] text-[#1877F2]">0{index + 1} / {study.type}</span><strong className="mt-2 block text-lg leading-tight">{study.title}</strong></span>
+                  <span className={`grid h-9 w-9 place-items-center border transition ${activeCase === index ? "border-[#1877F2] bg-[#1877F2] text-white" : "border-[#1C1E21]/15 group-hover:border-[#1877F2]"}`}><ArrowRight className="h-4 w-4" /></span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-col gap-5 border-t border-[#1C1E21]/12 pt-8 sm:flex-row sm:items-center sm:justify-between"><p className="max-w-xl text-sm leading-6 text-[#1C1E21]/52">Need a product experience users understand without explanation? Start with the decisions that matter most.</p><button onClick={() => setModalOpen(true)} className="group inline-flex items-center gap-3 self-start font-semibold">Discuss your experience <span className="grid h-11 w-11 place-items-center bg-[#1877F2] text-white transition group-hover:bg-[#1C1E21]"><ArrowRight className="h-4 w-4" /></span></button></div>
         </div>
-        <div className="relative mt-12 text-center"><button onClick={() => setModalOpen(true)} className="group inline-flex items-center gap-3 rounded-full bg-[#1877F2] px-7 py-4 font-semibold text-white transition hover:bg-[#1C1E21]">Get a quote <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></button></div>
       </section>
 
       <section className="relative overflow-hidden bg-[#e5f2f8] py-20 md:py-28">
@@ -230,22 +259,24 @@ export default function UxUiDesignPage() {
       <a href="#top" aria-label="Back to top" className="fixed bottom-5 right-5 z-30 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-[#1877F2] text-white shadow-xl transition hover:-translate-y-1 hover:bg-[#1C1E21]"><ArrowUp className="h-5 w-5" /></a>
 
       {modalOpen ? (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="consultation-title" onMouseDown={(event) => { if (event.target === event.currentTarget) setModalOpen(false); }}>
-          <motion.div initial={{ opacity: 0, y: 24, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} className="relative max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-2xl border border-white/15 bg-[#0b1b20] p-6 shadow-2xl md:p-9">
-            <button onClick={() => setModalOpen(false)} className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white" aria-label="Close consultation form"><X className="h-5 w-5" /></button>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1C1E21]/72 p-3 backdrop-blur-[3px] sm:p-6" role="dialog" aria-modal="true" aria-labelledby="consultation-title" onMouseDown={(event) => { if (event.target === event.currentTarget) setModalOpen(false); }}>
+          <motion.div initial={{ opacity: 0, y: 20, scale: 0.985 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }} className="relative max-h-[94vh] w-full max-w-[680px] overflow-y-auto border border-[#1C1E21]/12 bg-white text-[#1C1E21] shadow-[0_32px_100px_rgba(0,0,0,.28)]">
+            <div className="flex items-center justify-between border-b border-[#1C1E21]/10 px-5 py-4 md:px-8"><div className="flex items-center gap-3"><span className="h-2 w-2 bg-[#1877F2]" /><span className="text-[10px] font-semibold uppercase tracking-[.2em] text-[#1C1E21]/48">Design project enquiry / OG</span></div><button onClick={() => setModalOpen(false)} className="grid h-10 w-10 place-items-center border border-[#1C1E21]/12 text-[#1C1E21]/55 transition hover:border-[#1C1E21] hover:bg-[#1C1E21] hover:text-white" aria-label="Close consultation form"><X className="h-5 w-5" /></button></div>
+            <div className="p-5 md:p-8">
             {submitted ? (
-              <div className="py-16 text-center"><div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-teal text-ink"><Check className="h-8 w-8" /></div><h2 id="consultation-title" className="mt-6 text-3xl font-semibold">Request received.</h2><p className="mt-3 text-white/60">Thank you. The Opus Geeks team will contact you shortly.</p><button onClick={() => { setModalOpen(false); setSubmitted(false); }} className="mt-8 rounded-full bg-white px-6 py-3 font-semibold text-ink">Done</button></div>
+              <div className="py-12 text-center"><div className="mx-auto grid h-16 w-16 place-items-center bg-[#1877F2] text-white"><Check className="h-8 w-8" /></div><h2 id="consultation-title" className="mt-6 text-3xl font-semibold">Request received.</h2><p className="mt-3 text-[#1C1E21]/55">Thank you. The Opus Geeks team will contact you shortly.</p><button onClick={() => { setModalOpen(false); setSubmitted(false); }} className="mt-8 bg-[#1C1E21] px-7 py-3 font-semibold text-white transition hover:bg-[#1877F2]">Done</button></div>
             ) : (
-              <><p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal">Let&apos;s talk</p><h2 id="consultation-title" className="mt-3 pr-10 text-3xl font-semibold md:text-4xl">Book a free consultation</h2><p className="mt-3 text-sm leading-6 text-white/55">Tell us what you are building and our team will help shape the right next step.</p>
-              <form onSubmit={submitConsultation} className="mt-7 space-y-4">
-                <label className="block"><span className="mb-2 block text-sm text-white/65">Name</span><input required name="name" autoComplete="name" className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 outline-none transition focus:border-teal" /></label>
-                <label className="block"><span className="mb-2 block text-sm text-white/65">Email</span><input required type="email" name="email" autoComplete="email" className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 outline-none transition focus:border-teal" /></label>
-                <label className="block"><span className="mb-2 block text-sm text-white/65">Phone</span><input required type="tel" name="phone" autoComplete="tel" className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 outline-none transition focus:border-teal" /></label>
-                <label className="block"><span className="mb-2 block text-sm text-white/65">Project description</span><textarea required name="description" rows={4} className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 outline-none transition focus:border-teal" /></label>
-                <label className="flex cursor-pointer items-start gap-3 text-sm text-white/60"><input required type="checkbox" className="mt-1 h-4 w-4 accent-teal" /><span>I accept the terms and conditions.</span></label>
-                <button type="submit" className="group flex w-full items-center justify-center gap-3 rounded-xl bg-teal px-6 py-4 font-semibold text-ink transition hover:bg-white">Submit request <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></button>
+              <><p className="text-xs font-semibold uppercase tracking-[.2em] text-[#1877F2]">Start with clarity</p><h2 id="consultation-title" className="mt-3 max-w-lg text-balance text-3xl font-semibold leading-tight md:text-4xl">Shape a better product experience.</h2><p className="mt-3 max-w-xl text-sm leading-6 text-[#1C1E21]/55">Share the audience, product challenge, and desired outcome. We&apos;ll recommend a practical design next step.</p>
+              <form onSubmit={submitConsultation} className="mt-7 grid gap-4 sm:grid-cols-2">
+                <label className="block"><span className="mb-2 block text-xs font-semibold text-[#1C1E21]/65">Full name</span><input required name="name" autoComplete="name" className="h-12 w-full border border-[#1C1E21]/14 bg-[#F0F2F5] px-4 outline-none transition focus:border-[#1877F2] focus:bg-white" /></label>
+                <label className="block"><span className="mb-2 block text-xs font-semibold text-[#1C1E21]/65">Work email</span><input required type="email" name="email" autoComplete="email" className="h-12 w-full border border-[#1C1E21]/14 bg-[#F0F2F5] px-4 outline-none transition focus:border-[#1877F2] focus:bg-white" /></label>
+                <label className="block sm:col-span-2"><span className="mb-2 block text-xs font-semibold text-[#1C1E21]/65">Phone number</span><input required type="tel" name="phone" autoComplete="tel" className="h-12 w-full border border-[#1C1E21]/14 bg-[#F0F2F5] px-4 outline-none transition focus:border-[#1877F2] focus:bg-white" /></label>
+                <label className="block sm:col-span-2"><span className="mb-2 block text-xs font-semibold text-[#1C1E21]/65">Project brief</span><textarea required name="description" rows={3} placeholder="Product, audience, design challenge, and ideal timeline" className="w-full resize-none border border-[#1C1E21]/14 bg-[#F0F2F5] px-4 py-3 text-sm outline-none transition placeholder:text-[#1C1E21]/32 focus:border-[#1877F2] focus:bg-white" /></label>
+                <label className="flex cursor-pointer items-start gap-3 text-xs leading-5 text-[#1C1E21]/52 sm:col-span-2"><input required type="checkbox" className="mt-0.5 h-4 w-4 shrink-0 accent-[#1877F2]" /><span>I agree to be contacted about this project.</span></label>
+                <button type="submit" className="group flex min-h-14 items-center justify-between bg-[#1877F2] px-6 font-semibold text-white transition hover:bg-[#1C1E21] sm:col-span-2">Submit request <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" /></button>
               </form></>
             )}
+            </div>
           </motion.div>
         </div>
       ) : null}

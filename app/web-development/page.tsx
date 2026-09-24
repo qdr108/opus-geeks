@@ -21,7 +21,6 @@ import {
   Phone,
   ShieldCheck,
   ShoppingBag,
-  Sparkles,
   Workflow,
   X
 } from "lucide-react";
@@ -81,18 +80,31 @@ const services = [
   }
 ];
 
+const serviceDeliverables = [
+  ["Storefront architecture", "Checkout integration", "Conversion QA"],
+  ["Custom theme system", "App integrations", "Launch optimization"],
+  ["API architecture", "Secure authentication", "Technical documentation"],
+  ["Edge deployment", "CDN configuration", "Uptime monitoring"],
+  ["Event tracking", "Conversion dashboards", "Insight reporting"],
+  ["Custom publishing", "Editorial workflows", "Performance tuning"],
+  ["Content modeling", "Role permissions", "System integrations"],
+  ["CI/CD pipelines", "Automated testing", "Release monitoring"],
+  ["Security review", "Access controls", "Production hardening"],
+  ["Data architecture", "Query optimization", "Backup strategy"]
+];
+
 const stats = [
-  ["01", "Product Strategy"],
-  ["02", "System Design"],
-  ["03", "Engineering"],
-  ["04", "Release Support"]
+  ["01", "Product Strategy", "Align the audience, commercial goal, content model, and release priorities before production begins.", "Approved product brief"],
+  ["02", "System Design", "Turn journeys into a responsive interface system with clear states, reusable patterns, and measurable actions.", "Validated experience system"],
+  ["03", "Engineering", "Build the platform with integration, accessibility, performance, and maintainability treated as requirements.", "Production-ready release"],
+  ["04", "Release Support", "Ship through controlled QA, monitoring, documentation, and a prioritized improvement backlog.", "Measured launch handoff"]
 ];
 
 const caseStudies = [
-  { title: "US Maxim Nail Supply", type: "Ecommerce", image: "/images/web-case-1.png" },
-  { title: "Sky Cleaning", type: "Service website", image: "/images/web-case-2.png" },
-  { title: "QHCS", type: "Healthcare platform", image: "/images/web-case-3.png" },
-  { title: "XU Stream Aviation", type: "Corporate website", image: "/images/web-case-4.png" }
+  { title: "US Maxim Nail Supply", type: "Commerce platform", image: "/images/web-case-1-hd.jpg", outcome: "A premium storefront built around product discovery and conversion." },
+  { title: "Sky Cleaning", type: "Service platform", image: "/images/web-case-2-hd.jpg", outcome: "A clearer path from local search to a qualified booking." },
+  { title: "QHCS", type: "Healthcare platform", image: "/images/web-case-3-hd.jpg", outcome: "A credible digital front door for a specialist healthcare team." },
+  { title: "XU Stream Aviation", type: "Corporate platform", image: "/images/web-case-4-hd.jpg", outcome: "A focused brand experience for a high-trust aviation service." }
 ];
 
 const reveal = {
@@ -104,6 +116,13 @@ export default function WebDevelopmentPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [flippedService, setFlippedService] = useState<number | null>(null);
+  const [activeCase, setActiveCase] = useState(0);
+
+  const featuredCase = caseStudies[activeCase];
+  const supportingCases = caseStudies
+    .map((study, index) => ({ ...study, originalIndex: index }))
+    .filter((study) => study.originalIndex !== activeCase);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
@@ -126,43 +145,30 @@ export default function WebDevelopmentPage() {
     <main id="top" className="min-h-screen overflow-hidden bg-[#f0f2f5] text-[#1C1E21]">
       <SiteHeader />
 
-      <section className="relative min-h-[700px] overflow-hidden border-b border-[#1C1E21]/10 pt-24 lg:min-h-[760px]">
-        <div className="absolute inset-0 bg-[linear-gradient(120deg,#f8fbfd_0%,#edf6fa_58%,#dceef6_100%)]" />
-        <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(24,119,242,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(24,119,242,0.08)_1px,transparent_1px)] [background-size:72px_72px]" />
-        <div className="pointer-events-none absolute right-[-12%] top-20 hidden h-[680px] w-[680px] rounded-full border border-[#1877F2]/20 md:block" />
-        <div className="pointer-events-none absolute right-[-5%] top-40 hidden h-[480px] w-[480px] rounded-full border border-[#1C1E21]/10 md:block" />
+      <section className="relative overflow-hidden border-b border-[#1C1E21]/10 bg-white pt-24">
+        <div className="grid min-h-[720px] lg:grid-cols-[.92fr_1.08fr]">
+          <div className="relative flex items-center border-b border-[#1C1E21]/10 px-5 py-16 sm:px-8 lg:border-b-0 lg:border-r lg:px-[max(3rem,calc((100vw-min(100vw-2.5rem,1920px))/2))] lg:py-20">
+            <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(28,30,33,.055)_1px,transparent_1px),linear-gradient(90deg,rgba(28,30,33,.055)_1px,transparent_1px)] [background-size:72px_72px]" />
+            <motion.div initial="hidden" animate="show" transition={{ staggerChildren: 0.08 }} className="relative max-w-[700px]">
+              <motion.div variants={reveal} className="mb-8 flex items-center gap-4"><span className="grid h-10 w-10 place-items-center border border-[#1877F2] text-xs font-bold text-[#1877F2]">02</span><div><p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Web product engineering</p><p className="mt-1 text-xs text-[#1C1E21]/42">Commerce / Platforms / Growth</p></div></motion.div>
+              <motion.h1 variants={reveal} className="max-w-[680px] text-balance text-[clamp(3.25rem,5.2vw,5.8rem)] font-semibold leading-[.96]">Web products engineered to <span className="font-display font-normal italic text-[#1877F2]">perform in public.</span></motion.h1>
+              <motion.p variants={reveal} className="mt-7 max-w-[590px] text-base leading-7 text-[#1C1E21]/60 md:text-lg md:leading-8">We design and engineer high-stakes websites, commerce experiences, and platforms that stay fast, clear, and dependable as the business grows.</motion.p>
+              <motion.div variants={reveal} className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <button onClick={() => setModalOpen(true)} className="group inline-flex min-h-14 items-center justify-between gap-10 bg-[#1877F2] px-6 font-semibold text-white transition hover:bg-[#1C1E21] sm:min-w-[210px]">Start a web project <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" /></button>
+                <a href="#services" className="inline-flex min-h-14 items-center justify-center border border-[#1C1E21]/15 px-6 font-semibold text-[#1C1E21]/72 transition hover:border-[#1C1E21] hover:text-[#1C1E21]">Explore capabilities</a>
+              </motion.div>
+              <motion.div variants={reveal} className="mt-10 grid border-y border-[#1C1E21]/10 sm:grid-cols-3">{["Responsive systems", "Commerce ready", "Measured releases"].map((item, index) => <div key={item} className="flex min-h-16 items-center gap-3 border-b border-[#1C1E21]/10 py-3 last:border-b-0 sm:border-b-0 sm:border-r sm:px-4 sm:first:pl-0 sm:last:border-r-0"><span className="text-[10px] font-semibold text-[#1877F2]">0{index + 1}</span><span className="text-xs font-medium text-[#1C1E21]/58">{item}</span></div>)}</motion.div>
+            </motion.div>
+          </div>
 
-        <div className="section-shell relative grid min-h-[620px] items-center gap-8 py-8 lg:grid-cols-[0.9fr_1.1fr] lg:py-10">
-          <motion.div initial="hidden" animate="show" transition={{ staggerChildren: 0.08 }}>
-            <motion.p variants={reveal} className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">
-              <Sparkles className="h-4 w-4" /> Web platforms &amp; digital commerce
-            </motion.p>
-            <motion.h1 variants={reveal} className="text-balance text-5xl font-semibold leading-[1.02] md:text-6xl xl:text-7xl">
-              High-performance websites built to <span className="text-[#1877F2]">grow business.</span>
-            </motion.h1>
-            <motion.p variants={reveal} className="mt-7 max-w-xl text-lg leading-8 text-[#1C1E21]/65">
-              Opus Geeks leads the way in crafting innovative website development solutions that propel businesses to new heights of online success. We create dynamic, user-centric websites that captivate audiences and drive results across every device.
-            </motion.p>
-            <motion.div variants={reveal} className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <button onClick={() => setModalOpen(true)} className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#1877F2] px-6 py-4 font-semibold text-white shadow-[0_16px_40px_rgba(24,119,242,0.25)] transition hover:bg-[#1C1E21]">
-                Get a quote <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
-              </button>
-              <a href="#services" className="inline-flex items-center justify-center rounded-full border border-[#1C1E21]/15 bg-white/50 px-6 py-4 font-semibold text-[#1C1E21]/80 transition hover:border-[#1877F2] hover:text-[#1877F2]">Explore capabilities</a>
-            </motion.div>
-            <motion.div variants={reveal} className="mt-8 grid max-w-xl grid-cols-3 overflow-hidden rounded-xl border border-[#1C1E21]/10 bg-white/80 shadow-sm backdrop-blur">
-              {[["90+", "Web launches"], ["99.9%", "Uptime target"], ["4.9/5", "Client rating"]].map(([value, label]) => (
-                <div key={label} className="border-r border-[#1C1E21]/10 px-3 py-4 last:border-r-0 md:px-5"><strong className="block text-lg text-[#1877F2] md:text-xl">{value}</strong><span className="mt-1 block text-[10px] text-[#1C1E21]/50 md:text-xs">{label}</span></div>
-              ))}
-            </motion.div>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0, scale: 0.92, x: 40 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="relative mx-auto h-[460px] w-full max-w-[650px] [perspective:1200px] md:h-[550px]">
-            <div className="absolute inset-x-10 bottom-5 h-28 rounded-full bg-[#1877F2]/20 blur-3xl" />
-            <motion.div initial={{ opacity: 0, y: 18, rotateY: -2 }} animate={{ opacity: 1, y: 0, rotateY: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="absolute inset-x-2 top-3 overflow-hidden rounded-2xl border border-[#1C1E21]/15 bg-white shadow-[0_35px_80px_rgba(28,30,33,0.22)] [transform-style:preserve-3d] md:inset-x-0 md:top-8">
-              <div className="flex h-11 items-center gap-2 border-b border-[#1C1E21]/10 bg-[#F7F8FA] px-4"><i className="h-2.5 w-2.5 rounded-full bg-[#1877F2]" /><i className="h-2.5 w-2.5 rounded-full bg-[#AAB2BD]" /><i className="h-2.5 w-2.5 rounded-full bg-[#D8DDE5]" /><div className="ml-3 h-6 flex-1 rounded-md bg-white text-center text-[10px] leading-6 text-[#1C1E21]/35">opusgeeks.com / growth-dashboard</div></div>
-              <div className="grid h-[350px] grid-cols-[74px_1fr] bg-[#F0F2F5] md:h-[410px] md:grid-cols-[104px_1fr]"><aside className="border-r border-[#1C1E21]/10 bg-white p-3"><div className="h-8 rounded-lg bg-[#1877F2]" /><div className="mt-5 space-y-3">{[1, 2, 3, 4, 5].map((item) => <div key={item} className="h-7 rounded-md bg-[#F0F2F5]" />)}</div></aside><div className="p-4 md:p-6"><div className="flex items-end justify-between"><div><p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1877F2]">Live product</p><h3 className="mt-1 text-xl font-semibold md:text-2xl">Growth command center</h3></div><span className="rounded-full bg-[#E7F3FF] px-3 py-1 text-xs font-semibold text-[#1877F2]">+38.4%</span></div><div className="mt-5 grid grid-cols-3 gap-2 md:gap-3">{[["12.8k", "Visitors"], ["4.9%", "Conversion"], ["$84k", "Revenue"]].map(([value, label]) => <div key={label} className="rounded-xl bg-white p-3 shadow-sm"><b className="block text-base md:text-xl">{value}</b><span className="text-[10px] text-[#1C1E21]/45 md:text-xs">{label}</span></div>)}</div><div className="mt-3 rounded-xl bg-white p-4 shadow-sm"><div className="flex h-36 items-end gap-2">{[36, 62, 48, 78, 58, 92, 72, 100, 82, 112, 98, 126].map((height, index) => <motion.i key={index} initial={{ height: 0 }} animate={{ height }} transition={{ delay: 0.7 + index * 0.05, duration: 0.5 }} className="flex-1 rounded-t bg-[#1877F2]" style={{ maxHeight: "100%" }} />)}</div></div></div></div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65, duration: 0.45 }} className="absolute bottom-2 right-2 rounded-xl border border-[#1877F2]/15 bg-white px-5 py-4 shadow-xl md:right-[-14px]"><p className="text-xs uppercase tracking-[0.18em] text-[#1877F2]">Production ready</p><p className="mt-1 text-sm font-semibold">Next.js · Commerce · CMS</p></motion.div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7 }} className="relative min-h-[540px] overflow-hidden bg-[#F0F2F5] lg:min-h-[720px]">
+            <Image src="/images/portfolio-retail-system.jpg" alt="Responsive ecommerce website presented across desktop, tablet, and mobile" fill priority quality={95} sizes="(max-width: 1023px) 100vw, 54vw" className="object-cover" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(28,30,33,.05),transparent_55%,rgba(28,30,33,.55))]" />
+            <div className="absolute inset-x-0 top-0 flex items-center justify-between border-b border-white/35 bg-white/10 px-5 py-4 text-[10px] font-semibold uppercase tracking-[.18em] text-[#1C1E21]/70 backdrop-blur-sm md:px-7"><span>Featured build / Commerce</span><span>Responsive by design</span></div>
+            <div className="absolute bottom-0 left-0 right-0 grid bg-[#1C1E21]/88 text-white backdrop-blur-md sm:grid-cols-[1fr_auto]">
+              <div className="border-b border-white/15 px-5 py-5 sm:border-b-0 sm:border-r md:px-7"><p className="text-[10px] font-semibold uppercase tracking-[.18em] text-white/52">Experience system</p><p className="mt-2 text-lg font-semibold">Discovery → Product → Checkout</p></div>
+              <div className="flex items-center gap-6 px-5 py-5 md:px-7"><span className="text-sm text-white/62">Desktop · Tablet · Mobile</span><ArrowRight className="h-5 w-5 text-[#1877F2]" /></div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -175,25 +181,53 @@ export default function WebDevelopmentPage() {
         </div>
       </section>
 
-      <section id="services" className="relative scroll-mt-32 overflow-hidden bg-[#f0f2f5] py-20 md:py-24">
-        <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(rgba(24,119,242,0.14)_1px,transparent_1px)] [background-size:24px_24px]" />
-        <div className="section-shell">
-          <div className="relative mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Web capabilities</p>
-            <h2 className="mt-4 text-balance text-4xl font-semibold md:text-6xl">Web development software for you.</h2>
-            <p className="mt-6 text-lg leading-8 text-[#1C1E21]/55">We offer comprehensive web development solutions tailored to your unique business needs, from custom web applications to dynamic ecommerce platforms that elevate your online presence.</p>
+      <section id="services" className="relative scroll-mt-32 overflow-hidden border-y border-[#1C1E21]/10 bg-[#F0F2F5] py-20 md:py-28">
+        <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(28,30,33,.055)_1px,transparent_1px),linear-gradient(90deg,rgba(28,30,33,.055)_1px,transparent_1px)] [background-size:80px_80px]" />
+        <div className="section-shell relative grid gap-14 lg:grid-cols-[.34fr_.66fr] lg:items-start xl:gap-20">
+          <div className="lg:sticky lg:top-32">
+            <div className="flex items-center gap-4"><span className="h-px w-10 bg-[#1877F2]" /><p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Web capability system</p></div>
+            <h2 className="mt-6 max-w-xl text-balance text-4xl font-semibold leading-[1.02] md:text-6xl">One web practice. <span className="font-display font-normal italic text-[#1877F2]">Ten specialist tracks.</span></h2>
+            <p className="mt-6 max-w-md text-base leading-7 text-[#1C1E21]/56">Select a capability to inspect the production scope behind it. Every track connects strategy, implementation, and launch accountability.</p>
+            <div className="mt-10 border-y border-[#1C1E21]/12 py-5"><div className="flex items-center justify-between"><span className="text-[10px] font-semibold uppercase tracking-[.16em] text-[#1C1E21]/38">Interaction</span><span className="text-xs font-semibold text-[#1877F2]">Hover / Tap to flip</span></div></div>
+            <button onClick={() => setModalOpen(true)} className="group mt-8 inline-flex min-h-14 items-center justify-between gap-10 bg-[#1C1E21] px-6 font-semibold text-white transition hover:bg-[#1877F2]">Shape your web stack <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" /></button>
           </div>
-          <div className="relative mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-5 md:grid-cols-2">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <motion.article key={service.title} initial={false} whileHover={{ y: -6 }} transition={{ duration: 0.2 }} className="group relative min-h-[330px] overflow-hidden rounded-2xl border border-[#1C1E21]/10 bg-white p-7 shadow-[0_18px_45px_rgba(7,16,20,0.06)] transition hover:border-[#1877F2]/40 hover:shadow-[0_24px_60px_rgba(24,119,242,0.14)]">
-                  <span className="absolute right-5 top-5 inline-flex h-10 min-w-12 items-center justify-center rounded-lg border border-[#1877F2]/20 bg-[#E7F3FF] px-2 text-lg font-bold text-[#1877F2] shadow-sm">0{index + 1}</span>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1877F2]/10 text-[#1877F2] transition group-hover:-translate-y-1 group-hover:bg-[#1877F2] group-hover:text-white"><Icon className="h-6 w-6" /></div>
-                  <h3 className="mt-7 text-xl font-semibold leading-7">{service.title}</h3>
-                  <p className="mt-4 text-sm leading-6 text-[#1C1E21]/55">{service.description}</p>
-                  <div className="absolute inset-x-7 bottom-0 h-px origin-left scale-x-0 bg-gradient-to-r from-[#1877F2] to-transparent transition-transform duration-300 group-hover:scale-x-100" />
-                </motion.article>
+                <button
+                  type="button"
+                  key={service.title}
+                  aria-label={`${flippedService === index ? "Hide" : "Show"} ${service.title} deliverables`}
+                  aria-pressed={flippedService === index}
+                  onClick={() => setFlippedService(flippedService === index ? null : index)}
+                  className="group h-[300px] text-left [perspective:1400px] focus:outline-none"
+                >
+                  <span className={`relative block h-full w-full transition-transform duration-700 [transform-style:preserve-3d] [transition-timing-function:cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none lg:group-hover:[transform:rotateY(180deg)] lg:group-focus-visible:[transform:rotateY(180deg)] ${flippedService === index ? "[transform:rotateY(180deg)]" : ""}`}>
+                    <span className="absolute inset-0 flex flex-col overflow-hidden border border-[#1C1E21]/12 bg-white p-6 shadow-[0_20px_55px_rgba(28,30,33,.06)] [backface-visibility:hidden] md:p-7">
+                      <span className="absolute -right-3 -top-8 font-display text-[9rem] leading-none text-[#1C1E21]/[.035]">{String(index + 1).padStart(2, "0")}</span>
+                      <span className="relative flex items-start justify-between border-b border-[#1C1E21]/10 pb-5">
+                        <span className="grid h-10 w-10 place-items-center border border-[#1877F2]/24 text-[#1877F2]"><Icon className="h-[18px] w-[18px]" /></span>
+                        <span className="text-[10px] font-semibold uppercase tracking-[.18em] text-[#1C1E21]/35">Capability {String(index + 1).padStart(2, "0")}</span>
+                      </span>
+                      <span className="relative flex flex-1 flex-col pt-7">
+                        <span className="text-2xl font-semibold leading-tight text-[#1C1E21]">{service.title}</span>
+                        <span className="mt-4 line-clamp-3 max-w-md text-sm leading-6 text-[#1C1E21]/54">{service.description}</span>
+                        <span className="mt-auto flex items-center justify-between border-t border-[#1C1E21]/10 pt-5 text-[10px] font-semibold uppercase tracking-[.16em] text-[#1877F2]"><span>View deliverables</span><ArrowRight className="h-4 w-4" /></span>
+                      </span>
+                    </span>
+
+                    <span className="absolute inset-0 flex flex-col overflow-hidden bg-[#1C1E21] p-6 text-white [backface-visibility:hidden] [transform:rotateY(180deg)] md:p-7">
+                      <span className="absolute right-[-18px] top-[-34px] font-display text-[9rem] leading-none text-white/[.035]">{String(index + 1).padStart(2, "0")}</span>
+                      <span className="relative flex items-center justify-between border-b border-white/15 pb-5"><span className="text-[10px] font-semibold uppercase tracking-[.18em] text-[#1877F2]">Engagement scope</span><Icon className="h-5 w-5 text-white/48" /></span>
+                      <span className="relative mt-7 text-2xl font-semibold">{service.title}</span>
+                      <span className="relative mt-7 space-y-4">
+                        {serviceDeliverables[index].map((item) => <span key={item} className="flex items-center gap-3 text-sm text-white/72"><Check className="h-4 w-4 shrink-0 text-[#1877F2]" />{item}</span>)}
+                      </span>
+                      <span className="relative mt-auto flex items-center justify-between border-t border-white/15 pt-5 text-[10px] font-semibold uppercase tracking-[.16em] text-white/52"><span>Tap to return</span><ArrowRight className="h-4 w-4 -rotate-180" /></span>
+                    </span>
+                  </span>
+                </button>
               );
             })}
           </div>
@@ -214,40 +248,67 @@ export default function WebDevelopmentPage() {
       </section>
 
       <section className="relative overflow-hidden border-y border-[#1C1E21]/10 bg-[#F0F2F5] py-20 text-[#1C1E21] md:py-28">
-        <Image src="/images/app-team.png" alt="Opus Geeks product team collaborating" fill sizes="100vw" className="object-cover opacity-[0.06] grayscale" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#F0F2F5_0%,rgba(240,242,245,0.94)_52%,rgba(240,242,245,0.76)_100%)]" />
-        <div className="section-shell relative grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Performance at scale</p>
-            <h2 className="mt-4 text-balance text-4xl font-semibold md:text-5xl">Metrics that reflect delivery experience.</h2>
-            <p className="mt-6 text-lg leading-8 text-[#1C1E21]/60">We focus on the indicators that shape successful web products: reliable execution, capable teams, lasting partnerships, and consistently high standards.</p>
-            <button onClick={() => setModalOpen(true)} className="group mt-8 inline-flex items-center gap-3 rounded-full bg-[#1877F2] px-6 py-4 font-semibold text-white shadow-[0_12px_30px_rgba(24,119,242,0.2)] transition hover:bg-[#166FE5]">Get a quote <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></button>
+        <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(90deg,transparent_49.9%,rgba(28,30,33,.07)_50%,transparent_50.1%)] [background-size:25%_100%]" />
+        <div className="section-shell relative">
+          <div className="grid gap-8 border-b border-[#1C1E21]/15 pb-12 lg:grid-cols-[1.15fr_.85fr] lg:items-end">
+            <div>
+              <div className="flex items-center gap-4"><span className="h-px w-10 bg-[#1877F2]" /><p className="text-xs font-semibold uppercase tracking-[.2em] text-[#1877F2]">Delivery architecture</p></div>
+              <h2 className="mt-6 max-w-4xl text-balance text-4xl font-semibold leading-[1.02] md:text-6xl">Four disciplines. <span className="font-display font-normal italic text-[#1877F2]">One accountable system.</span></h2>
+            </div>
+            <div className="lg:justify-self-end"><p className="max-w-xl text-base leading-7 text-[#1C1E21]/58 md:text-lg md:leading-8">Every stage resolves a different business risk and produces a concrete handoff for the next discipline.</p><button onClick={() => setModalOpen(true)} className="group mt-6 inline-flex items-center gap-3 font-semibold text-[#1C1E21]">Discuss your delivery plan <span className="grid h-10 w-10 place-items-center border border-[#1C1E21]/18 transition group-hover:border-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white"><ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></span></button></div>
           </div>
-          <div className="grid grid-cols-2 overflow-hidden rounded-2xl border-l border-t border-[#1C1E21]/10 bg-white shadow-[0_16px_44px_rgba(28,30,33,0.08)]">
-            {stats.map(([value, label]) => (
-              <motion.div key={label} whileHover={{ backgroundColor: "#F0F6FF" }} className="border-b border-r border-[#1C1E21]/10 p-6 md:p-10"><p className="text-4xl font-semibold text-[#1877F2] md:text-6xl">{value}</p><p className="mt-3 text-sm text-[#1C1E21]/55 md:text-base">{label}</p></motion.div>
+
+          <div className="border-b border-[#1C1E21]/15">
+            {stats.map(([value, label, description, output]) => (
+              <motion.article key={label} initial={false} whileHover="hover" className="group grid gap-5 border-t border-[#1C1E21]/15 py-7 first:border-t-0 md:grid-cols-[90px_220px_1fr_220px] md:items-center md:gap-8 md:py-9">
+                <motion.span variants={{ hover: { x: 6 } }} transition={{ duration: 0.25 }} className="font-display text-5xl leading-none text-[#1C1E21]/18 transition-colors group-hover:text-[#1877F2] md:text-6xl">{value}</motion.span>
+                <h3 className="text-xl font-semibold md:text-2xl">{label}</h3>
+                <p className="max-w-2xl text-sm leading-6 text-[#1C1E21]/55">{description}</p>
+                <div className="border-l border-[#1C1E21]/15 pl-5"><span className="block text-[9px] font-semibold uppercase tracking-[.18em] text-[#1877F2]">Stage output</span><span className="mt-2 block text-sm font-semibold">{output}</span></div>
+              </motion.article>
             ))}
           </div>
         </div>
       </section>
 
       <section className="relative overflow-hidden border-y border-[#1C1E21]/10 bg-white py-20 md:py-28">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(85,174,224,0.18),transparent_30%)]" />
-        <div className="section-shell grid gap-8 lg:grid-cols-2 lg:items-end">
-          <h2 className="relative text-balance text-4xl font-semibold leading-tight md:text-6xl">Our web development <span className="text-[#1877F2]">case studies.</span></h2>
-          <p className="relative text-lg leading-8 text-[#1C1E21]/60">Explore selected web experiences across hospitality, retail, wellness, and service marketplaces, designed around real customer journeys and commercial goals.</p>
-        </div>
-        <div className="section-shell mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {caseStudies.map((study, index) => (
-            <motion.article key={study.title} initial={false} whileHover={{ y: -6 }} transition={{ duration: 0.2 }} className="group relative aspect-[6/5] overflow-hidden rounded-2xl border border-white/10 bg-[#101a1e] shadow-2xl">
-              <Image src={study.image} alt={`${study.title} web development case study`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover transition duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/5 to-transparent" />
-              <div className="absolute inset-x-5 top-5 flex items-center justify-between text-xs uppercase tracking-[0.15em] text-white/65"><span>Case 0{index + 1}</span><Globe2 className="h-5 w-5" /></div>
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-5 pt-16"><p className="text-xs text-teal">{study.type}</p><h3 className="mt-1 text-xl font-semibold">{study.title}</h3></div>
+        <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(28,30,33,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(28,30,33,.045)_1px,transparent_1px)] [background-size:72px_72px]" />
+        <div className="section-shell relative">
+          <div className="grid gap-8 border-b border-[#1C1E21]/12 pb-10 lg:grid-cols-[1fr_.8fr] lg:items-end">
+            <div><p className="text-xs font-semibold uppercase tracking-[.2em] text-[#1877F2]">Selected web systems / 01-04</p><h2 className="mt-5 max-w-3xl text-balance text-4xl font-semibold leading-[1.02] md:text-6xl">Built for the moment <span className="font-display font-normal italic text-[#1877F2]">the business grows.</span></h2></div>
+            <p className="max-w-xl text-base leading-7 text-[#1C1E21]/58 lg:justify-self-end md:text-lg md:leading-8">Four different industries. One shared standard: a clear customer journey, credible product presentation, and a platform ready to perform.</p>
+          </div>
+
+          <div className="mt-8 grid gap-4 lg:grid-cols-[1.22fr_.78fr]">
+            <motion.article key={featuredCase.title} initial={{ opacity: 0.88 }} animate={{ opacity: 1 }} transition={{ duration: 0.28 }} className="group relative min-h-[520px] overflow-hidden bg-[#1C1E21] sm:min-h-[620px] lg:min-h-[760px]">
+              <Image src={featuredCase.image} alt={`${featuredCase.title} web development case study`} fill priority={false} sizes="(max-width: 1024px) 100vw, 60vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1E21] via-[#1C1E21]/5 to-transparent" />
+              <div className="absolute inset-x-5 top-5 flex items-center justify-between text-[10px] font-semibold uppercase tracking-[.2em] text-white/70 sm:inset-x-7 sm:top-7"><span>Featured case / {String(activeCase + 1).padStart(2, "0")}</span><span className="grid h-10 w-10 place-items-center border border-white/25"><Globe2 className="h-4 w-4" /></span></div>
+              <div className="absolute inset-x-5 bottom-5 border-t border-white/25 pt-5 text-white sm:inset-x-7 sm:bottom-7 sm:grid sm:grid-cols-[1fr_1fr] sm:items-end sm:gap-8 sm:pt-7">
+                <div><p className="text-xs font-semibold uppercase tracking-[.16em] text-[#78B7FF]">{featuredCase.type}</p><h3 className="mt-2 text-3xl font-semibold sm:text-4xl">{featuredCase.title}</h3></div>
+                <p className="mt-4 max-w-md text-sm leading-6 text-white/70 sm:mt-0">{featuredCase.outcome}</p>
+              </div>
             </motion.article>
-          ))}
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              {supportingCases.map((study, index) => (
+                <motion.article key={study.title} initial={{ opacity: 0.75, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25, delay: index * 0.04 }} onClick={() => setActiveCase(study.originalIndex)} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setActiveCase(study.originalIndex); } }} role="button" tabIndex={0} aria-label={`Feature ${study.title}`} className={`group grid min-h-[300px] cursor-pointer overflow-hidden border border-[#1C1E21]/12 bg-[#F0F2F5] outline-none transition-colors hover:border-[#1877F2] focus-visible:border-[#1877F2] focus-visible:ring-2 focus-visible:ring-[#1877F2]/25 lg:min-h-0 lg:grid-cols-[1.08fr_.92fr] ${index === 2 ? "sm:col-span-2 lg:col-span-1" : "sm:col-span-1"}`}>
+                  <div className="relative min-h-[250px] overflow-hidden lg:min-h-0">
+                    <Image src={study.image} alt={`${study.title} web development case study`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 32vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-black/10" />
+                    <span className="absolute left-4 top-4 bg-white/92 px-3 py-2 text-[9px] font-semibold uppercase tracking-[.18em] text-[#1C1E21]">Case {String(study.originalIndex + 1).padStart(2, "0")}</span>
+                  </div>
+                  <div className="flex flex-col justify-between p-5 sm:p-6">
+                    <div><p className="text-[10px] font-semibold uppercase tracking-[.16em] text-[#1877F2]">{study.type}</p><h3 className="mt-2 text-xl font-semibold leading-tight">{study.title}</h3><p className="mt-3 text-sm leading-6 text-[#1C1E21]/55">{study.outcome}</p></div>
+                    <span className="mt-6 grid h-10 w-10 place-items-center border border-[#1C1E21]/15 transition-colors group-hover:border-[#1877F2] group-hover:bg-[#1877F2] group-hover:text-white"><ArrowRight className="h-4 w-4" /></span>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-col gap-5 border-t border-[#1C1E21]/12 pt-8 sm:flex-row sm:items-center sm:justify-between"><p className="max-w-xl text-sm leading-6 text-[#1C1E21]/52">Planning a commerce, service, healthcare, or corporate platform? Start with a useful scope, not a sales pitch.</p><button onClick={() => setModalOpen(true)} className="group inline-flex items-center gap-3 self-start font-semibold text-[#1C1E21]">Discuss your project <span className="grid h-11 w-11 place-items-center bg-[#1877F2] text-white transition group-hover:bg-[#1C1E21]"><ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></span></button></div>
         </div>
-        <div className="relative mt-12 text-center"><button onClick={() => setModalOpen(true)} className="group inline-flex items-center gap-3 rounded-full bg-[#1877F2] px-7 py-4 font-semibold text-white transition hover:bg-[#1C1E21]">Get a quote <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></button></div>
       </section>
 
       <section className="relative overflow-hidden bg-[#e5f2f8] py-20 md:py-28">
@@ -262,22 +323,27 @@ export default function WebDevelopmentPage() {
       <a href="#top" aria-label="Back to top" className="fixed bottom-5 right-5 z-30 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-[#1877F2] text-white shadow-xl transition hover:-translate-y-1 hover:bg-[#1C1E21]"><ArrowUp className="h-5 w-5" /></a>
 
       {modalOpen ? (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="consultation-title" onMouseDown={(event) => { if (event.target === event.currentTarget) setModalOpen(false); }}>
-          <motion.div initial={{ opacity: 0, y: 24, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} className="relative max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-2xl border border-white/15 bg-[#0b1b20] p-6 shadow-2xl md:p-9">
-            <button onClick={() => setModalOpen(false)} className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white" aria-label="Close consultation form"><X className="h-5 w-5" /></button>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1C1E21]/72 p-3 backdrop-blur-[3px] sm:p-6" role="dialog" aria-modal="true" aria-labelledby="consultation-title" onMouseDown={(event) => { if (event.target === event.currentTarget) setModalOpen(false); }}>
+          <motion.div initial={{ opacity: 0, y: 20, scale: 0.985 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }} className="relative max-h-[94vh] w-full max-w-[680px] overflow-y-auto border border-[#1C1E21]/12 bg-white text-[#1C1E21] shadow-[0_32px_100px_rgba(0,0,0,.28)]">
+            <div className="flex items-center justify-between border-b border-[#1C1E21]/10 px-5 py-4 md:px-8">
+              <div className="flex items-center gap-3"><span className="h-2 w-2 bg-[#1877F2]" /><span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1C1E21]/48">Web project enquiry / OG</span></div>
+              <button onClick={() => setModalOpen(false)} className="grid h-10 w-10 place-items-center border border-[#1C1E21]/12 text-[#1C1E21]/55 transition hover:border-[#1C1E21] hover:bg-[#1C1E21] hover:text-white" aria-label="Close consultation form"><X className="h-5 w-5" /></button>
+            </div>
+            <div className="p-5 md:p-8">
             {submitted ? (
-              <div className="py-16 text-center"><div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-teal text-ink"><Check className="h-8 w-8" /></div><h2 id="consultation-title" className="mt-6 text-3xl font-semibold">Request received.</h2><p className="mt-3 text-white/60">Thank you. The Opus Geeks team will contact you shortly.</p><button onClick={() => { setModalOpen(false); setSubmitted(false); }} className="mt-8 rounded-full bg-white px-6 py-3 font-semibold text-ink">Done</button></div>
+              <div className="py-12 text-center"><div className="mx-auto grid h-16 w-16 place-items-center bg-[#1877F2] text-white"><Check className="h-8 w-8" /></div><h2 id="consultation-title" className="mt-6 text-3xl font-semibold">Request received.</h2><p className="mt-3 text-[#1C1E21]/55">Thank you. The Opus Geeks team will contact you shortly.</p><button onClick={() => { setModalOpen(false); setSubmitted(false); }} className="mt-8 bg-[#1C1E21] px-7 py-3 font-semibold text-white transition hover:bg-[#1877F2]">Done</button></div>
             ) : (
-              <><p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal">Let&apos;s talk</p><h2 id="consultation-title" className="mt-3 pr-10 text-3xl font-semibold md:text-4xl">Book a free consultation</h2><p className="mt-3 text-sm leading-6 text-white/55">Tell us what you are building and our team will help shape the right next step.</p>
-              <form onSubmit={submitConsultation} className="mt-7 space-y-4">
-                <label className="block"><span className="mb-2 block text-sm text-white/65">Name</span><input required name="name" autoComplete="name" className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 outline-none transition focus:border-teal" /></label>
-                <label className="block"><span className="mb-2 block text-sm text-white/65">Email</span><input required type="email" name="email" autoComplete="email" className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 outline-none transition focus:border-teal" /></label>
-                <label className="block"><span className="mb-2 block text-sm text-white/65">Phone</span><input required type="tel" name="phone" autoComplete="tel" className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 outline-none transition focus:border-teal" /></label>
-                <label className="block"><span className="mb-2 block text-sm text-white/65">Project description</span><textarea required name="description" rows={4} className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3 outline-none transition focus:border-teal" /></label>
-                <label className="flex cursor-pointer items-start gap-3 text-sm text-white/60"><input required type="checkbox" className="mt-1 h-4 w-4 accent-teal" /><span>I accept the terms and conditions.</span></label>
-                <button type="submit" className="group flex w-full items-center justify-center gap-3 rounded-xl bg-teal px-6 py-4 font-semibold text-ink transition hover:bg-white">Submit request <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" /></button>
+              <><p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1877F2]">Start with clarity</p><h2 id="consultation-title" className="mt-3 max-w-lg text-balance text-3xl font-semibold leading-tight md:text-4xl">Tell us what you&apos;re building.</h2><p className="mt-3 max-w-xl text-sm leading-6 text-[#1C1E21]/55">Share the essentials. We&apos;ll review the scope and recommend a practical next step within one business day.</p>
+              <form onSubmit={submitConsultation} className="mt-7 grid gap-4 sm:grid-cols-2">
+                <label className="block"><span className="mb-2 block text-xs font-semibold text-[#1C1E21]/65">Full name</span><input required name="name" autoComplete="name" className="h-12 w-full border border-[#1C1E21]/14 bg-[#F0F2F5] px-4 outline-none transition focus:border-[#1877F2] focus:bg-white" /></label>
+                <label className="block"><span className="mb-2 block text-xs font-semibold text-[#1C1E21]/65">Work email</span><input required type="email" name="email" autoComplete="email" className="h-12 w-full border border-[#1C1E21]/14 bg-[#F0F2F5] px-4 outline-none transition focus:border-[#1877F2] focus:bg-white" /></label>
+                <label className="block sm:col-span-2"><span className="mb-2 block text-xs font-semibold text-[#1C1E21]/65">Phone number</span><input required type="tel" name="phone" autoComplete="tel" className="h-12 w-full border border-[#1C1E21]/14 bg-[#F0F2F5] px-4 outline-none transition focus:border-[#1877F2] focus:bg-white" /></label>
+                <label className="block sm:col-span-2"><span className="mb-2 block text-xs font-semibold text-[#1C1E21]/65">Project brief</span><textarea required name="description" rows={3} placeholder="Website type, audience, goals, and ideal timeline" className="w-full resize-none border border-[#1C1E21]/14 bg-[#F0F2F5] px-4 py-3 text-sm outline-none transition placeholder:text-[#1C1E21]/32 focus:border-[#1877F2] focus:bg-white" /></label>
+                <label className="flex cursor-pointer items-start gap-3 text-xs leading-5 text-[#1C1E21]/52 sm:col-span-2"><input required type="checkbox" className="mt-0.5 h-4 w-4 shrink-0 accent-[#1877F2]" /><span>I agree to be contacted about this project.</span></label>
+                <button type="submit" className="group flex min-h-14 items-center justify-between bg-[#1877F2] px-6 font-semibold text-white transition hover:bg-[#1C1E21] sm:col-span-2">Submit request <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" /></button>
               </form></>
             )}
+            </div>
           </motion.div>
         </div>
       ) : null}
